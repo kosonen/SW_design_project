@@ -1,6 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+<<<<<<< HEAD
         <file>dataBrowser.qml</file>
+=======
+        <file>energy.qml</file>
+        <file>background.qml</file>
+>>>>>>> added background and energy modules
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
+<<<<<<< HEAD
 
     Loader{
         source: "dataBrowser.qml"
@@ -14,6 +15,15 @@ Window {
         height: parent.height
         anchors.left: parent.left
 
+=======
+    Loader{
+        source: "background.qml"
+        width: parent.width
+        height: parent.height
+    }
+
+    Loader{
+>>>>>>> added background and energy modules
 
     }
 
