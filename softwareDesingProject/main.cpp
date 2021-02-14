@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 
+#include "api.h"
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -9,6 +11,9 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
+
+    API api;
+    api.load("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::timevaluepair&place=tampere");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
