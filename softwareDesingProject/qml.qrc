@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>dataBrowser.qml</file>
+        <file>DataBrowser.qml</file>
         <file>energy.qml</file>
         <file>temperature.qml</file>
+        <file>WeatherListModel.qml</file>
+        <file>ConsumptionListModel.qml</file>
     </qresource>
 </RCC>

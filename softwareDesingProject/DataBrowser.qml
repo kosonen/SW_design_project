@@ -1,24 +1,8 @@
-import QtQuick 2.0
+import QtQuick 2.15
 
 Item {
     id: browser
-   // width: parent.width /5
-   // height: parent.height
-
-    ListModel {
-            id: model
-
-            ListElement {
-                name:'Solar Power'
-
-            }
-            ListElement {
-                name:'Wind Power'
-            }
-            ListElement {
-                name:'Hydro Power'
-            }
-        }
+    property ListModel modelToView: model
 
     Rectangle{
         id: borders
@@ -29,7 +13,7 @@ Item {
             ListView {
                 id: list
                 anchors.fill: parent
-                model: model
+                model: modelToView
                 delegate: Component {
                     Item{
                             width: parent.width

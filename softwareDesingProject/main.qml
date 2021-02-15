@@ -13,12 +13,30 @@ Window {
         height: parent.height
         color: "darkcyan"
 
-       Loader{
-            id: dataBrowser
-            source: "dataBrowser.qml"
+        WeatherListModel
+        {
+            id: weatherModel
+        }
+        ConsumptionListModel
+        {
+            id: consumptionModel
+        }
+
+        DataBrowser
+        {
+            id: consumptionBrowser
             width: parent.width / 10
             height: parent.height
             anchors.left: parent.left
+            modelToView: consumptionModel
+        }
+        DataBrowser
+        {
+            id: weatherBrowser
+            width: parent.width / 10
+            height: parent.height
+            anchors.right: parent.right
+            modelToView: weatherModel
         }
 
         Loader{
@@ -26,9 +44,9 @@ Window {
             source: "energy.qml"
             height: parent.height/2.5
 
-            anchors.left: dataBrowser.right
+            anchors.left: consumptionBrowser.right
             anchors.top: parent.top
-            anchors.right: parent.right
+            anchors.right: weatherBrowser.left
 
             anchors.topMargin: 150
             anchors.leftMargin: 200
@@ -42,11 +60,13 @@ Window {
             height: parent.height/6
             width: parent.width/4
 
-            anchors.left: dataBrowser.right
+            anchors.left: consumptionBrowser.right
             anchors.top: energy.bottom
+            anchors.right: weatherBrowser.left
 
             anchors.topMargin: 150
             anchors.leftMargin: 200
+            anchors.rightMargin: 200
 
         }
 
