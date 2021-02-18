@@ -108,6 +108,17 @@ Window {
 
         }
 
+        ConsumptionPieChart{
+            id: consumptionChart
+            height: energy.height
+            width: energy.height
+
+            anchors.left: energy.right
+            anchors.top: parent.top
+            anchors.topMargin: 150
+            anchors.leftMargin: 50
+        }
+
     }
 
 

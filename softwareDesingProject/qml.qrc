@@ -7,5 +7,6 @@
         <file>WeatherListModel.qml</file>
         <file>ConsumptionListModel.qml</file>
         <file>OptionColumn.qml</file>
+        <file>ConsumptionPieChart.qml</file>
     </qresource>
 </RCC>
