@@ -3,6 +3,7 @@ import QtQuick 2.15
 Item {
     id: browser
     property ListModel modelToView: model
+    property int heightOfElement: 30
 
     Rectangle{
         id: borders
@@ -17,7 +18,7 @@ Item {
                 delegate: Component {
                     Item{
                             width: parent.width
-                            height: 30
+                            height: heightOfElement
 
                             Column{
                                 Text { text: name

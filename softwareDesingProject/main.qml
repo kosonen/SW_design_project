@@ -26,7 +26,7 @@ Window {
         {
             id: consumptionBrowser
             width: parent.width / 10
-            height: parent.height
+            height: consumptionBrowser.heightOfElement * consumptionModel.rowCount()
             anchors.left: parent.left
             modelToView: consumptionModel
         }
@@ -34,7 +34,7 @@ Window {
         {
             id: weatherBrowser
             width: parent.width / 10
-            height: parent.height
+            height: weatherBrowser.heightOfElement * weatherModel.rowCount()
             anchors.right: parent.right
             modelToView: weatherModel
         }
