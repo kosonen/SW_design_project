@@ -3,10 +3,13 @@ import QtQuick.Controls 2.15
 
 Item {
     property int spacing: 2
+    id: optionItem
     ButtonGroup{
         id: consumtionPredictionGroup
+        buttons: columElement.children
     }
     Rectangle{
+        id:boundingrect
         border.color: "black"
         width: parent.width
         height: parent.height
@@ -16,12 +19,21 @@ Item {
 
       RadioButton{
           ButtonGroup.group: consumtionPredictionGroup
-          text: qsTr("Predicition")
+          text: qsTr("Consumed")
       }
       RadioButton{
           ButtonGroup.group: consumtionPredictionGroup
-          text: qsTr("Tentative")
+          text: qsTr("Producted")
       }
+      RadioButton{
+          ButtonGroup.group: consumtionPredictionGroup
+          text: qsTr("Predicted consupmtion")
+      }
+      RadioButton{
+          ButtonGroup.group: consumtionPredictionGroup
+          text: qsTr("Tentative production")
+      }
+
 
   }
     }

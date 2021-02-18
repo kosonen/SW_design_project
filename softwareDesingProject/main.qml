@@ -48,7 +48,7 @@ Window {
         OptionColumn{
             id: optionColumn
             width: consumptionBrowser.width
-            height: consumptionBrowser.height
+            height: 170
             anchors.top: consumptionBrowser.bottom
         }
 
