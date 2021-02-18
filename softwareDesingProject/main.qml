@@ -95,7 +95,7 @@ Window {
         Loader{
 
             source: "temperature.qml"
-            height: parent.height/6
+            height: parent.height/3.5
             width: parent.width/4
 
             anchors.left: consumptionBrowser.right
