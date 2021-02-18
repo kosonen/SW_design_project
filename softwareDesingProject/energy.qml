@@ -9,38 +9,26 @@ Item {
         border.color: "black"
 
         ChartView{
-            title: "Enegy Production Sources"
+            title: "Energiatuotanto"
             anchors.fill: parent
             antialiasing: true
 
-            ValueAxis {
-                id: time
-                min: 0
-                max: 24
-                tickCount: 24
-                labelFormat: "‰.0f"
-            }
+            ValueAxis{id: customX}
+            ValueAxis{id: customY}
 
-            AreaSeries{
-                name: "Solar"
-                axisX: ValueAxis
-                upperSeries: LineSeries{
-                    XYPoint { x: 0; y: 1 }
-                    XYPoint { x: 1; y: 1 }
-                    XYPoint { x: 2; y: 1 }
-                    XYPoint { x: 3; y: 1 }
-                }
-            }
+            LineSeries{
+                name: "*energiamuoto*"
+                //axisX: customX
+                //axisY: customY
+                XYPoint { x:0; y:0 }
+                XYPoint { x:1; y:3 }
+                XYPoint { x:2; y:2 }
+                XYPoint { x:4; y:6 }
 
-            AreaSeries{
-                name: "Wind"
             }
-
-            AreaSeries{
-                name: "Hydro"
-            }
-
         }
+
+
 
     }
 
