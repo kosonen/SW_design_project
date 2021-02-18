@@ -22,20 +22,57 @@ Window {
             id: consumptionModel
         }
 
+        Rectangle{
+            id: titleConsumption
+            width: consumptionBrowser.width
+            height: 25
+            anchors.top: parent.top
+            anchors.left: parent.left
+            border.color: "black"
+            Text{
+                id: titleText
+                text: qsTr("Consumption Options")
+
+            }
+
+        }
+
         DataBrowser
         {
             id: consumptionBrowser
             width: parent.width / 10
             height: consumptionBrowser.heightOfElement * consumptionModel.rowCount()
-            anchors.left: parent.left
+            anchors.top: titleConsumption.bottom
             modelToView: consumptionModel
         }
+        OptionColumn{
+            id: optionColumn
+            width: consumptionBrowser.width
+            height: consumptionBrowser.height
+            anchors.top: consumptionBrowser.bottom
+        }
+
+        Rectangle{
+            id: titleWeather
+            width: weatherBrowser.width
+            height: 25
+            anchors.top: optionColumn.bottom
+            anchors.topMargin: 5
+            border.color: "black"
+            Text{
+                id: titleweatherText
+                text: qsTr("Weather Options")
+
+            }
+
+        }
+
         DataBrowser
         {
             id: weatherBrowser
             width: parent.width / 10
             height: weatherBrowser.heightOfElement * weatherModel.rowCount()
-            anchors.right: parent.right
+            anchors.top: titleWeather.bottom
             modelToView: weatherModel
         }
 
@@ -46,11 +83,12 @@ Window {
 
             anchors.left: consumptionBrowser.right
             anchors.top: parent.top
-            anchors.right: weatherBrowser.left
+            anchors.right: parent.right
 
             anchors.topMargin: 150
             anchors.leftMargin: 200
-            anchors.rightMargin: 200
+            anchors.rightMargin: 600
+
 
         }
 
@@ -62,11 +100,11 @@ Window {
 
             anchors.left: consumptionBrowser.right
             anchors.top: energy.bottom
-            anchors.right: weatherBrowser.left
+            anchors.right: parent.right
 
             anchors.topMargin: 150
             anchors.leftMargin: 200
-            anchors.rightMargin: 200
+            anchors.rightMargin: 600
 
         }
 

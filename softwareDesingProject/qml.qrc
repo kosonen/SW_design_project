@@ -6,5 +6,6 @@
         <file>temperature.qml</file>
         <file>WeatherListModel.qml</file>
         <file>ConsumptionListModel.qml</file>
+        <file>OptionColumn.qml</file>
     </qresource>
 </RCC>

@@ -5,6 +5,8 @@ Item {
     property ListModel modelToView: model
     property int heightOfElement: 30
 
+
+
     Rectangle{
         id: borders
         width: parent.width
