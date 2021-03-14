@@ -21,6 +21,7 @@ private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
 
 private:
+
     QNetworkAccessManager* network;
     QXmlStreamReader* parser;
     QVector<QPair<QString, QString>> data;
