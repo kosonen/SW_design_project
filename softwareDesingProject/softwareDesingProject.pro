@@ -1,4 +1,4 @@
-QT += quick charts widgets core
+QT += quick charts widgets core xml
 
 CONFIG += c++11
 

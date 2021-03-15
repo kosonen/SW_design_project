@@ -1,6 +1,7 @@
 #include "api.h"
 
 #include <QNetworkReply>
+#include <QDomDocument>
 
 API::API(QObject *parent) : QObject(parent)
 {
@@ -23,30 +24,24 @@ void API::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
 
-    parser->addData(reply->readAll());
+    QDomDocument doc;
 
-    while (parser->name() != "MeasurementTimeseries") {
-        parser->readNext();
+    if (!doc.setContent(reply->readAll())) {
+        return;
     }
 
-    parser->readNextStartElement();
-
-    while (parser->name() == "point") {
-        QPair<QString, QString> point;
-        parser->readNextStartElement();
-        parser->readNextStartElement();
-        point.first = parser->readElementText();
-        parser->readNextStartElement();
-        point.second = parser->readElementText();
-        parser->readNextStartElement();
-        parser->readNextStartElement();
-        parser->readNextStartElement();
-        data.push_back(point);
+    for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
+    {
+        QDomElement element = m.firstChildElement().firstChildElement();
+        QDomElement time = element.nextSiblingElement();
+        QDomElement name = time.nextSiblingElement();
+        QDomElement value = name.nextSiblingElement();
+        qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
+        qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
+        qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
     }
 
-    for (auto p : data) {
-        qDebug() << p;
-    }
+    qDebug() << "Content read OK!";
 
     reply->deleteLater();
 }
