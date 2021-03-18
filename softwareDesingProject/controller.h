@@ -1,6 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "datarequestsettings.h"
+#include "iurlbuilder.h"
 #include <QObject>
 
 class Controller : public QObject
@@ -24,6 +26,8 @@ public:
 
 private:
     /* Maybe add own class for parameter settings */
+    DataRequestSettings m_settings;
+    IURLBuilder* m_urlBuilder;
 signals:
 
 };

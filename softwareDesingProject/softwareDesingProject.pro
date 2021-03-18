@@ -9,7 +9,9 @@ CONFIG += c++11
 SOURCES += \
         api.cpp \
         controller.cpp \
-        main.cpp
+        datarequestsettings.cpp \
+        main.cpp \
+        urlbuilder.cpp
 
 RESOURCES += qml.qrc
 
@@ -26,4 +28,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     api.h \
-    controller.h
+    controller.h \
+    datarequestsettings.h \
+    iurlbuilder.h \
+    urlbuilder.h
