@@ -1,5 +1,6 @@
 import QtQuick 2.15
 
+
 Item {
     id: browser
     property ListModel modelToView: model
@@ -37,11 +38,15 @@ Item {
 
                 }
                 focus: true
-                onCurrentItemChanged: console.log(model.get(list.currentIndex).name + ' selected')
+                onCurrentItemChanged: {
+
+                    console.log(model.get(list.currentIndex).name + ' selected');
+                    return list.currentIndex;
 
             }
     }
 
 
 
+}
 }

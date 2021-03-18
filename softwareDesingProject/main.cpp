@@ -3,6 +3,7 @@
 #include <QQmlApplicationEngine>
 
 #include "api.h"
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +12,7 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-
+    qmlRegisterType<Controller>("controller", 1, 0, "Controller");
     API api;
     api.load("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature");
 
