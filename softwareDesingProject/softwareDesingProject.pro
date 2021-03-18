@@ -30,5 +30,6 @@ HEADERS += \
     api.h \
     controller.h \
     datarequestsettings.h \
+    defines.h \
     iurlbuilder.h \
     urlbuilder.h

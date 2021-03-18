@@ -11,7 +11,8 @@ public:
 
     static URLBuilder* getInstance();
 
-    bool buildURL(const DataRequestSettings &settings, QUrl &url) override;
+    bool buildFMIURL(DataRequestSettings &settings, QString &urlString) override;
+    bool buildFingridURL(const DataRequestSettings &settings, QString &urlString) override;
 
 private:
     URLBuilder();

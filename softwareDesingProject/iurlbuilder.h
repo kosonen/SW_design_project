@@ -15,12 +15,20 @@ public:
     virtual ~IURLBuilder(){};
 
     /**
-     * @brief buildURL
+     * @brief buildFMIURL build url to fetch data from FMI API.
      * @param settings for URL.
      * @param url of datarequest. User must create empty url for this.
      * @return True if building url is successfull, otherwise false.
      */
-    virtual bool buildURL(const DataRequestSettings &settings, QUrl &url) = 0;
+    virtual bool buildFMIURL(DataRequestSettings &settings, QString &urlString) = 0;
+
+    /**
+     * @brief buildFingridURL build url to fetch data from Fingrid API.
+     * @param settings for URL.
+     * @param url of datarequest. User must create empty url for this.
+     * @return True if building url is successfull, otherwise false.
+     */
+    virtual bool buildFingridURL(const DataRequestSettings &settings, QString &urlString) = 0;
 };
 
 #endif // IURLBUILDER_H

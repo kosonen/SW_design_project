@@ -12,6 +12,7 @@ API::API(QObject *parent) : QObject(parent)
 
 void API::load(const QString &url)
 {
+    qDebug() << "Loading with url " << url;
     network->get(QNetworkRequest(url));
 }
 

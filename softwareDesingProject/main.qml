@@ -350,11 +350,12 @@ Window {
             onClicked: {
                 viewController.setLocation(inputInfo.text);
                 viewController.setDataSources(["solar", "temperature"])
-                var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +s
-                tartDayInput.text + "T" + startTimeInput.text +"Z";
+                var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
+                startDayInput.text + "T" + startTimeInput.text +"Z";
                 var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +
                 endDayInput.text + "T" + endTimeInput.text +"Z";
                 viewController.setTimeWindow(startTime, endTime);
+                viewController.requestData();
             }
         }
 

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QHash>
 
 /**
  * @brief The DataRequestSettings class implements settings needed to build url for datarequest.
@@ -23,12 +24,11 @@ public:
     QString getStartTime();
     QString getEndTime();
 
-private:
-    QString m_location;
-    QVector<QString> m_dataSources;
+    QHash<QString,QString> getParams();
 
-    QString m_startTime;
-    QString m_endTime;
+private:
+    QHash<QString, QString> m_params;
+    QVector<QString> m_dataSources;
 
 
 

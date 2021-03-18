@@ -3,6 +3,7 @@
 
 #include "datarequestsettings.h"
 #include "iurlbuilder.h"
+#include "api.h"
 #include <QObject>
 
 class Controller : public QObject
@@ -28,6 +29,7 @@ private:
     /* Maybe add own class for parameter settings */
     DataRequestSettings m_settings;
     IURLBuilder* m_urlBuilder;
+    API m_requestAPI;
 signals:
 
 };
