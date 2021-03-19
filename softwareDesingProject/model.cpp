@@ -9,6 +9,17 @@ Model::Model(QObject *parent):
     m_urlBuilder = URLBuilder::getInstance();
 }
 
+QtCharts::QLineSeries *Model::getTempSeries() const
+{
+    return m_tempSeries;
+}
+
+void Model::setTempSeries(QtCharts::QLineSeries *tempSeries)
+{
+    m_tempSeries = tempSeries;
+    emit tempSeriesSignal();
+}
+
 bool Model::update(DataRequestSettings settings)
 {
     qDebug() << "Updating model";
@@ -50,4 +61,14 @@ bool Model::update(DataRequestSettings settings)
     }
     isOk = true;
     return isOk;
+}
+
+void Model::populateTempSeries()
+{
+    m_tempSeries->append(-4,-6);
+    m_tempSeries->append(0,0);
+    m_tempSeries->append(1,2);
+    m_tempSeries->append(3,4);
+    m_tempSeries->append(5,6);
+
 }
