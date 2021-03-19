@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.14
-import controller 1.0
+//import controller 1.0
 
 Window {
     width: screen.width
@@ -370,9 +370,9 @@ Window {
 
         }
 
-        Controller{
-            id: viewController
-        }
+//        Controller{
+//            id: viewController
+//        }
         Rectangle{
             id: titleConsumption
             width: consumptionBrowser.width

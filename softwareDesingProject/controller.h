@@ -2,8 +2,10 @@
 #define CONTROLLER_H
 
 #include "datarequestsettings.h"
-#include "iurlbuilder.h"
-#include "api.h"
+
+
+#include "model.h"
+
 #include <QObject>
 
 class Controller : public QObject
@@ -25,13 +27,13 @@ public:
     /* All fetched data sources are fit into the same time frame */
     Q_INVOKABLE void setTimeWindow(QString startTime, QString endTime);
 
-private:
-    /* Maybe add own class for parameter settings */
-    DataRequestSettings m_settings;
-    IURLBuilder* m_urlBuilder;
-    API m_requestAPI;
+    void setModel(Model* model);
+
 signals:
 
+private:
+    DataRequestSettings m_settings;
+    Model* m_model;
 };
 
 #endif // CONTROLLER_H

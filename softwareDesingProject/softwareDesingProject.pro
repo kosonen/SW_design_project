@@ -11,6 +11,7 @@ SOURCES += \
         controller.cpp \
         datarequestsettings.cpp \
         main.cpp \
+        model.cpp \
         urlbuilder.cpp
 
 RESOURCES += qml.qrc
@@ -32,4 +33,5 @@ HEADERS += \
     datarequestsettings.h \
     defines.h \
     iurlbuilder.h \
+    model.h \
     urlbuilder.h
