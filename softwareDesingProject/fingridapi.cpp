@@ -1,36 +1,45 @@
-#include "api.h"
+#include "fingridapi.h"
 
-#include <QNetworkReply>
-#include <QDomDocument>
 
-API::API(QObject *parent) : QObject(parent)
+FingridAPI::FingridAPI(QObject* parent) : API(parent)
 {
-    network = new QNetworkAccessManager(this);
-    parser = new QXmlStreamReader();
-    connect(network, &QNetworkAccessManager::finished, this, &API::downloadCompleted);
+    network_ = new QNetworkAccessManager(this);
+    parser_ = new QXmlStreamReader();
+    connect(network_, &QNetworkAccessManager::finished, this, &FingridAPI::downloadCompleted);
+
 }
 
-void API::load(const QString &url)
+FingridAPI::~FingridAPI()
+{
+    delete network_;
+    delete parser_;
+}
+
+void FingridAPI::load(const QString &url)
 {
     qDebug() << "Loading with url " << url;
-    network->get(QNetworkRequest(url));
+    QNetworkRequest req{ url };
+    const QString headername = "x-api-key";
+    req.setRawHeader(headername.toUtf8(), FINGRIDAPIKEY.toUtf8());
+    network_->get(req);
+
 }
 
-QVector<QPair<QString, QString>> API::getData()
+QVector<QPair<QString, QString> > FingridAPI::getData()
 {
-    return data;
+    return data_;
 }
 
-void API::downloadCompleted(QNetworkReply *reply)
+void FingridAPI::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
-
     QDomDocument doc;
-
     if (!doc.setContent(reply->readAll())) {
+        qDebug() << "BROKEN" << Qt::endl;
         return;
     }
-
+    QString tmpString = doc.toString();
+    qDebug() << tmpString << Qt::endl;
     for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
     {
         QDomElement element = m.firstChildElement().firstChildElement();
@@ -41,8 +50,6 @@ void API::downloadCompleted(QNetworkReply *reply)
         qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
         qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
     }
-
     qDebug() << "Content read OK!";
-
     reply->deleteLater();
 }

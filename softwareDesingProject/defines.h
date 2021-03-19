@@ -23,4 +23,8 @@ const QString GEO_ID = "geoid";
 const QString WMO = "wmo";
 const QString TIMEZONE = "timezone";
 
+
+// Key for Fingrid API
+const QString FINGRIDAPIKEY = "gMOfLulbYP2rK93hZVoR33Ij2y59Y0Gg3FgrsCaD";
+
 #endif // DEFINES_H

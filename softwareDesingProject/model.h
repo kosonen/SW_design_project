@@ -5,6 +5,8 @@
 #include "iurlbuilder.h"
 #include "urlbuilder.h"
 #include "api.h"
+#include "fmiapi.h"
+#include "fingridapi.h"
 
 #include <QObject>
 
@@ -23,7 +25,8 @@ signals:
 
 private:
     IURLBuilder* m_urlBuilder;
-    API m_requestAPI;
+    FMIAPI m_requestFMIAPI;
+    FingridAPI m_requestFingridAPI;
 
 };
 

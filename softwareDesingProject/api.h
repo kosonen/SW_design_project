@@ -8,23 +8,17 @@
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
 
+#include <QNetworkReply>
+#include <QDomDocument>
+
+
 class API : public QObject
 {
     Q_OBJECT
 public:
-    explicit API(QObject *parent = nullptr);
-
-    void load(const QString &url);
-    QVector<QPair<QString, QString>> getData();
-
-private Q_SLOTS:
-    void downloadCompleted(QNetworkReply* reply);
-
-private:
-
-    QNetworkAccessManager* network;
-    QXmlStreamReader* parser;
-    QVector<QPair<QString, QString>> data;
+    explicit API(QObject *parent = nullptr) : QObject(parent) {};
+    virtual void load(const QString &url) = 0;
+    virtual QVector<QPair<QString, QString>> getData() = 0;
 };
 
 #endif // API_H

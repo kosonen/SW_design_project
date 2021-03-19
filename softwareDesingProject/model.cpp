@@ -4,7 +4,7 @@
 Model::Model(QObject *parent):
     QObject(parent),
     m_urlBuilder(nullptr),
-    m_requestAPI()
+    m_requestFMIAPI()
 {
     m_urlBuilder = URLBuilder::getInstance();
 }
@@ -27,7 +27,7 @@ bool Model::update(DataRequestSettings settings)
                     return isOk;
                 }
                 qDebug() << "Requestind data with url " << urlString;
-                m_requestAPI.load(urlString);
+                m_requestFMIAPI.load(urlString);
 
             }
             else if(SOURCE_TO_API_MAPPING[source] == "FINGRID")
@@ -39,7 +39,7 @@ bool Model::update(DataRequestSettings settings)
                     return isOk;
                 }
                 qDebug() << "Requestind data with url " << urlString;
-                m_requestAPI.load(urlString);
+                m_requestFMIAPI.load(urlString);
             }
         }
         else
