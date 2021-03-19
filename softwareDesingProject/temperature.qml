@@ -11,10 +11,10 @@ Item{
             anchors.fill: parent
             antialiasing: true
 
-            ValueAxis{
-                id: customX
-                min: -10
-                max: 10
+            DateTimeAxis{
+                id: timeAxis
+                min: model.startTime
+                max: model.endTime
             }
             ValueAxis{
                 id: customY
@@ -26,7 +26,7 @@ Item{
                 id: tempSeries
                 color: "red"
                 name: "Temperature"
-                axisX: customX
+                axisX: timeAxis
                 axisY: customY
                 /*
                 XYPoint { x:0; y:3 }
@@ -41,5 +41,6 @@ Item{
     {
         model.tempSeries = tempSeries;
         model.populateTempSeries();
+        model.initTimeAxis();
     }
 }

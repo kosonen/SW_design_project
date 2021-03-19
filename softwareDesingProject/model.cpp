@@ -4,7 +4,11 @@
 Model::Model(QObject *parent):
     QObject(parent),
     m_urlBuilder(nullptr),
-    m_requestFMIAPI()
+    m_requestFMIAPI(),
+    m_tempSeries{},
+    m_start(),
+    m_end()
+
 {
     m_urlBuilder = URLBuilder::getInstance();
 }
@@ -14,11 +18,36 @@ QtCharts::QLineSeries *Model::getTempSeries() const
     return m_tempSeries;
 }
 
+QDateTime Model::getStartTime()
+{
+    return m_start;
+}
+
+QDateTime Model::getEndTime()
+{
+    return m_end;
+}
+
+
+
 void Model::setTempSeries(QtCharts::QLineSeries *tempSeries)
 {
     m_tempSeries = tempSeries;
-    emit tempSeriesSignal();
+    emit tempSeriesChanged();
 }
+
+void Model::setStartTime(QDateTime start)
+{
+    m_start = start;
+    emit startTimeChanged();
+}
+
+void Model::setEndTime(QDateTime end)
+{
+    m_end = end;
+    emit endTimeChanged();
+}
+
 
 bool Model::update(DataRequestSettings settings)
 {
@@ -69,6 +98,14 @@ void Model::populateTempSeries()
     m_tempSeries->append(0,0);
     m_tempSeries->append(1,2);
     m_tempSeries->append(3,4);
-    m_tempSeries->append(5,6);
+    m_tempSeries->append(1727159758,1);
 
 }
+
+void Model::initTimeAxis()
+{
+    setStartTime(QDateTime::fromMSecsSinceEpoch(1616181405365));
+    setEndTime(QDateTime::fromMSecsSinceEpoch(1616183405365));
+}
+
+
