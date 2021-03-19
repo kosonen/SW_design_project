@@ -26,5 +26,6 @@ const QString TIMEZONE = "timezone";
 
 // Key for Fingrid API
 const QString FINGRIDAPIKEY = "gMOfLulbYP2rK93hZVoR33Ij2y59Y0Gg3FgrsCaD";
+const QString FINGRIDKEYHEADER = "x-api-key";
 
 #endif // DEFINES_H

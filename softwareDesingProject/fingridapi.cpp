@@ -19,8 +19,7 @@ void FingridAPI::load(const QString &url)
 {
     qDebug() << "Loading with url " << url;
     QNetworkRequest req{ url };
-    const QString headername = "x-api-key";
-    req.setRawHeader(headername.toUtf8(), FINGRIDAPIKEY.toUtf8());
+    req.setRawHeader(FINGRIDKEYHEADER.toUtf8(), FINGRIDAPIKEY.toUtf8());
     network_->get(req);
 
 }
@@ -35,7 +34,8 @@ void FingridAPI::downloadCompleted(QNetworkReply *reply)
     qDebug() << "Request was " << reply->request().url();
     QDomDocument doc;
     if (!doc.setContent(reply->readAll())) {
-        qDebug() << "BROKEN" << Qt::endl;
+        qDebug() << "Fingrid request BROKEN" << Qt::endl;
+
         return;
     }
     QString tmpString = doc.toString();
