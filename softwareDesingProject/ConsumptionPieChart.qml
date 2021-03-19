@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtCharts 2.15
+import QtQuick 2.14
+import QtCharts 2.14
 
 Item {
     Rectangle{
