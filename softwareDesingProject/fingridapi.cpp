@@ -1,5 +1,5 @@
 #include "fingridapi.h"
-
+#include <QUrlQuery>
 
 FingridAPI::FingridAPI(QObject* parent) : API(parent)
 {
@@ -18,10 +18,26 @@ FingridAPI::~FingridAPI()
 void FingridAPI::load(const QString &url)
 {
     qDebug() << "Loading with url " << url;
-    QNetworkRequest req{ url };
-    req.setRawHeader(FINGRIDKEYHEADER.toUtf8(), FINGRIDAPIKEY.toUtf8());
-    network_->get(req);
 
+
+    //TODO: Make these dynamic, so pass the correct stamps as arguments
+    const QString start_time_value = "2021-03-14T00:00:00Z";
+    const QString end_time_value   = "2021-03-15T00:00:00Z";
+
+    const QString start_time_header = "start_time";
+    const QString end_time_header   = "end_time";
+
+    QUrlQuery query;
+    QUrl loadUrl(url);
+    query.addQueryItem(start_time_header, start_time_value);
+    query.addQueryItem(end_time_header, end_time_value);
+    loadUrl.setQuery(query.query());
+
+
+    QNetworkRequest req(loadUrl);
+    req.setRawHeader(FINGRIDKEYHEADER.toUtf8(), FINGRIDAPIKEY.toUtf8());
+
+    network_->get(req);
 }
 
 QList<QPointF> FingridAPI::getData()
@@ -32,23 +48,24 @@ QList<QPointF> FingridAPI::getData()
 void FingridAPI::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
+    QString errMsg;
     QDomDocument doc;
-    if (!doc.setContent(reply->readAll())) {
+    if (!doc.setContent(reply->readAll(), &errMsg)) {
         qDebug() << "Fingrid request BROKEN" << Qt::endl;
-
+        qDebug() << "Error: " << errMsg << Qt::endl;
         return;
     }
     QString tmpString = doc.toString();
     qDebug() << tmpString << Qt::endl;
     for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
     {
-        QDomElement element = m.firstChildElement().firstChildElement();
-        QDomElement time = element.nextSiblingElement();
-        QDomElement name = time.nextSiblingElement();
-        QDomElement value = name.nextSiblingElement();
-        qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
-        qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
+        QDomElement value = m.firstChildElement();
+        QDomElement start_time = value.nextSiblingElement();
+        QDomElement end_time = start_time.nextSiblingElement();
         qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+        qDebug() << qPrintable(start_time.tagName()) << ": " << start_time.text() << Qt::endl;
+        qDebug() << qPrintable(end_time.tagName()) << ": " << end_time.text() << Qt::endl;
+
     }
     qDebug() << "Content read OK!";
     reply->deleteLater();
