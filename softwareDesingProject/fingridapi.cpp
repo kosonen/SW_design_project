@@ -25,7 +25,7 @@ void FingridAPI::load(const QString &url)
 
 }
 
-QVector<QPair<QString, QString> > FingridAPI::getData()
+QList<QPointF> FingridAPI::getData()
 {
     return data_;
 }

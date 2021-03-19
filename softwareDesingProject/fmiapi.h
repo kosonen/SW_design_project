@@ -12,7 +12,7 @@ public:
      virtual ~FMIAPI();
 
     void load(const QString &url);
-    QVector<QPair<QString, QString>> getData();
+    QList<QPointF> getData();
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
@@ -21,7 +21,7 @@ private:
 
     QNetworkAccessManager* network_;
     QXmlStreamReader* parser_;
-    QVector<QPair<QString, QString>> data_;
+    QList<QPointF> data_;
 
 };
 

@@ -20,7 +20,7 @@ void FMIAPI::load(const QString &url)
     network_->get(QNetworkRequest(url));
 }
 
-QVector<QPair<QString, QString> > FMIAPI::getData()
+QList<QPointF> FMIAPI::getData()
 {
     return data_;
 }
@@ -30,6 +30,8 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
     qDebug() << "Request was " << reply->request().url();
 
     QDomDocument doc;
+
+    data_.clear();
 
     if (!doc.setContent(reply->readAll())) {
         return;
@@ -44,9 +46,28 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
         qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
         qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
         qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+
+        QString timeStr = time.text();
+        QDateTime dateTime = QDateTime::fromString(timeStr, "yyyy-MM-ddThh:mm:ssZ");
+        QPointF point;
+
+        point.setX(dateTime.toMSecsSinceEpoch());
+        point.setY(value.text().toDouble());
+
+        data_.append(point);
+
     }
 
     qDebug() << "Content read OK!";
+    /*
+    for(int i = 0; i < data_.length(); i++){
+        QString xVal = QString::number(data_.at(i).x(), 'g', 20);
+        QString yVal = QString::number(data_.at(i).y(), 'g', 20);
+        qDebug() << qPrintable(xVal) << " "
+                 << qPrintable(yVal)
+                 << Qt::endl;
+    }
+    */
 
     reply->deleteLater();
 }

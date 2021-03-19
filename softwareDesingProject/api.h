@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QVector>
 #include <QPair>
+#include <QList>
+#include <QPointF>
 
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
@@ -18,7 +20,7 @@ class API : public QObject
 public:
     explicit API(QObject *parent = nullptr) : QObject(parent) {};
     virtual void load(const QString &url) = 0;
-    virtual QVector<QPair<QString, QString>> getData() = 0;
+    virtual QList<QPointF> getData() = 0;
 };
 
 #endif // API_H
