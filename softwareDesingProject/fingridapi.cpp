@@ -15,9 +15,9 @@ FingridAPI::~FingridAPI()
     delete parser_;
 }
 
-void FingridAPI::load(const QString &url)
+void FingridAPI::load(QUrl url)
 {
-    qDebug() << "Loading with url " << url;
+    qDebug() << "Loading with url " << url << Qt::endl;;
 
 
     //TODO: Make these dynamic, so pass the correct stamps as arguments
@@ -28,15 +28,13 @@ void FingridAPI::load(const QString &url)
     const QString end_time_header   = "end_time";
 
     QUrlQuery query;
-    QUrl loadUrl(url);
     query.addQueryItem(start_time_header, start_time_value);
     query.addQueryItem(end_time_header, end_time_value);
-    loadUrl.setQuery(query.query());
+    url.setQuery(query.query());
 
 
-    QNetworkRequest req(loadUrl);
+    QNetworkRequest req(url);
     req.setRawHeader(FINGRIDKEYHEADER.toUtf8(), FINGRIDAPIKEY.toUtf8());
-
     network_->get(req);
 }
 

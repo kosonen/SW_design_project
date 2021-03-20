@@ -11,7 +11,7 @@ public:
     explicit FingridAPI(QObject* parent = nullptr);
     ~FingridAPI();
 
-    void load(const QString &url);
+    void load(QUrl url);
     QList<QPointF> getData();
 
 private Q_SLOTS:

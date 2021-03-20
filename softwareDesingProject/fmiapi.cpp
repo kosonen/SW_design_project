@@ -14,7 +14,7 @@ FMIAPI::~FMIAPI()
     delete parser_;
 }
 
-void FMIAPI::load(const QString &url)
+void FMIAPI::load(QUrl url)
 {
     qDebug() << "Loading with url " << url;
     network_->get(QNetworkRequest(url));

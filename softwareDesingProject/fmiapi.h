@@ -11,7 +11,7 @@ public:
      FMIAPI(QObject* parent = nullptr);
      virtual ~FMIAPI();
 
-    void load(const QString &url);
+    void load(QUrl url);
     QList<QPointF> getData();
 
 private Q_SLOTS:

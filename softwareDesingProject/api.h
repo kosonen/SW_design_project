@@ -19,7 +19,7 @@ class API : public QObject
     Q_OBJECT
 public:
     explicit API(QObject *parent = nullptr) : QObject(parent) {};
-    virtual void load(const QString &url) = 0;
+    virtual void load(QUrl url) = 0;
     virtual QList<QPointF> getData() = 0;
 };
 

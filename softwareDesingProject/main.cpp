@@ -24,8 +24,12 @@ int main(int argc, char *argv[])
 
 //    qmlRegisterType<Controller>("controller", 1, 0, "Controller");
 
-//    API api;
-//    api.load("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature");
+
+    //For testing)
+    FMIAPI api;
+    api.load(QUrl("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature"));
+    FingridAPI api2;
+    api2.load(QUrl("https://api.fingrid.fi/v1/variable/74/events/xml"));
 
     QQmlApplicationEngine engine;
 
