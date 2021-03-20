@@ -59,7 +59,7 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
     }
 
     qDebug() << "Content read OK!";
-    /*
+
     for(int i = 0; i < data_.length(); i++){
         QString xVal = QString::number(data_.at(i).x(), 'g', 20);
         QString yVal = QString::number(data_.at(i).y(), 'g', 20);
@@ -67,7 +67,7 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
                  << qPrintable(yVal)
                  << Qt::endl;
     }
-    */
+
 
     reply->deleteLater();
 }

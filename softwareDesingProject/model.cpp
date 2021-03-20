@@ -55,31 +55,32 @@ bool Model::update(DataRequestSettings settings)
     bool isOk = false;
     for(QString source : settings.getDatasources())
     {
+        qDebug() << "SOURCE IS: " << source << Qt::endl;
         if(SOURCE_TO_API_MAPPING.contains(source))
         {
-            QString urlString = QString();
+            QUrl url;
             if(SOURCE_TO_API_MAPPING[source] == "FMI")
             {
-                isOk = m_urlBuilder->buildFMIURL(settings, urlString);
+                isOk = m_urlBuilder->buildFMIURL(settings, url, source);
                 if(!isOk)
                 {
                     qDebug() << "Failed to build FMI url";
                     return isOk;
                 }
-                qDebug() << "Requestind data with url " << urlString;
-                m_requestFMIAPI.load(urlString);
+                qDebug() << "Requestind data with url " << url.toString();
+                m_requestFMIAPI.load(url);
 
             }
             else if(SOURCE_TO_API_MAPPING[source] == "FINGRID")
             {
-                isOk = m_urlBuilder->buildFingridURL(settings, urlString);
+                isOk = m_urlBuilder->buildFingridURL(settings, url, source);
                 if(!isOk)
                 {
                     qDebug() << "Failed to build Fingrid url";
                     return isOk;
                 }
-                qDebug() << "Requestind data with url " << urlString;
-                m_requestFMIAPI.load(urlString);
+                qDebug() << "Requestind data with url " << url.toString();
+                //m_requestFingridAPI.load(url);
             }
         }
         else

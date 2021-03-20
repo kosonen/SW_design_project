@@ -3,6 +3,8 @@
 #include <QHash>
 #include <QString>
 #include <QHashIterator>
+#include <QUrlQuery>
+#include <QDebug>
 
 URLBuilder* URLBuilder::s_urlBuilder = nullptr;
 
@@ -20,22 +22,32 @@ URLBuilder *URLBuilder::getInstance()
     return  s_urlBuilder;
 }
 
-bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QString &urlString)
+bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QUrl &url, QString source)
 {
-    QString baseURL = "https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple";
+    QUrl fetchURL(QString("https://opendata.fmi.fi/wfs"));
+
     QHash<QString, QString> params = settings.getParams();
-    QString paramString("");
     QHashIterator<QString,QString> i (params);
+    QUrlQuery query;
+
+    //default query parameters
+    query.addQueryItem("service", "WFS");
+    query.addQueryItem("version", "2.0.0");
+    query.addQueryItem("request", "getFeature");
+    query.addQueryItem("storedquery_id", "fmi::forecast::hirlam::surface::point::simple");
+
     while(i.hasNext())
     {
         i.next();
-        paramString += "&" + i.key() + "=" +i.value();
+        query.addQueryItem(i.key(), i.value());
     }
-    urlString = baseURL + paramString;
+    query.addQueryItem("parameters", source);
+    fetchURL.setQuery(query);
+    url=fetchURL;
     return true;
 }
 
-bool URLBuilder::buildFingridURL(const DataRequestSettings &settings, QString &urlString)
+bool URLBuilder::buildFingridURL(const DataRequestSettings &settings, QUrl &url, QString source)
 {
     return true;
 }
