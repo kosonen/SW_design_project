@@ -95,18 +95,16 @@ bool Model::update(DataRequestSettings settings)
 
 void Model::populateTempSeries()
 {
-    m_tempSeries->append(-4,-6);
-    m_tempSeries->append(0,0);
-    m_tempSeries->append(1,2);
-    m_tempSeries->append(3,4);
-    m_tempSeries->append(1727159758,1);
+    m_tempSeries->append(m_start.toMSecsSinceEpoch(),-6);
+    m_tempSeries->append((m_start.toMSecsSinceEpoch()+m_end.toMSecsSinceEpoch())/2, 6);
+    m_tempSeries->append(m_end.toMSecsSinceEpoch(),2);
 
 }
 
 void Model::initTimeAxis()
 {
     setStartTime(QDateTime::fromMSecsSinceEpoch(1616181405365));
-    setEndTime(QDateTime::fromMSecsSinceEpoch(1616183405365));
+    setEndTime(QDateTime::fromMSecsSinceEpoch(1616183305365));
 }
 
 
