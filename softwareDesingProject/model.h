@@ -43,6 +43,8 @@ public:
     Q_INVOKABLE void populateTempSeries();
     Q_INVOKABLE void initTimeAxis();
 
+    Q_INVOKABLE void updateTemp();
+
 signals:
 
     void tempSeriesChanged();
