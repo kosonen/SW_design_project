@@ -292,7 +292,7 @@ Window {
                 width: endMonthInputBoundingRect.width
                 height: endMonthInputBoundingRect.height
                 anchors.fill: parent
-                text: getTomorrow().getMonth()
+                text: getTomorrow().getMonth() +1
                 leftPadding: 4
             }
         }
