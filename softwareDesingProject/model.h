@@ -38,10 +38,6 @@ public:
 
     bool update(DataRequestSettings settings);
 
-    // populate series with random crap
-    // for testing/debug only
-    Q_INVOKABLE void populateTempSeries();
-    Q_INVOKABLE void initTimeAxis();
 
     Q_INVOKABLE void updateTemp();
 

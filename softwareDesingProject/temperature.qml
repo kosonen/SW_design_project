@@ -40,7 +40,5 @@ Item{
     Component.onCompleted:
     {
         model.tempSeries = tempSeries;
-        model.initTimeAxis();
-        model.populateTempSeries();
     }
 }
