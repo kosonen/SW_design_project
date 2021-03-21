@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.14
+import QtQml 2.14
 //import controller 1.0
 
 Window {
@@ -8,6 +9,19 @@ Window {
     height: screen.height
     visible: true
     title: qsTr("Hello World")
+
+  /*  QtObject{
+        id: dateObj
+        property var locale: Qt.locale()
+        property date currentTime: new Date()
+        property string timeString: timeString
+
+        Component.onCompleted: {
+            console.log("timeString " << timeString);
+            timeString = currentTime.toLocaleTimeString(locale, Locale.ShortFormat);
+            console.log("timeString " << timeString);
+        }
+    }*/
 
     Rectangle{
         width: parent.width
@@ -43,8 +57,8 @@ Window {
                 id: inputInfo
                 width: locationInputBoundingRect.width
                 height: locationInputBoundingRect.height
-
-
+                text: "Viitasaari"
+                leftPadding: 4
             }
         }
 
@@ -93,8 +107,8 @@ Window {
                 id: startDayInput
                 width: startDayInputBoundingRect.width
                 height: startDayInputBoundingRect.height
-
-
+                text: getCurrentDate().getDate()
+                leftPadding: 4
             }
         }
 
@@ -127,6 +141,8 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getCurrentDate().getMonth() +1
+                leftPadding: 4
             }
         }
 
@@ -159,6 +175,8 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getCurrentDate().getFullYear()
+                leftPadding: 4
             }
         }
 
@@ -191,6 +209,8 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getCurrentDate().getHours() + ":" + getCurrentDate().getMinutes() + ":" + "00"
+                leftPadding: 4
             }
         }
 
@@ -238,8 +258,8 @@ Window {
                 id: endDayInput
                 width: endDayInputBoundingRect.width
                 height: endDayInputBoundingRect.height
-
-
+                text: getTomorrow().getDate()
+                leftPadding: 4
             }
         }
 
@@ -272,6 +292,8 @@ Window {
                 width: endMonthInputBoundingRect.width
                 height: endMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getTomorrow().getMonth()
+                leftPadding: 4
             }
         }
 
@@ -304,6 +326,8 @@ Window {
                 width: endMonthInputBoundingRect.width
                 height: endMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getTomorrow().getFullYear()
+                leftPadding: 4
             }
         }
 
@@ -336,6 +360,8 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
+                text: getTomorrow().getHours() + ":" + getTomorrow().getMinutes() + ":" + "00"
+                leftPadding: 4
             }
         }
 
@@ -475,6 +501,16 @@ Window {
 
     }
 
+function getCurrentDate(){
+    var today = new Date();
+    return  today;
+}
 
+function getTomorrow()
+{
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() +1);
+    return tomorrow;
+}
 
 }
