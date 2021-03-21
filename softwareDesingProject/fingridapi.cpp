@@ -34,7 +34,7 @@ void FingridAPI::load(QUrl url)
 
 
     QNetworkRequest req(url);
-    req.setRawHeader(FINGRIDKEYHEADER.toUtf8(), FINGRIDAPIKEY.toUtf8());
+    req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
     network_->get(req);
 }
 

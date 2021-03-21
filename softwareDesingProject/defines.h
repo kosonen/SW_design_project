@@ -2,6 +2,7 @@
 #define DEFINES_H
 
 #include <QHash>
+#include <QUrlQuery>
 
 const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"solar", "FINGRID"},
@@ -25,7 +26,17 @@ const QString TIMEZONE = "timezone";
 
 
 // Key for Fingrid API
-const QString FINGRIDAPIKEY = "gMOfLulbYP2rK93hZVoR33Ij2y59Y0Gg3FgrsCaD";
-const QString FINGRIDKEYHEADER = "x-api-key";
+const QString FINGRID_API_KEY = "gMOfLulbYP2rK93hZVoR33Ij2y59Y0Gg3FgrsCaD";
+const QString FINGRID_KEY_HEADER = "x-api-key";
+
+// Default query parameters for FMI
+const QUrlQuery FMI_QUERY= QUrlQuery(
+{
+    QPair<QString, QString>("service", "WFS"),
+    QPair<QString, QString>("version", "2.0.0"),
+    QPair<QString, QString>("request", "getFeature"),
+    QPair<QString, QString>("storedquery_id", "fmi::forecast::hirlam::surface::point::simple")
+}
+);
 
 #endif // DEFINES_H

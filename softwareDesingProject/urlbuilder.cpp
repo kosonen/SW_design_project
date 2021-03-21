@@ -1,4 +1,5 @@
 #include "urlbuilder.h"
+#include "defines.h"
 #include "datarequestsettings.h"
 #include <QHash>
 #include <QString>
@@ -28,13 +29,7 @@ bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QUrl &url, QString s
 
     QHash<QString, QString> params = settings.getParams();
     QHashIterator<QString,QString> i (params);
-    QUrlQuery query;
-
-    //default query parameters
-    query.addQueryItem("service", "WFS");
-    query.addQueryItem("version", "2.0.0");
-    query.addQueryItem("request", "getFeature");
-    query.addQueryItem("storedquery_id", "fmi::forecast::hirlam::surface::point::simple");
+    QUrlQuery query = QUrlQuery(FMI_QUERY);
 
     while(i.hasNext())
     {
