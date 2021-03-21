@@ -39,7 +39,8 @@ public:
     bool update(DataRequestSettings settings);
 
 
-    Q_INVOKABLE void updateTemp();
+public slots:
+    void updateTemp();
 
 signals:
 

@@ -1,6 +1,5 @@
 #include "model.h"
 #include "defines.h"
-#include <QThread>
 
 Model::Model(QObject *parent):
     QObject(parent),
@@ -12,6 +11,7 @@ Model::Model(QObject *parent):
 
 {
     m_urlBuilder = URLBuilder::getInstance();
+    connect(&m_requestFMIAPI, &FMIAPI::dataParsed, this, &Model::updateTemp);
 }
 
 QtCharts::QLineSeries *Model::getTempSeries() const
@@ -98,9 +98,8 @@ bool Model::update(DataRequestSettings settings)
 
 void Model::updateTemp()
 {
+    qDebug() << "Updating temperature graph" << Qt::endl;
 
-    // needs to be fixed
-    QThread::msleep(3000);
     QList<QPointF> data = m_requestFMIAPI.getData();
 
     qDebug() << data.size() << Qt::endl;

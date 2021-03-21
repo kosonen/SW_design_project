@@ -21,6 +21,9 @@ public:
     explicit API(QObject *parent = nullptr) : QObject(parent) {};
     virtual void load(QUrl url) = 0;
     virtual QList<QPointF> getData() = 0;
+
+signals:
+    void dataParsed();
 };
 
 #endif // API_H

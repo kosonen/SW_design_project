@@ -14,6 +14,9 @@ public:
     void load(QUrl url);
     QList<QPointF> getData();
 
+signals:
+    void dataParsed();
+
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
 

@@ -382,8 +382,6 @@ Window {
                 endDayInput.text + "T" + endTimeInput.text +"Z";
                 viewController.setTimeWindow(startTime, endTime);
                 viewController.requestData();
-
-                model.updateTemp();
             }
         }
 

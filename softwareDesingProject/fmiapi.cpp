@@ -70,6 +70,8 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
 
 
     reply->deleteLater();
+
+    emit dataParsed();
 }
 
 
