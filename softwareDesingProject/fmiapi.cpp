@@ -48,7 +48,7 @@ void FMIAPI::downloadCompleted(QNetworkReply *reply)
         qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
 
         QString timeStr = time.text();
-        QDateTime dateTime = QDateTime::fromString(timeStr, "yyyy-MM-ddThh:mm:ssZ");
+        QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
         QPointF point;
 
         point.setX(dateTime.toMSecsSinceEpoch());
