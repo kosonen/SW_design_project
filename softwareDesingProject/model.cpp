@@ -122,12 +122,15 @@ void Model::updateTemp()
         return;
     }
 
+    for (auto p : data)
+    {
+        qDebug() << "X: " << p.x() << "Y: " << p.y() << Qt::endl;
+    }
+
     setStartTime(QDateTime::fromMSecsSinceEpoch(data.first().rx()));
     setEndTime(QDateTime::fromMSecsSinceEpoch(data.last().rx()));
 
-    QtCharts::QLineSeries* newSeries = new QtCharts::QLineSeries();
-    newSeries->replace(data);
-    setTempSeries(newSeries);
+    m_tempSeries->replace(data);
 
 }
 
