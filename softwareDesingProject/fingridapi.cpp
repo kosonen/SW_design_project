@@ -46,8 +46,12 @@ QList<QPointF> FingridAPI::getData()
 void FingridAPI::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
+
     QString errMsg;
     QDomDocument doc;
+
+    data_.clear();
+
     if (!doc.setContent(reply->readAll(), &errMsg)) {
         qDebug() << "Fingrid request BROKEN" << Qt::endl;
         qDebug() << "Error: " << errMsg << Qt::endl;
@@ -64,7 +68,21 @@ void FingridAPI::downloadCompleted(QNetworkReply *reply)
         qDebug() << qPrintable(start_time.tagName()) << ": " << start_time.text() << Qt::endl;
         qDebug() << qPrintable(end_time.tagName()) << ": " << end_time.text() << Qt::endl;
 
+        QString timeStr = start_time.text();
+        QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
+        QPointF point;
+        point.setX(dateTime.toMSecsSinceEpoch());
+        point.setY(value.text().toDouble());
+
+        data_.append(point);
     }
     qDebug() << "Content read OK!";
     reply->deleteLater();
+    for(int i = 0; i < data_.length(); i++){
+        QString xVal = QString::number(data_.at(i).x(), 'g', 20);
+        QString yVal = QString::number(data_.at(i).y(), 'g', 20);
+        qDebug() << qPrintable(xVal) << " "
+                 << qPrintable(yVal)
+                 << Qt::endl;
+    }
 }
