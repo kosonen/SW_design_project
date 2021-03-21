@@ -1,5 +1,6 @@
 #include "model.h"
 #include "defines.h"
+#include <QThread>
 
 Model::Model(QObject *parent):
     QObject(parent),
@@ -105,6 +106,29 @@ void Model::initTimeAxis()
 {
     setStartTime(QDateTime::fromMSecsSinceEpoch(1616181405365));
     setEndTime(QDateTime::fromMSecsSinceEpoch(1616183305365));
+}
+
+void Model::updateTemp()
+{
+
+    // needs to be fixed
+    QThread::msleep(3000);
+    QList<QPointF> data = m_requestFMIAPI.getData();
+
+    qDebug() << data.size() << Qt::endl;
+    if (data.size() < 2)
+    {
+        qDebug() << "tyhjä" << Qt::endl;
+        return;
+    }
+
+    setStartTime(QDateTime::fromMSecsSinceEpoch(data.first().rx()));
+    setEndTime(QDateTime::fromMSecsSinceEpoch(data.last().rx()));
+
+    QtCharts::QLineSeries* newSeries = new QtCharts::QLineSeries();
+    newSeries->replace(data);
+    setTempSeries(newSeries);
+
 }
 
 
