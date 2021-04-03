@@ -454,7 +454,7 @@ Window {
             modelToView: weatherModel
         }
 
-        Loader{
+        /*Loader{
             id: energy
             source: "energy.qml"
             height: parent.height/2.5
@@ -468,16 +468,17 @@ Window {
             anchors.rightMargin: 600
 
 
-        }
+        }*/
 
         Loader{
 
-            source: "temperature.qml"
-            height: parent.height/3.5
-            width: parent.width/4
+            id: view
+            source: "view.qml"
+            height: parent.height/1.25
+            width: parent.width
 
             anchors.left: consumptionBrowser.right
-            anchors.top: energy.bottom
+            anchors.top: parent.top
             anchors.right: parent.right
 
             anchors.topMargin: 150
@@ -488,12 +489,12 @@ Window {
 
         ConsumptionPieChart{
             id: consumptionChart
-            height: energy.height
-            width: energy.height
+            height: view.height/2
+            width: view.height/2
 
-            anchors.left: energy.right
-            anchors.top: parent.top
-            anchors.topMargin: 150
+            anchors.left: view.right
+            anchors.top: view.top
+            anchors.topMargin: 50
             anchors.leftMargin: 50
         }
 
