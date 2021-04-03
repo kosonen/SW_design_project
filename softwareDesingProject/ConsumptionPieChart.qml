@@ -9,15 +9,16 @@ Item {
 
         ChartView{
             id: chart
-            title: "Energy production forms in finland"
+            title: "Electricity production forms in finland"
             anchors.fill: parent
             legend.alignment: Qt.AlignTop
             antialiasing: true
             PieSeries{
                 id: serie
-                PieSlice{ label: "Solar power"; value: 15 }
+                PieSlice{ label: "Wind"; value: 15 }
                 PieSlice{ label: "Nuclear"; value: 30 }
-                PieSlice{ label: "Hydro power"; value: 25}
+                PieSlice{ label: "Hydro"; value: 25}
+                PieSlice{ label: "Other"; value: 28}
 
             }
         }

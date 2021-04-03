@@ -53,6 +53,14 @@ private:
     FMIAPI m_requestFMIAPI;
     FingridAPI m_requestFingridAPI;
     QtCharts::QLineSeries* m_tempSeries;
+    QtCharts::QLineSeries* m_humSeries;
+    QtCharts::QLineSeries* m_eleProductionSeries;
+    QtCharts::QLineSeries* m_eleConsumptionSeries;
+    QtCharts::QLineSeries* m_windProductionSeries;
+    QtCharts::QLineSeries* m_nuclearProductionSeries;
+    QtCharts::QLineSeries* m_hydroProductionSeries;
+    QPair<int, int> m_weatherY;
+    QPair<int, int> m_enegyY;
     QDateTime m_start;
     QDateTime m_end;
 

@@ -6,6 +6,14 @@ Model::Model(QObject *parent):
     m_urlBuilder(nullptr),
     m_requestFMIAPI(),
     m_tempSeries{},
+    m_humSeries{},
+    m_eleProductionSeries{},
+    m_eleConsumptionSeries{},
+    m_windProductionSeries{},
+    m_nuclearProductionSeries{},
+    m_hydroProductionSeries{},
+    m_weatherY{},
+    m_enegyY{},
     m_start(),
     m_end()
 

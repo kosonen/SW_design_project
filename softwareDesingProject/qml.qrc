@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>DataBrowser.qml</file>
-        <file>energy.qml</file>
         <file>view.qml</file>
         <file>WeatherListModel.qml</file>
         <file>ConsumptionListModel.qml</file>
