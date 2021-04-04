@@ -44,8 +44,8 @@ QPointF Model::getWeatherY()
 
 QPointF Model::getLimits(QList<QPointF> data)
 {
-    qreal top = 0;
-    qreal bottom = 0;
+    qreal top = data.at(0).y();
+    qreal bottom = data.at(0).y();
     for (auto point : data)
     {
         if(point.y() > top)
