@@ -5,7 +5,7 @@ import QtQml 2.14
 //import controller 1.0
 
 Window {
-    width: screen.width
+    width: screen.height * 4/3
     height: screen.height
     visible: true
     title: qsTr("Hello World")
@@ -26,7 +26,7 @@ Window {
     Rectangle{
         width: parent.width
         height: parent.height
-        color: "darkcyan"
+        color: "cyan"
 
         Rectangle{
             id: locationInfoBoudningRect
@@ -474,7 +474,7 @@ Window {
 
             id: view
             source: "view.qml"
-            height: parent.height/1.25
+            height: parent.height/2
             width: parent.width
 
             anchors.left: consumptionBrowser.right

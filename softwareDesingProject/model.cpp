@@ -37,6 +37,29 @@ QDateTime Model::getEndTime()
     return m_end;
 }
 
+QPointF Model::getWeatherY()
+{
+    return m_weatherY;
+}
+
+QPointF Model::getLimits(QList<QPointF> data)
+{
+    qreal top = 0;
+    qreal bottom = 0;
+    for (auto point : data)
+    {
+        if(point.y() > top)
+        {
+            top = point.y();
+        }
+        if(point.y() < bottom)
+        {
+            bottom = point.y();
+        }
+    }
+    return QPointF(top, bottom);
+}
+
 
 
 void Model::setTempSeries(QtCharts::QLineSeries *tempSeries)
@@ -55,6 +78,12 @@ void Model::setEndTime(QDateTime end)
 {
     m_end = end;
     emit endTimeChanged();
+}
+
+void Model::setWeatherY(QPointF newValue)
+{
+    m_weatherY = newValue;
+    emit weatherYChanged();
 }
 
 
@@ -126,6 +155,12 @@ void Model::updateTemp()
     setEndTime(QDateTime::fromMSecsSinceEpoch(data.last().rx()));
 
     m_tempSeries->replace(data);
+
+    // update Y axis limits
+    QPointF limits = getLimits(data);
+    qreal yTop = limits.x() + 1;
+    qreal yBottom = limits.y() - 1;
+    setWeatherY(QPointF(yTop, yBottom));
 
 }
 

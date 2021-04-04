@@ -19,6 +19,7 @@ class Model : public QObject
     Q_PROPERTY(QtCharts::QLineSeries* tempSeries READ getTempSeries WRITE setTempSeries NOTIFY tempSeriesChanged)
     Q_PROPERTY(QDateTime startTime READ getStartTime WRITE setStartTime NOTIFY startTimeChanged)
     Q_PROPERTY(QDateTime endTime READ getEndTime WRITE setEndTime NOTIFY endTimeChanged)
+    Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
 
 
 public:
@@ -30,11 +31,15 @@ public:
     QtCharts::QLineSeries* getTempSeries() const;
     QDateTime getStartTime();
     QDateTime getEndTime();
+    QPointF getWeatherY();
+
+    QPointF getLimits(QList<QPointF> data);
 
 
     void setTempSeries(QtCharts::QLineSeries *tempSeries);
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
+    void setWeatherY(QPointF newValue);
 
     bool update(DataRequestSettings settings);
 
@@ -47,6 +52,7 @@ signals:
     void tempSeriesChanged();
     void startTimeChanged();
     void endTimeChanged();
+    void weatherYChanged();
 
 private:
     IURLBuilder* m_urlBuilder;
@@ -59,8 +65,8 @@ private:
     QtCharts::QLineSeries* m_windProductionSeries;
     QtCharts::QLineSeries* m_nuclearProductionSeries;
     QtCharts::QLineSeries* m_hydroProductionSeries;
-    QPair<int, int> m_weatherY;
-    QPair<int, int> m_enegyY;
+    QPointF m_weatherY;
+    QPointF m_enegyY;
     QDateTime m_start;
     QDateTime m_end;
 

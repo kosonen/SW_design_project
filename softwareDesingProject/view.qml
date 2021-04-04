@@ -18,8 +18,8 @@ Item{
             }
             ValueAxis{
                 id: customY
-                min: -10
-                max: 10
+                min: model.weatherY.y
+                max: model.weatherY.x
             }
 
             LineSeries{
@@ -28,11 +28,6 @@ Item{
                 name: "Temperature"
                 axisX: timeAxis
                 axisY: customY
-                /*
-                XYPoint { x:0; y:3 }
-                XYPoint { x:1; y:2 }
-                XYPoint { x:2; y:4 }
-                XYPoint { x:4; y:3 }*/
 
             }
         }
