@@ -5,8 +5,8 @@ Model::Model(QObject *parent):
     QObject(parent),
     m_urlBuilder(nullptr),
     m_requestFMIAPI(),
-    m_tempSeries{},
-    m_humSeries{},
+    m_weatherSeries{},
+    m_weatherType("temperature"),
     m_eleProductionSeries{},
     m_eleConsumptionSeries{},
     m_windProductionSeries{},
@@ -22,9 +22,9 @@ Model::Model(QObject *parent):
     connect(&m_requestFMIAPI, &FMIAPI::dataParsed, this, &Model::updateTemp);
 }
 
-QtCharts::QLineSeries *Model::getTempSeries() const
+QtCharts::QLineSeries *Model::getWeatherSeries() const
 {
-    return m_tempSeries;
+    return m_weatherSeries;
 }
 
 QDateTime Model::getStartTime()
@@ -40,6 +40,11 @@ QDateTime Model::getEndTime()
 QPointF Model::getWeatherY()
 {
     return m_weatherY;
+}
+
+QString Model::getWeatherType()
+{
+    return m_weatherType;
 }
 
 QPointF Model::getLimits(QList<QPointF> data)
@@ -62,10 +67,10 @@ QPointF Model::getLimits(QList<QPointF> data)
 
 
 
-void Model::setTempSeries(QtCharts::QLineSeries *tempSeries)
+void Model::setWeatherSeries(QtCharts::QLineSeries *weatherSeries)
 {
-    m_tempSeries = tempSeries;
-    emit tempSeriesChanged();
+    m_weatherSeries = weatherSeries;
+    emit weatherSeriesChanged();
 }
 
 void Model::setStartTime(QDateTime start)
@@ -84,6 +89,12 @@ void Model::setWeatherY(QPointF newValue)
 {
     m_weatherY = newValue;
     emit weatherYChanged();
+}
+
+void Model::setWeatherType(QString newType)
+{
+    m_weatherType = newType;
+    emit weatherTypeChanged();
 }
 
 
@@ -154,7 +165,7 @@ void Model::updateTemp()
     setStartTime(QDateTime::fromMSecsSinceEpoch(data.first().rx()));
     setEndTime(QDateTime::fromMSecsSinceEpoch(data.last().rx()));
 
-    m_tempSeries->replace(data);
+    m_weatherSeries->replace(data);
 
     // update Y axis limits
     QPointF limits = getLimits(data);

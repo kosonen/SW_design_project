@@ -13,13 +13,16 @@
 #include <QLineSeries>
 #include <QDateTime>
 
+//enum weatherT {temperature, wind, humidity, NONE};
+
 class Model : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QtCharts::QLineSeries* tempSeries READ getTempSeries WRITE setTempSeries NOTIFY tempSeriesChanged)
+    Q_PROPERTY(QtCharts::QLineSeries* weatherSeries READ getWeatherSeries WRITE setWeatherSeries NOTIFY weatherSeriesChanged)
     Q_PROPERTY(QDateTime startTime READ getStartTime WRITE setStartTime NOTIFY startTimeChanged)
     Q_PROPERTY(QDateTime endTime READ getEndTime WRITE setEndTime NOTIFY endTimeChanged)
     Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
+    Q_PROPERTY(QString weatherType READ getWeatherType WRITE setWeatherType NOTIFY weatherTypeChanged)
 
 
 public:
@@ -28,18 +31,20 @@ public:
 
     explicit Model(QObject *parent = nullptr);
 
-    QtCharts::QLineSeries* getTempSeries() const;
+    QtCharts::QLineSeries* getWeatherSeries() const;
     QDateTime getStartTime();
     QDateTime getEndTime();
     QPointF getWeatherY();
+    QString getWeatherType();
 
     QPointF getLimits(QList<QPointF> data);
 
 
-    void setTempSeries(QtCharts::QLineSeries *tempSeries);
+    void setWeatherSeries(QtCharts::QLineSeries *weatherSeries);
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
     void setWeatherY(QPointF newValue);
+    void setWeatherType(QString newType);
 
     bool update(DataRequestSettings settings);
 
@@ -49,17 +54,18 @@ public slots:
 
 signals:
 
-    void tempSeriesChanged();
+    void weatherSeriesChanged();
     void startTimeChanged();
     void endTimeChanged();
     void weatherYChanged();
+    void weatherTypeChanged();
 
 private:
     IURLBuilder* m_urlBuilder;
     FMIAPI m_requestFMIAPI;
     FingridAPI m_requestFingridAPI;
-    QtCharts::QLineSeries* m_tempSeries;
-    QtCharts::QLineSeries* m_humSeries;
+    QtCharts::QLineSeries* m_weatherSeries;
+    QString m_weatherType;
     QtCharts::QLineSeries* m_eleProductionSeries;
     QtCharts::QLineSeries* m_eleConsumptionSeries;
     QtCharts::QLineSeries* m_windProductionSeries;

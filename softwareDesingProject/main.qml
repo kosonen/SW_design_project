@@ -389,6 +389,7 @@ Window {
         {
             id: weatherModel
 
+
         }
         ConsumptionListModel
         {

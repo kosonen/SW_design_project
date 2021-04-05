@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtCharts 2.14
 
 Item{
+
     Rectangle{
         width: parent.width
         height: parent.height
@@ -22,18 +23,59 @@ Item{
                 max: model.weatherY.x
             }
 
+
             LineSeries{
-                id: tempSeries
-                color: "red"
-                name: "Temperature"
+                id: weatherSeries
+                color: getColor()
+                name: getName()
                 axisX: timeAxis
                 axisY: customY
 
             }
         }
     }
+
+
     Component.onCompleted:
     {
-        model.tempSeries = tempSeries;
+        model.weatherSeries = weatherSeries;
     }
+
+    function getColor()
+    {
+        var color;
+        if (model.weatherType === "temperature")
+        {
+            color = "red";
+        }
+        if (model.weatherType === "wind")
+        {
+            color = "gray";
+        }
+        if (model.weatherType === "humidity")
+        {
+            color = "blue";
+        }
+        return color;
+    }
+
+    function getName()
+    {
+        var name;
+        if (model.weatherType === "temperature")
+        {
+            name = "Temperature";
+        }
+        if (model.weatherType === "wind")
+        {
+            name = "Wind";
+        }
+        if (model.weatherType === "humidity")
+        {
+            name = "Humidity";
+        }
+        return name;
+    }
+
 }
+
