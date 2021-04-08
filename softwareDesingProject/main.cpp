@@ -3,7 +3,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "api.h"
+#include "idatasource.h"
 #include "controller.h"
 #include "model.h"
 
@@ -25,11 +25,11 @@ int main(int argc, char *argv[])
 //    qmlRegisterType<Controller>("controller", 1, 0, "Controller");
 
 
-    //For testing)
-    FMIAPI api;
-    api.load(QUrl("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature"));
-    FingridAPI api2;
-    api2.load(QUrl("https://api.fingrid.fi/v1/variable/74/events/xml"));
+    // For testing
+//    FmiDataSource api;
+//    api.load(QUrl("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature"));
+//    FingridDataSource api2;
+//    api2.load(QUrl("https://api.fingrid.fi/v1/variable/74/events/xml"));
 
     QQmlApplicationEngine engine;
 

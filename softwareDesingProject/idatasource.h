@@ -14,11 +14,11 @@
 #include <QDomDocument>
 
 
-class API : public QObject
+class IDataSource : public QObject
 {
     Q_OBJECT
 public:
-    explicit API(QObject *parent = nullptr) : QObject(parent) {};
+    explicit IDataSource(QObject *parent = nullptr) : QObject(parent) {};
     virtual void load(QUrl url) = 0;
     virtual QList<QPointF> getData() = 0;
 

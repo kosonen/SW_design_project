@@ -1,31 +1,31 @@
-#include "fmiapi.h"
+#include "fmidatasource.h"
 
 
-FMIAPI::FMIAPI(QObject* parent) : API(parent)
+FmiDataSource::FmiDataSource(QObject* parent) : IDataSource(parent)
 {
     network_ = new QNetworkAccessManager(this);
     parser_ = new QXmlStreamReader();
-    connect(network_, &QNetworkAccessManager::finished, this, &FMIAPI::downloadCompleted);
+    connect(network_, &QNetworkAccessManager::finished, this, &FmiDataSource::downloadCompleted);
 }
 
-FMIAPI::~FMIAPI()
+FmiDataSource::~FmiDataSource()
 {
     delete network_;
     delete parser_;
 }
 
-void FMIAPI::load(QUrl url)
+void FmiDataSource::load(QUrl url)
 {
     qDebug() << "Loading with url " << url;
     network_->get(QNetworkRequest(url));
 }
 
-QList<QPointF> FMIAPI::getData()
+QList<QPointF> FmiDataSource::getData()
 {
     return data_;
 }
 
-void FMIAPI::downloadCompleted(QNetworkReply *reply)
+void FmiDataSource::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
 

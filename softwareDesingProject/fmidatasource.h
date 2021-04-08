@@ -1,15 +1,15 @@
 #ifndef FMIAPI_H
 #define FMIAPI_H
 
-#include "api.h"
+#include "idatasource.h"
 
-class FMIAPI : public API
+class FmiDataSource : public IDataSource
 {
     Q_OBJECT
 public:
 
-     FMIAPI(QObject* parent = nullptr);
-     virtual ~FMIAPI();
+     FmiDataSource(QObject* parent = nullptr);
+     virtual ~FmiDataSource();
 
     void load(QUrl url);
     QList<QPointF> getData();

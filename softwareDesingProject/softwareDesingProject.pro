@@ -9,8 +9,8 @@ CONFIG += c++11
 SOURCES += \
         controller.cpp \
         datarequestsettings.cpp \
-        fingridapi.cpp \
-        fmiapi.cpp \
+        fingriddatasource.cpp \
+        fmidatasource.cpp \
         main.cpp \
         model.cpp \
         urlbuilder.cpp
@@ -29,12 +29,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    api.h \
     controller.h \
     datarequestsettings.h \
     defines.h \
-    fingridapi.h \
-    fmiapi.h \
+    fingriddatasource.h \
+    fmidatasource.h \
+    idatasource.h \
     iurlbuilder.h \
     model.h \
     urlbuilder.h

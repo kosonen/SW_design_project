@@ -19,7 +19,7 @@ Model::Model(QObject *parent):
 
 {
     m_urlBuilder = URLBuilder::getInstance();
-    connect(&m_requestFMIAPI, &FMIAPI::dataParsed, this, &Model::updateTemp);
+    connect(&m_requestFMIAPI, &FmiDataSource::dataParsed, this, &Model::updateTemp);
 }
 
 QtCharts::QLineSeries *Model::getWeatherSeries() const

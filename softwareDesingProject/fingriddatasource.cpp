@@ -1,21 +1,21 @@
-#include "fingridapi.h"
+#include "fingriddatasource.h"
 #include <QUrlQuery>
 
-FingridAPI::FingridAPI(QObject* parent) : API(parent)
+FingridDataSource::FingridDataSource(QObject* parent) : IDataSource(parent)
 {
     network_ = new QNetworkAccessManager(this);
     parser_ = new QXmlStreamReader();
-    connect(network_, &QNetworkAccessManager::finished, this, &FingridAPI::downloadCompleted);
+    connect(network_, &QNetworkAccessManager::finished, this, &FingridDataSource::downloadCompleted);
 
 }
 
-FingridAPI::~FingridAPI()
+FingridDataSource::~FingridDataSource()
 {
     delete network_;
     delete parser_;
 }
 
-void FingridAPI::load(QUrl url)
+void FingridDataSource::load(QUrl url)
 {
     qDebug() << "Loading with url " << url << Qt::endl;;
 
@@ -38,12 +38,12 @@ void FingridAPI::load(QUrl url)
     network_->get(req);
 }
 
-QList<QPointF> FingridAPI::getData()
+QList<QPointF> FingridDataSource::getData()
 {
     return data_;
 }
 
-void FingridAPI::downloadCompleted(QNetworkReply *reply)
+void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
 

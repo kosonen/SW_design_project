@@ -1,15 +1,15 @@
 #ifndef FINGRIDAPI_H
 #define FINGRIDAPI_H
 
-#include "api.h"
+#include "idatasource.h"
 #include "defines.h"
 
-class FingridAPI : public API
+class FingridDataSource : public IDataSource
 {
     Q_OBJECT
 public:
-    explicit FingridAPI(QObject* parent = nullptr);
-    ~FingridAPI();
+    explicit FingridDataSource(QObject* parent = nullptr);
+    ~FingridDataSource();
 
     void load(QUrl url);
     QList<QPointF> getData();

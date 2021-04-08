@@ -4,9 +4,9 @@
 #include "datarequestsettings.h"
 #include "iurlbuilder.h"
 #include "urlbuilder.h"
-#include "api.h"
-#include "fmiapi.h"
-#include "fingridapi.h"
+#include "idatasource.h"
+#include "fmidatasource.h"
+#include "fingriddatasource.h"
 
 #include <QObject>
 #include <QChart>
@@ -62,8 +62,8 @@ signals:
 
 private:
     IURLBuilder* m_urlBuilder;
-    FMIAPI m_requestFMIAPI;
-    FingridAPI m_requestFingridAPI;
+    FmiDataSource m_requestFMIAPI;
+    FingridDataSource m_requestFingridAPI;
     QtCharts::QLineSeries* m_weatherSeries;
     QString m_weatherType;
     QtCharts::QLineSeries* m_eleProductionSeries;
