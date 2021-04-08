@@ -2,11 +2,7 @@
 #define MODEL_H
 
 #include "datarequestsettings.h"
-#include "iurlbuilder.h"
-#include "urlbuilder.h"
-#include "idatasource.h"
-#include "fmidatasource.h"
-#include "fingriddatasource.h"
+#include "datafetcher.h"
 
 #include <QObject>
 #include <QChart>
@@ -61,9 +57,7 @@ signals:
     void weatherTypeChanged();
 
 private:
-    IURLBuilder* m_urlBuilder;
-    FmiDataSource m_requestFMIAPI;
-    FingridDataSource m_requestFingridAPI;
+    DataFetcher* m_dataFetcher;
     QtCharts::QLineSeries* m_weatherSeries;
     QString m_weatherType;
     QtCharts::QLineSeries* m_eleProductionSeries;
