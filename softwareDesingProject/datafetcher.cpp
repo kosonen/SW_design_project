@@ -3,52 +3,53 @@
 DataFetcher::DataFetcher(QObject *parent):
     QObject(parent),
     m_urlBuilder(nullptr),
-    m_requestFMIAPI()
+    m_requestFMIAPI(new FmiDataSource),
+    m_requestFingridAPI(new FingridDataSource)
 {
     m_urlBuilder = URLBuilder::getInstance();
-    connect(&m_requestFMIAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
+    connect(m_requestFMIAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
+    connect(m_requestFingridAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
 }
 
 bool DataFetcher::fetch(DataRequestSettings settings)
 {
     qDebug() << "Updating model";
-    bool isOk = false;
-    for(QString source : settings.getDatasources())
-    {
-        qDebug() << "SOURCE IS: " << source << Qt::endl;
-        if(SOURCE_TO_API_MAPPING.contains(source))
-        {
-            QUrl url;
-            if(SOURCE_TO_API_MAPPING[source] == "FMI")
-            {
-                isOk = m_urlBuilder->buildFMIURL(settings, url, source);
-                if(!isOk)
-                {
-                    qDebug() << "Failed to build FMI url";
-                    return isOk;
-                }
-                qDebug() << "Requestind data with url " << url.toString();
-                m_requestFMIAPI.load(url);
 
-            }
-            else if(SOURCE_TO_API_MAPPING[source] == "FINGRID")
-            {
-                isOk = m_urlBuilder->buildFingridURL(settings, url, source);
-                if(!isOk)
-                {
-                    qDebug() << "Failed to build Fingrid url";
-                    return isOk;
-                }
-                qDebug() << "Requestind data with url " << url.toString();
-                //m_requestFingridAPI.load(url);
-            }
-        }
-        else
+    QUrl url;
+    IDataSource* dataSource = nullptr;
+
+    for (QString source : settings.getDatasources())
+    {
+        if (!SOURCE_TO_API_MAPPING.contains(source))
         {
-            qDebug()<< "Unknown option";
-            return isOk;
+            qDebug() << "Error: Unknown option";
+            return false;
         }
+
+        // TODO: There needs to be better solution for selecting between the
+        // dataSources. Also the urlBuilder needs some adjustment.
+        if (SOURCE_TO_API_MAPPING[source] == "FMI")
+        {
+            if (!m_urlBuilder->buildFMIURL(settings, url, source))
+            {
+                qDebug() << "Failed to build FMI url";
+                return false;
+            }
+            dataSource = dynamic_cast<IDataSource*>(m_requestFMIAPI);
+        }
+        else if (SOURCE_TO_API_MAPPING[source] == "FINGRID")
+        {
+            if (!m_urlBuilder->buildFingridURL(settings, url, source))
+            {
+                qDebug() << "Failed to build Fingrid url";
+                return false;
+            }
+            dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
+        }
+
+        // Make data request
+        dataSource->load(url);
     }
-    isOk = true;
-    return isOk;
+
+    return true;
 }

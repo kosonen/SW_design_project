@@ -8,6 +8,7 @@
 #include "fmidatasource.h"
 #include "fingriddatasource.h"
 
+
 #include <QObject>
 
 class DataFetcher : public QObject
@@ -23,8 +24,8 @@ signals:
 
 private:
     IURLBuilder* m_urlBuilder;
-    FmiDataSource m_requestFMIAPI;
-    FingridDataSource m_requestFingridAPI;
+    FmiDataSource* m_requestFMIAPI;
+    FingridDataSource* m_requestFingridAPI;
 
 };
 
