@@ -16,7 +16,6 @@ Model::Model(QObject *parent):
     m_enegyY{},
     m_start(),
     m_end()
-
 {
     m_urlBuilder = URLBuilder::getInstance();
     connect(&m_requestFMIAPI, &FmiDataSource::dataParsed, this, &Model::updateTemp);
@@ -144,11 +143,9 @@ bool Model::update(DataRequestSettings settings)
 
 
 
-void Model::updateTemp()
+void Model::updateTemp(QList<QPointF> data)
 {
     qDebug() << "Updating temperature graph" << Qt::endl;
-
-    QList<QPointF> data = m_requestFMIAPI.getData();
 
     qDebug() << data.size() << Qt::endl;
     if (data.size() < 2)

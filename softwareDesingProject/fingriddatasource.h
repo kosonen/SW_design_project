@@ -11,8 +11,7 @@ public:
     explicit FingridDataSource(QObject* parent = nullptr);
     ~FingridDataSource();
 
-    void load(QUrl url);
-    QList<QPointF> getData();
+    virtual void load(QUrl url) override;
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
@@ -21,7 +20,6 @@ private:
 
     QNetworkAccessManager* network_;
     QXmlStreamReader* parser_;
-    QList<QPointF> data_;
 
 };
 

@@ -8,23 +8,17 @@ class FmiDataSource : public IDataSource
     Q_OBJECT
 public:
 
-     FmiDataSource(QObject* parent = nullptr);
-     virtual ~FmiDataSource();
+    FmiDataSource(QObject* parent = nullptr);
+    virtual ~FmiDataSource();
 
-    void load(QUrl url);
-    QList<QPointF> getData();
-
-signals:
-    void dataParsed();
+    virtual void load(QUrl url) override;
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
 
 private:
-
     QNetworkAccessManager* network_;
     QXmlStreamReader* parser_;
-    QList<QPointF> data_;
 
 };
 

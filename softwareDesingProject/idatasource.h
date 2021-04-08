@@ -20,10 +20,9 @@ class IDataSource : public QObject
 public:
     explicit IDataSource(QObject *parent = nullptr) : QObject(parent) {};
     virtual void load(QUrl url) = 0;
-    virtual QList<QPointF> getData() = 0;
 
 signals:
-    void dataParsed();
+    void dataParsed(QList<QPointF> data);
 };
 
 #endif // API_H

@@ -50,7 +50,7 @@ public:
 
 
 public slots:
-    void updateTemp();
+    void updateTemp(QList<QPointF> data);
 
 signals:
 
