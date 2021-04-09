@@ -16,7 +16,7 @@ Model::Model(QObject *parent):
     m_start(),
     m_end()
 {
-    connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateTemp);
+    connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateSeries);
 }
 
 QtCharts::QLineSeries *Model::getWeatherSeries() const
@@ -101,7 +101,7 @@ bool Model::update(DataRequestSettings settings)
     return m_dataFetcher->fetch(settings);
 }
 
-void Model::updateTemp(QList<QPointF> data)
+void Model::updateSeries(QList<QPointF> data)
 {
     qDebug() << "Updating temperature graph" << Qt::endl;
 

@@ -46,7 +46,7 @@ public:
 
 
 public slots:
-    void updateTemp(QList<QPointF> data);
+    void updateSeries(QList<QPointF> data);
 
 signals:
 

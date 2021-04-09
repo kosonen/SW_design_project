@@ -28,8 +28,14 @@ void Controller::setLocation(QString value)
 
 void Controller::setDataSources(QVector<QString> sources)
 {
-    for(auto str : sources)
+    for(auto &str : sources)
     {
+        // UI has different texts than in API's, here we map UI names to API properties.
+        if(WEATHER_OPTION_TO_MODEL_MAPPING.contains(str))
+        {
+            str = WEATHER_OPTION_TO_MODEL_MAPPING[str];
+
+        }
         qDebug() << "Source " << str;
     }
     m_settings.setDatasources(sources);

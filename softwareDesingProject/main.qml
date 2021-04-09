@@ -107,7 +107,17 @@ Window {
                 id: startDayInput
                 width: startDayInputBoundingRect.width
                 height: startDayInputBoundingRect.height
-                text: getCurrentDate().getDate()
+                text: {
+                    if(getCurrentDate().getDate() < 10)
+                    {
+                        startDayInput.text = "0" + getCurrentDate().getDate();
+                    }
+                    else
+                    {
+                        startDayInput.text = getCurrentDate().getDate();
+                    }
+                }
+
                 leftPadding: 4
             }
         }
@@ -141,7 +151,17 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
-                text: getCurrentDate().getMonth() +1
+                text: {
+                    if(getCurrentDate().getMonth() < 10)
+                    {
+                        startMonthInput.text = "0" + getCurrentDate().getMonth();
+                    }
+                    else
+                    {
+                        startMonthInput.text = getCurrentDate().getMonth();
+                    }
+                }
+
                 leftPadding: 4
             }
         }
@@ -209,7 +229,29 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
-                text: getCurrentDate().getHours() + ":" + getCurrentDate().getMinutes() + ":" + "00"
+                //text: getCurrentDate().getHours() + "." + getCurrentDate().getMinutes() + "." + "00"
+                text: {
+                    var retString = "";
+                    if(getCurrentDate().getHours() < 10)
+                    {
+                        retString += "0"+ getCurrentDate().getHours();
+                    }
+                    else
+                    {
+                        retString  += getCurrentDate().getHours();
+                    }
+                    retString += ".";
+                    if(getCurrentDate().getMinutes() < 10)
+                    {
+                        retString += "0" + getCurrentDate().getMinutes();
+                    }
+                    else{
+                        retString += getCurrentDate().getMinutes();
+                    }
+                    retString += ".00";
+                    startTimeInput.text = retString;
+                }
+
                 leftPadding: 4
             }
         }
@@ -258,7 +300,16 @@ Window {
                 id: endDayInput
                 width: endDayInputBoundingRect.width
                 height: endDayInputBoundingRect.height
-                text: getTomorrow().getDate()
+                text: {
+                    if(getTomorrow().getDate() < 10)
+                    {
+                        endDayInput.text = "0" + getTomorrow().getDate();
+                    }
+                    else
+                    {
+                        endDayInput.text = getTomorrow().getDate();
+                    }
+                }
                 leftPadding: 4
             }
         }
@@ -292,7 +343,16 @@ Window {
                 width: endMonthInputBoundingRect.width
                 height: endMonthInputBoundingRect.height
                 anchors.fill: parent
-                text: getTomorrow().getMonth() +1
+                text: {
+                    if(getTomorrow().getMonth() < 10)
+                    {
+                        endMonthInput.text = "0" + getTomorrow().getMonth();
+                    }
+                    else
+                    {
+                        endMonthInput.text = getTomorrow().getMonth();
+                    }
+                }
                 leftPadding: 4
             }
         }
@@ -360,7 +420,29 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
-                text: getTomorrow().getHours() + ":" + getTomorrow().getMinutes() + ":" + "00"
+               // text: getTomorrow().getHours() + "." + getTomorrow().getMinutes() + "." + "00"
+                text: {
+                    var retString = "";
+                    if(getTomorrow().getHours() < 10)
+                    {
+                        retString += "0"+ getTomorrow().getHours();
+                    }
+                    else
+                    {
+                        retString  += getTomorrow().getHours();
+                    }
+                    retString += ".";
+                    if(getTomorrow().getMinutes() < 10)
+                    {
+                        retString += "0" + getTomorrow().getMinutes();
+                    }
+                    else{
+                        retString += getTomorrow().getMinutes();
+                    }
+                    retString += ".00";
+                    endTimeInput.text = retString;
+                }
+
                 leftPadding: 4
             }
         }
@@ -375,7 +457,7 @@ Window {
             anchors.left: parent.left
             onClicked: {
                 viewController.setLocation(inputInfo.text);
-                viewController.setDataSources(["solar", "temperature"])
+                viewController.setDataSources(["solar", "Temperature"])
                 var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
                 startDayInput.text + "T" + startTimeInput.text +"Z";
                 var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +

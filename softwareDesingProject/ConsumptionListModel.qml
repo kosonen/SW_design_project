@@ -5,7 +5,7 @@ ListModel
     id: consumptionModel
      ListElement
      {
-        name:'Solar Power'
+        name:'Hydro Power'
      }
      ListElement
      {
@@ -13,6 +13,6 @@ ListModel
      }
      ListElement
      {
-        name:'Hydro Power'
+        name:'Nuclear Power'
      }
 }

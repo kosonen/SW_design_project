@@ -16,6 +16,7 @@ public:
 
 private:
     URLBuilder();
+    QUrlQuery getBaseQuery(const QString &startTime,const QString &endTime);
 
     static URLBuilder* s_urlBuilder;
 };

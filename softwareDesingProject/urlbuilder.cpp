@@ -6,6 +6,7 @@
 #include <QHashIterator>
 #include <QUrlQuery>
 #include <QDebug>
+#include <QDateTime>
 
 URLBuilder* URLBuilder::s_urlBuilder = nullptr;
 
@@ -29,7 +30,10 @@ bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QUrl &url, QString s
 
     QHash<QString, QString> params = settings.getParams();
     QHashIterator<QString,QString> i (params);
-    QUrlQuery query = QUrlQuery(FMI_QUERY);
+
+
+
+    QUrlQuery query = getBaseQuery(settings.getStartTime(), settings.getEndTime());
 
     while(i.hasNext())
     {
@@ -50,6 +54,19 @@ bool URLBuilder::buildFingridURL(const DataRequestSettings &settings, QUrl &url,
 
 
 URLBuilder::URLBuilder()
- {
+{
+
+}
+
+QUrlQuery URLBuilder::getBaseQuery(const QString &startTime,const QString &endTime)
+{
+    QUrlQuery retVal = FMI_QUERY_FORECAST;
+    qDebug() << "getBaseQuery() " <<"Start time " << QDateTime::fromString(startTime, "yyyy-MM-ddTHH.mm.ssZ") << " End date " << QDateTime::fromString(endTime, "yyyy-MM-ddTHH.mm.ssZ");
+    if(QDateTime::fromString(startTime, "yyyy-MM-ddTHH.mm.ssZ") > QDateTime::fromString(endTime, "yyyy-MM-ddTHH.mm.ssZ"))
+    {
+        retVal = FMI_QUERY_OBSERVATIONS;
+    }
+    qDebug() << "getBaseQuery() " << "Query: " << retVal.toString();
+    return retVal;
 
 }
