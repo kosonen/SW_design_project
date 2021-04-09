@@ -3,10 +3,9 @@ import QtQuick 2.14
 
 Item {
     id: browser
-    property ListModel modelToView: model
+    property ListModel modelToView: listModel
     property int heightOfElement: 30
-
-
+    property string type: ""
 
     Rectangle{
         id: borders
@@ -40,7 +39,12 @@ Item {
                 focus: true
                 onCurrentItemChanged: {
 
-                    console.log(model.get(list.currentIndex).name + ' selected');
+                    console.log(modelToView.get(list.currentIndex).name + ' selected');
+                    if(type === "weather")
+                    {
+                        setWeatherProperties(modelToView.get(list.currentIndex).name )
+                    }
+
                     return list.currentIndex;
 
             }
@@ -49,4 +53,11 @@ Item {
 
 
 }
+    function setWeatherProperties(prop)
+    {
+        console.log("current index " + prop);
+        model.setWeatherType(String(prop));
+    }
+
 }
+

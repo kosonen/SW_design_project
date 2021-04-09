@@ -10,6 +10,12 @@ const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"wind", "FMI"}
 };
 
+const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
+    {"Wind speed", "wind"},
+    {"Temperature", "temperature"},
+    {"Humidity", "humidity"}
+};
+
 // Aliases for query parameters
 const QString LOCATION = "place";
 const QString STARTIME = "starttime";

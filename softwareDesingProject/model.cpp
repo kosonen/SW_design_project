@@ -5,7 +5,7 @@ Model::Model(QObject *parent):
     QObject(parent),
     m_dataFetcher(new DataFetcher),
     m_weatherSeries{},
-    m_weatherType("temperature"),
+    m_weatherType("Temperature"),
     m_eleProductionSeries{},
     m_eleConsumptionSeries{},
     m_windProductionSeries{},
@@ -90,6 +90,7 @@ void Model::setWeatherY(QPointF newValue)
 
 void Model::setWeatherType(QString newType)
 {
+    qDebug() << "Weather type " << newType;
     m_weatherType = newType;
     emit weatherTypeChanged();
 }

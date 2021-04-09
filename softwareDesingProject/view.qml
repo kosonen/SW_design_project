@@ -44,15 +44,15 @@ Item{
     function getColor()
     {
         var color;
-        if (model.weatherType === "temperature")
+        if (model.weatherType === "Temperature")
         {
             color = "red";
         }
-        if (model.weatherType === "wind")
+        if (model.weatherType === "Wind speed")
         {
             color = "gray";
         }
-        if (model.weatherType === "humidity")
+        if (model.weatherType === "Humidity")
         {
             color = "blue";
         }
@@ -62,15 +62,15 @@ Item{
     function getName()
     {
         var name;
-        if (model.weatherType === "temperature")
+        if (model.weatherType === "Temperature")
         {
             name = "Temperature";
         }
-        if (model.weatherType === "wind")
+        if (model.weatherType === "Wind speed")
         {
             name = "Wind";
         }
-        if (model.weatherType === "humidity")
+        if (model.weatherType === "Humidity")
         {
             name = "Humidity";
         }

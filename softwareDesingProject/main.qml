@@ -422,6 +422,7 @@ Window {
             height: consumptionBrowser.heightOfElement * consumptionModel.rowCount()
             anchors.top: titleConsumption.bottom
             modelToView: consumptionModel
+            type: "consupmtion"
 
         }
         OptionColumn{
@@ -453,6 +454,7 @@ Window {
             height: weatherBrowser.heightOfElement * weatherModel.rowCount()
             anchors.top: titleWeather.bottom
             modelToView: weatherModel
+            type: "weather"
         }
 
         /*Loader{
