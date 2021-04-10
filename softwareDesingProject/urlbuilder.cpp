@@ -60,9 +60,11 @@ URLBuilder::URLBuilder()
 
 QUrlQuery URLBuilder::getBaseQuery(const QString &startTime,const QString &endTime)
 {
+    qDebug() << "getBaseQuery() startStr " << startTime << " endStr " << endTime;
     QUrlQuery retVal = FMI_QUERY_FORECAST;
+   // QString parsedStringStartTime =
     qDebug() << "getBaseQuery() " <<"Start time " << QDateTime::fromString(startTime, "yyyy-MM-ddTHH.mm.ssZ") << " End date " << QDateTime::fromString(endTime, "yyyy-MM-ddTHH.mm.ssZ");
-    if(QDateTime::fromString(startTime, "yyyy-MM-ddTHH.mm.ssZ") > QDateTime::fromString(endTime, "yyyy-MM-ddTHH.mm.ssZ"))
+    if(QDateTime::fromString(startTime, "yyyy-MM-ddTHH:mm:ssZ") > QDateTime::fromString(endTime, "yyyy-MM-ddTHH:mm:ssZ"))
     {
         retVal = FMI_QUERY_OBSERVATIONS;
     }

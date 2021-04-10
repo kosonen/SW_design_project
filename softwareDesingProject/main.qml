@@ -152,13 +152,15 @@ Window {
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
                 text: {
-                    if(getCurrentDate().getMonth() < 10)
+                    if(getCurrentDate().getMonth() + 1 < 10)
                     {
-                        startMonthInput.text = "0" + getCurrentDate().getMonth();
+                        var input =  getCurrentDate().getMonth() +1;
+                        startMonthInput.text = "0" + input;
                     }
                     else
                     {
-                        startMonthInput.text = getCurrentDate().getMonth();
+                        var inputUnderTen =  getCurrentDate().getMonth() +1;
+                        startMonthInput.text = inputUnderTen;
                     }
                 }
 
@@ -240,7 +242,7 @@ Window {
                     {
                         retString  += getCurrentDate().getHours();
                     }
-                    retString += ".";
+                    retString += ":";
                     if(getCurrentDate().getMinutes() < 10)
                     {
                         retString += "0" + getCurrentDate().getMinutes();
@@ -248,7 +250,7 @@ Window {
                     else{
                         retString += getCurrentDate().getMinutes();
                     }
-                    retString += ".00";
+                    retString += ":00";
                     startTimeInput.text = retString;
                 }
 
@@ -344,13 +346,14 @@ Window {
                 height: endMonthInputBoundingRect.height
                 anchors.fill: parent
                 text: {
-                    if(getTomorrow().getMonth() < 10)
+                    if(getTomorrow().getMonth() + 1< 10)
                     {
-                        endMonthInput.text = "0" + getTomorrow().getMonth();
+                        var input = getTomorrow().getMonth() + 1;
+                        endMonthInput.text = "0" + input;
                     }
                     else
                     {
-                        endMonthInput.text = getTomorrow().getMonth();
+                        endMonthInput.text = getTomorrow().getMonth() + 1;
                     }
                 }
                 leftPadding: 4
@@ -431,7 +434,7 @@ Window {
                     {
                         retString  += getTomorrow().getHours();
                     }
-                    retString += ".";
+                    retString += ":";
                     if(getTomorrow().getMinutes() < 10)
                     {
                         retString += "0" + getTomorrow().getMinutes();
@@ -439,7 +442,7 @@ Window {
                     else{
                         retString += getTomorrow().getMinutes();
                     }
-                    retString += ".00";
+                    retString += ":00";
                     endTimeInput.text = retString;
                 }
 
