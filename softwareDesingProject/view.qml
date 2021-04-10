@@ -9,6 +9,7 @@ Item{
         border.color: "black"
 
         ChartView{
+            id: chartView
             anchors.fill: parent
             antialiasing: true
 
@@ -39,6 +40,7 @@ Item{
     Component.onCompleted:
     {
         model.weatherSeries = weatherSeries;
+        model.chartView = chartView;
     }
 
     function getColor()

@@ -15,6 +15,7 @@ class Model : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::QLineSeries* weatherSeries READ getWeatherSeries WRITE setWeatherSeries NOTIFY weatherSeriesChanged)
+    Q_PROPERTY(QtCharts::QChart* chartView READ getChartView WRITE setChartView NOTIFY chartViewChanged)
     Q_PROPERTY(QDateTime startTime READ getStartTime WRITE setStartTime NOTIFY startTimeChanged)
     Q_PROPERTY(QDateTime endTime READ getEndTime WRITE setEndTime NOTIFY endTimeChanged)
     Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
@@ -28,6 +29,7 @@ public:
     explicit Model(QObject *parent = nullptr);
 
     QtCharts::QLineSeries* getWeatherSeries() const;
+    QtCharts::QChart* getChartView() const;
     QDateTime getStartTime();
     QDateTime getEndTime();
     QPointF getWeatherY();
@@ -37,6 +39,7 @@ public:
 
 
     void setWeatherSeries(QtCharts::QLineSeries *weatherSeries);
+    void setChartView(QtCharts::QChart* chart);
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
     void setWeatherY(QPointF newValue);
@@ -51,6 +54,7 @@ public slots:
 signals:
 
     void weatherSeriesChanged();
+    void chartViewChanged();
     void startTimeChanged();
     void endTimeChanged();
     void weatherYChanged();
@@ -69,6 +73,9 @@ private:
     QPointF m_enegyY;
     QDateTime m_start;
     QDateTime m_end;
+
+    QtCharts::QChart* m_chart;
+//    QtCharts::DeclarativeChart joku;
 
 
 };

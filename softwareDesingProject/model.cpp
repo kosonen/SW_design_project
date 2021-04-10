@@ -14,7 +14,8 @@ Model::Model(QObject *parent):
     m_weatherY{},
     m_enegyY{},
     m_start(),
-    m_end()
+    m_end(),
+    m_chart(nullptr)
 {
     connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateTemp);
 }
@@ -22,6 +23,11 @@ Model::Model(QObject *parent):
 QtCharts::QLineSeries *Model::getWeatherSeries() const
 {
     return m_weatherSeries;
+}
+
+QtCharts::QChart* Model::getChartView() const
+{
+    return m_chart;
 }
 
 QDateTime Model::getStartTime()
@@ -66,8 +72,29 @@ QPointF Model::getLimits(QList<QPointF> data)
 
 void Model::setWeatherSeries(QtCharts::QLineSeries *weatherSeries)
 {
+    qDebug() << "Setting line" << Qt::endl;
+    qDebug() << "Setting line" << Qt::endl;
+    qDebug() << "Setting line" << Qt::endl;
+    qDebug() << "Setting line" << Qt::endl;
+
+    qDebug() << "Series: " << weatherSeries << Qt::endl;
+
     m_weatherSeries = weatherSeries;
+    m_chart = weatherSeries->chart();
     emit weatherSeriesChanged();
+}
+
+void Model::setChartView(QtCharts::QChart* chart)
+{
+    qDebug() << "Setting chart" << Qt::endl;
+    qDebug() << "Setting chart" << Qt::endl;
+    qDebug() << "Setting chart" << Qt::endl;
+    qDebug() << "Setting chart" << Qt::endl;
+
+    qDebug() << "Series: " << chart << Qt::endl;
+
+//    m_chart = dynamic_cast<QtCharts::QChart*>(chart);
+    emit chartViewChanged();
 }
 
 void Model::setStartTime(QDateTime start)
@@ -103,6 +130,12 @@ bool Model::update(DataRequestSettings settings)
 void Model::updateTemp(QList<QPointF> data)
 {
     qDebug() << "Updating temperature graph" << Qt::endl;
+    qDebug() << "Chart address: " << m_chart << Qt::endl;
+    qDebug() << "series address: " << m_weatherSeries << Qt::endl;
+    if (m_chart != nullptr)
+    {
+        qDebug() << "Series count: " << m_chart->series().size() << Qt::endl;
+    }
 
     qDebug() << data.size() << Qt::endl;
     if (data.size() < 2)
