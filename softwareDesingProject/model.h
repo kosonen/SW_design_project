@@ -40,7 +40,7 @@ public:
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
     void setWeatherY(QPointF newValue);
-    Q_INVOKABLE void setWeatherType(QString newType);
+    void setWeatherType(QString newType);
 
     bool update(DataRequestSettings settings);
 

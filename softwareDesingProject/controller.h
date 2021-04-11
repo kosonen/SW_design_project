@@ -27,6 +27,8 @@ public:
     /* All fetched data sources are fit into the same time frame */
     Q_INVOKABLE void setTimeWindow(QString startTime, QString endTime);
 
+    Q_INVOKABLE void setWeatherType(QString newType);
+
     void setModel(Model* model);
 
 signals:

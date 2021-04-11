@@ -460,7 +460,8 @@ Window {
             anchors.left: parent.left
             onClicked: {
                 viewController.setLocation(inputInfo.text);
-                viewController.setDataSources(["solar", "Temperature"])
+                //viewController.setDataSources(["solar", "Temperature"])
+
                 var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
                 startDayInput.text + "T" + startTimeInput.text +"Z";
                 var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +

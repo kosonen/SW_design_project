@@ -7,7 +7,8 @@
 const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"solar", "FINGRID"},
     {"temperature", "FMI"},
-    {"wind", "FMI"}
+    {"wind", "FMI"},
+    {"humidity", "FMI"}
 };
 
 const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {

@@ -56,7 +56,10 @@ Item {
     function setWeatherProperties(prop)
     {
         console.log("current index " + prop);
-        model.setWeatherType(String(prop));
+        //model.setWeatherType(String(prop));
+        viewController.setWeatherType(String(prop));
+        viewController.setDataSources([String(prop)]);
+        viewController.requestData();
     }
 
 }
