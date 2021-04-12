@@ -1,11 +1,9 @@
 #ifndef API_H
 #define API_H
 
+#include "datacontainer.h"
+
 #include <QObject>
-#include <QVector>
-#include <QPair>
-#include <QList>
-#include <QPointF>
 
 #include <QNetworkAccessManager>
 #include <QXmlStreamReader>
@@ -22,7 +20,7 @@ public:
     virtual void load(QUrl url) = 0;
 
 signals:
-    void dataParsed(QList<QPointF> data);
+    void dataParsed(DataContainer* data);
 };
 
 #endif // API_H

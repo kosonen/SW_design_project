@@ -1,6 +1,7 @@
 #ifndef DATAFETCHER_H
 #define DATAFETCHER_H
 
+#include "datacontainer.h"
 #include "datarequestsettings.h"
 #include "iurlbuilder.h"
 #include "urlbuilder.h"
@@ -20,7 +21,7 @@ public:
     bool fetch(DataRequestSettings settings);
 
 signals:
-    void dataReady(QList<QPointF> data);
+    void dataReady(DataContainer* data);
 
 private:
     IURLBuilder* m_urlBuilder;

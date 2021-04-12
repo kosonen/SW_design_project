@@ -45,7 +45,7 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
     QString errMsg;
     QDomDocument doc;
 
-    QList<QPointF> data;
+    DataContainer* data = new DataContainer;
 
     if (!doc.setContent(reply->readAll(), &errMsg)) {
         qDebug() << "Fingrid request BROKEN" << Qt::endl;
@@ -69,17 +69,18 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
         point.setX(dateTime.toMSecsSinceEpoch());
         point.setY(value.text().toDouble());
 
-        data.append(point);
+        data->addElement(point);
     }
     qDebug() << "Content read OK!";
     reply->deleteLater();
 
-    for(int i = 0; i < data.length(); i++){
-        QString xVal = QString::number(data.at(i).x(), 'g', 20);
-        QString yVal = QString::number(data.at(i).y(), 'g', 20);
-        qDebug() << qPrintable(xVal) << " "
-                 << qPrintable(yVal)
-                 << Qt::endl;
-    }
+//    for(int i = 0; i < data.length(); i++){
+//        QString xVal = QString::number(data.at(i).x(), 'g', 20);
+//        QString yVal = QString::number(data.at(i).y(), 'g', 20);
+//        qDebug() << qPrintable(xVal) << " "
+//                 << qPrintable(yVal)
+//                 << Qt::endl;
+//    }
+
     emit dataParsed(data);
 }

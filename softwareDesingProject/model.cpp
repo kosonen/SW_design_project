@@ -101,33 +101,34 @@ bool Model::update(DataRequestSettings settings)
     return m_dataFetcher->fetch(settings);
 }
 
-void Model::updateSeries(QList<QPointF> data)
+void Model::updateSeries(DataContainer* data)
 {
     qDebug() << "Updating temperature graph" << Qt::endl;
 
-    qDebug() << data.size() << Qt::endl;
-    if (data.size() < 2)
+    qDebug() << data->getData().size() << Qt::endl;
+    if (data->getData().size() < 2)
     {
         qDebug() << "tyhjä" << Qt::endl;
         return;
     }
 
-    for (auto p : data)
-    {
-        qDebug() << "X: " << p.x() << "Y: " << p.y() << Qt::endl;
-    }
+//    for (auto p : data->get)
+//    {
+//        qDebug() << "X: " << p.x() << "Y: " << p.y() << Qt::endl;
+//    }
 
-    setStartTime(QDateTime::fromMSecsSinceEpoch(data.first().rx()));
-    setEndTime(QDateTime::fromMSecsSinceEpoch(data.last().rx()));
+    setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
+    setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
 
-    m_weatherSeries->replace(data);
+    m_weatherSeries->replace(data->getData());
 
     // update Y axis limits
-    QPointF limits = getLimits(data);
+    QPointF limits = getLimits(data->getData());
     qreal yTop = limits.x() + 1;
     qreal yBottom = limits.y() - 1;
     setWeatherY(QPointF(yTop, yBottom));
 
+//    delete data;
 }
 
 

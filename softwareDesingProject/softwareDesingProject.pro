@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         controller.cpp \
+        datacontainer.cpp \
         datafetcher.cpp \
         datarequestsettings.cpp \
         fingriddatasource.cpp \
@@ -31,6 +32,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     controller.h \
+    datacontainer.h \
     datafetcher.h \
     datarequestsettings.h \
     defines.h \

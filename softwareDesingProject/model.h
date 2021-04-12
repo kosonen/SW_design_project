@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "datacontainer.h"
 #include "datarequestsettings.h"
 #include "datafetcher.h"
 
@@ -46,7 +47,7 @@ public:
 
 
 public slots:
-    void updateSeries(QList<QPointF> data);
+    void updateSeries(DataContainer* data);
 
 signals:
 
