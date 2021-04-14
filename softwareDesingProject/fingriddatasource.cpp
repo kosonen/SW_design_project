@@ -82,5 +82,7 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 //                 << Qt::endl;
 //    }
 
+    data->setCategory("electricity");
+
     emit dataParsed(data);
 }

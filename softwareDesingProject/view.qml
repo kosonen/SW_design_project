@@ -18,9 +18,15 @@ Item{
                 max: model.endTime
             }
             ValueAxis{
-                id: customY
+                id: weatherY
                 min: model.weatherY.y
                 max: model.weatherY.x
+            }
+
+            ValueAxis{
+                id: electricityY
+                min: 0
+                max: 100
             }
 
 
@@ -29,9 +35,18 @@ Item{
                 color: getColor()
                 name: getName()
                 axisX: timeAxis
-                axisY: customY
+                axisY: weatherY
 
             }
+
+            LineSeries{
+                id: electricitySeries
+                //color: "black"
+                name: "electricity placeholder"
+                axisX: timeAxis
+                axisYRight: electricityY
+            }
+
         }
     }
 
@@ -39,6 +54,7 @@ Item{
     Component.onCompleted:
     {
         model.weatherSeries = weatherSeries;
+        model.elecrtricitySeries = electricitySeries;
     }
 
     function getColor()

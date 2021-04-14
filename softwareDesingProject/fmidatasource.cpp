@@ -66,7 +66,7 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
     // TODO: this neds to be set automatically to correct value
     data->setType("temperature");
     // TODO: move "weather" to some constant
-    data->setCategory("weater");
+    data->setCategory("weather");
 
     reply->deleteLater();
 

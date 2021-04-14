@@ -5,12 +5,15 @@ Model::Model(QObject *parent):
     QObject(parent),
     m_dataFetcher(new DataFetcher),
     m_weatherSeries{},
+    m_eleSeries{},
     m_weatherType("Temperature"),
+    /*
     m_eleProductionSeries{},
     m_eleConsumptionSeries{},
     m_windProductionSeries{},
     m_nuclearProductionSeries{},
     m_hydroProductionSeries{},
+    */
     m_weatherY{},
     m_enegyY{},
     m_start(),
@@ -22,6 +25,11 @@ Model::Model(QObject *parent):
 QtCharts::QLineSeries *Model::getWeatherSeries() const
 {
     return m_weatherSeries;
+}
+
+QtCharts::QLineSeries *Model::getElectricitySeries() const
+{
+    return m_eleSeries;
 }
 
 QDateTime Model::getStartTime()
@@ -68,6 +76,12 @@ void Model::setWeatherSeries(QtCharts::QLineSeries *weatherSeries)
 {
     m_weatherSeries = weatherSeries;
     emit weatherSeriesChanged();
+}
+
+void Model::setElectricitySeries(QtCharts::QLineSeries *electricitySeries)
+{
+    m_eleSeries = electricitySeries;
+    emit electricitySeriesChanged();
 }
 
 void Model::setStartTime(QDateTime start)
@@ -120,9 +134,18 @@ void Model::updateSeries(DataContainer* data)
     setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
     setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
 
-    m_weatherSeries->replace(data->getData());
+    qDebug() << data->getCategory() << Qt::endl;
 
-    // update Y axis limits
+    if(data->getCategory() == "weather")
+    {
+        m_weatherSeries->replace(data->getData());
+    }
+    else if (data->getCategory() == "electricity")
+    {
+        m_eleSeries->replace(data->getData());
+    }
+
+    // update weatherY axis limits
     QPointF limits = getLimits(data->getData());
     qreal yTop = limits.x() + 1;
     qreal yBottom = limits.y() - 1;

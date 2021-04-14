@@ -16,6 +16,7 @@ class Model : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QtCharts::QLineSeries* weatherSeries READ getWeatherSeries WRITE setWeatherSeries NOTIFY weatherSeriesChanged)
+    Q_PROPERTY(QtCharts::QLineSeries* elecrtricitySeries READ getElectricitySeries WRITE setElectricitySeries NOTIFY electricitySeriesChanged)
     Q_PROPERTY(QDateTime startTime READ getStartTime WRITE setStartTime NOTIFY startTimeChanged)
     Q_PROPERTY(QDateTime endTime READ getEndTime WRITE setEndTime NOTIFY endTimeChanged)
     Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
@@ -29,6 +30,7 @@ public:
     explicit Model(QObject *parent = nullptr);
 
     QtCharts::QLineSeries* getWeatherSeries() const;
+    QtCharts::QLineSeries* getElectricitySeries() const;
     QDateTime getStartTime();
     QDateTime getEndTime();
     QPointF getWeatherY();
@@ -38,6 +40,7 @@ public:
 
 
     void setWeatherSeries(QtCharts::QLineSeries *weatherSeries);
+    void setElectricitySeries(QtCharts::QLineSeries *electricitySeries);
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
     void setWeatherY(QPointF newValue);
@@ -56,16 +59,20 @@ signals:
     void endTimeChanged();
     void weatherYChanged();
     void weatherTypeChanged();
+    void electricitySeriesChanged();
 
 private:
     DataFetcher* m_dataFetcher;
     QtCharts::QLineSeries* m_weatherSeries;
+    QtCharts::QLineSeries* m_eleSeries;
     QString m_weatherType;
+    /*
     QtCharts::QLineSeries* m_eleProductionSeries;
     QtCharts::QLineSeries* m_eleConsumptionSeries;
     QtCharts::QLineSeries* m_windProductionSeries;
     QtCharts::QLineSeries* m_nuclearProductionSeries;
     QtCharts::QLineSeries* m_hydroProductionSeries;
+    */
     QPointF m_weatherY;
     QPointF m_enegyY;
     QDateTime m_start;
