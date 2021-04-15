@@ -6,6 +6,9 @@ FingridDataSource::FingridDataSource(QObject* parent) : IDataSource(parent)
     network_ = new QNetworkAccessManager(this);
     parser_ = new QXmlStreamReader();
     connect(network_, &QNetworkAccessManager::finished, this, &FingridDataSource::downloadCompleted);
+    source_ = "191";
+    startTime_ = QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(-3);
+    endTime_ = QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(-1);
 
 }
 
@@ -23,7 +26,7 @@ void FingridDataSource::setSearchParameter(const QString param)
 void FingridDataSource::makeRequest()
 {
 
-    QUrl url;
+    QUrl url = buildFingridURL();
     QNetworkRequest req(url);
     req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
     network_->get(req);
@@ -56,11 +59,12 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 
         QString timeStr = start_time.text();
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
-        QPointF point;
-        point.setX(dateTime.toMSecsSinceEpoch());
-        point.setY(value.text().toDouble());
-
-        data->addElement(point);
+        if(!timeStr.isEmpty()){
+            QPointF point;
+            point.setX(dateTime.toMSecsSinceEpoch());
+            point.setY(value.text().toDouble());
+            data->addElement(point);
+        }
     }
     qDebug() << "Content read OK!";
     reply->deleteLater();
@@ -81,8 +85,13 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 
 void FingridDataSource::setTimeWindow(QString startTime, QString endTime)
 {
-    startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
-    endTime_ = QDateTime::fromString(endTime, Qt::ISODate);
+
+    if(!startTime.isEmpty()){
+        startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
+    }
+    if(!endTime.isEmpty()){
+        endTime_ = QDateTime::fromString(endTime, Qt::ISODate);
+    }
 }
 
 
@@ -92,19 +101,15 @@ QUrl FingridDataSource::buildFingridURL()
     QString id;
     QUrlQuery query;
     query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[STARTIME],
-                       startTime_.toString());
+                       startTime_.toString(Qt::ISODate));
 
     query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[ENDTIME],
-                       endTime_.toString());
+                       endTime_.toString(Qt::ISODate));
 
-    if(CONSUMPTION_OPTION_TO_MODEL_MAPPING.contains(source_)){
-        id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[source_];
-    }
-    else{
-        qDebug() << "Failed in Fingrid id mapping" << Qt::endl;
-    }
-    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable" + id + "/event/xml"));
+
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + source_ + "/event/xml"));
     fetchURL.setQuery(query);
+    qDebug() << "FINGRID URL IS: " <<  fetchURL;
     return fetchURL;
 }
 

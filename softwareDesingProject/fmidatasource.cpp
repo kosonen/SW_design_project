@@ -6,7 +6,11 @@ FmiDataSource::FmiDataSource(QObject* parent) : IDataSource(parent)
     network_ = new QNetworkAccessManager(this);
     parser_ = new QXmlStreamReader();
     connect(network_, &QNetworkAccessManager::finished, this, &FmiDataSource::downloadCompleted);
-    firstFetchHandled_ = false;
+    firstFetchHandled_ = true;
+    source_ = "temperature";
+    startTime_ = QDateTime::currentDateTime();
+    endTime_ = QDateTime::currentDateTime();
+    location_ = "Viitasaari";
 }
 
 FmiDataSource::~FmiDataSource()
@@ -33,28 +37,27 @@ void FmiDataSource::makeRequest()
     /* Fetch both from observations and forecast */
     if(!endTimeInPast and startTimeInPast){
         firstFetchHandled_ = false;
-        QUrl urlPast = buildFMIURL(false, startTime_.toString(), currentTime.toString());
+        QUrl urlPast = buildFMIURL(false, startTime_.toString(Qt::ISODate), currentTime.toString(Qt::ISODate));
         network_->get(QNetworkRequest(urlPast));
-        QUrl urlForecast = buildFMIURL(true, startTime_.toString(), currentTime.toString());
-        network_->get(QNetworkRequest(urlForecast));
     }
     /* Fetch from observations */
     else if(startTimeInPast and endTimeInPast){
         firstFetchHandled_ = true;
-        QUrl url = buildFMIURL(false, startTime_.toString(), endTime_.toString());
+        QUrl url = buildFMIURL(false, startTime_.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
         network_->get(QNetworkRequest(url));
     }
     /* Fetch from forecasts */
     else {
         firstFetchHandled_ = true;
         qDebug() << "TIMES: " << startTime_.toString() << Qt::endl;
-        QUrl url = buildFMIURL(true, startTime_.toString(), endTime_.toString());
+        QUrl url = buildFMIURL(true, startTime_.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
         network_->get(QNetworkRequest(url));
     }
 }
 
 void FmiDataSource::setLocation(QString location)
 {
+    location_ = location;
     queryParameters_[LOCATION] = location;
 }
 
@@ -78,22 +81,29 @@ QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTim
         query = FMI_QUERY_OBSERVATIONS;
     }
 
+    //query.addQueryItem(STARTIME, QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(1).toString(Qt::ISODate));
+    //query.addQueryItem(ENDTIME,QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(2).toString(Qt::ISODate));
     query.addQueryItem(STARTIME, startTime);
-    query.addQueryItem(ENDTIME,endTime);
+    query.addQueryItem(ENDTIME, endTime);
+
 
 
     QHashIterator<QString,QString> i (queryParameters_);
 
+    /*)
     while(i.hasNext())
     {
         i.next();
         query.addQueryItem(i.key(), i.value());
     }
+    */
+    query.addQueryItem(LOCATION, "Tampere");
     query.addQueryItem("parameters", source_);
     fetchURL.setQuery(query);
 
     return fetchURL;
 }
+
 
 void FmiDataSource::fetchHandler()
 {
@@ -101,22 +111,28 @@ void FmiDataSource::fetchHandler()
         DataContainer* data = new DataContainer();
         for(auto it: dataBuffer_)
         {
+            qDebug() << it;
             data->addElement(it);
         }
-
-        firstFetchHandled_ = false;
 
         // TODO: this neds to be set automatically to correct value
         data->setType("temperature");
         // TODO: move "weather" to some constant
         data->setCategory("weather");
 
+
+
+
         emit dataParsed(data);
     }
     else{
         firstFetchHandled_ = true;
+        QDateTime currentTime = QDateTime::currentDateTimeUtc();
+        QUrl urlForecast = buildFMIURL(true, currentTime.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
+        network_->get(QNetworkRequest(urlForecast));
     }
 }
+
 
 void FmiDataSource::downloadCompleted(QNetworkReply *reply)
 {
@@ -142,7 +158,7 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
         QPointF point;
 
-        if(value.text().toLower() != "nan"){
+        if(!timeStr.isEmpty() and value.text() != "NaN"){
             point.setX(dateTime.toMSecsSinceEpoch());
             point.setY(value.text().toDouble());
 
@@ -150,19 +166,12 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
         }
     }
 
-    qDebug() << "Content read OK!";
-
-//    for(int i = 0; i < data.length(); i++){
-//        QString xVal = QString::number(data.at(i).x(), 'g', 20);
-//        QString yVal = QString::number(data.at(i).y(), 'g', 20);
-//        qDebug() << qPrintable(xVal) << " "
-//                 << qPrintable(yVal)
-//                 << Qt::endl;
-//    }
-
-    reply->deleteLater();
+    qDebug() << "Content read OK!" << dataBuffer_.size();
 
     fetchHandler();
+
+
+    reply->deleteLater();
 }
 
 

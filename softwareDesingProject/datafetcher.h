@@ -24,7 +24,6 @@ signals:
     void dataReady(DataContainer* data);
 
 private:
-    IURLBuilder* m_urlBuilder;
     FmiDataSource* m_requestFMIAPI;
     FingridDataSource* m_requestFingridAPI;
 

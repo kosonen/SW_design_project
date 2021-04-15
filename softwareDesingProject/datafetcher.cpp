@@ -28,19 +28,22 @@ bool DataFetcher::fetch(DataRequestSettings settings)
         // dataSources. Also the urlBuilder needs some adjustment.
         if (SOURCE_TO_API_MAPPING[source] == "FMI")
         {
+            qDebug() << "FMI REQUEST";
             m_requestFMIAPI->setLocation(settings.getLocation());
-            m_requestFMIAPI->setTimeWindow(settings.getStartTime(), settings.getEndTime());
-            m_requestFMIAPI->setSearchParameter(source);
             dataSource = dynamic_cast<IDataSource*>(m_requestFMIAPI);
         }
         else if (SOURCE_TO_API_MAPPING[source] == "FINGRID")
         {
-            //TODO:
-            //dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
+            m_requestFingridAPI->setTimeWindow(settings.getStartTime(), settings.getEndTime());
+            m_requestFingridAPI->setSearchParameter(source);
+            dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
         }
 
         // Make data request
         dataSource->makeRequest();
+        dataSource->setTimeWindow(settings.getStartTime(), settings.getEndTime());
+        dataSource->setSearchParameter(source);
+
     }
 
     return true;
