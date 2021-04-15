@@ -10,6 +10,7 @@
 
 #include <QNetworkReply>
 #include <QDomDocument>
+#include <QHash>
 
 
 class IDataSource : public QObject
@@ -18,9 +19,9 @@ class IDataSource : public QObject
 public:
     explicit IDataSource(QObject *parent = nullptr) : QObject(parent) {}
 
-    virtual void setLocation(QString location) = 0;
     virtual void setTimeWindow(QString startTime, QString endTime) = 0;
     virtual void makeRequest() = 0;
+    virtual void setSearchParameter(const QString param) = 0;
 
     // Sitten vielä mahdollisesti jotain metodeja tuon piirakkamallin
     // toteutukseen.

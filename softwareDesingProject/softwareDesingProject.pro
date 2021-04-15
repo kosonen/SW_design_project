@@ -14,8 +14,7 @@ SOURCES += \
         fingriddatasource.cpp \
         fmidatasource.cpp \
         main.cpp \
-        model.cpp \
-        urlbuilder.cpp
+        model.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,6 +38,4 @@ HEADERS += \
     fingriddatasource.h \
     fmidatasource.h \
     idatasource.h \
-    iurlbuilder.h \
-    model.h \
-    urlbuilder.h
+    model.h

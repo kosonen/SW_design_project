@@ -11,15 +11,25 @@ public:
     explicit FingridDataSource(QObject* parent = nullptr);
     ~FingridDataSource();
 
-    virtual void load(QUrl url) override;
+    virtual void setTimeWindow(QString startTime, QString endTime);
+    virtual void makeRequest();
+    virtual void setSearchParameter(const QString param);
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply* reply);
 
 private:
 
+    QUrl buildFingridURL();
+
+
     QNetworkAccessManager* network_;
     QXmlStreamReader* parser_;
+    QHash<QString,QString> queryParameters_;
+
+    QString source_;
+    QDateTime startTime_;
+    QDateTime endTime_;
 
 };
 

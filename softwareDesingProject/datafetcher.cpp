@@ -2,11 +2,9 @@
 
 DataFetcher::DataFetcher(QObject *parent):
     QObject(parent),
-    m_urlBuilder(nullptr),
     m_requestFMIAPI(new FmiDataSource),
     m_requestFingridAPI(new FingridDataSource)
 {
-    m_urlBuilder = URLBuilder::getInstance();
     connect(m_requestFMIAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
     connect(m_requestFingridAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
 }
@@ -30,26 +28,19 @@ bool DataFetcher::fetch(DataRequestSettings settings)
         // dataSources. Also the urlBuilder needs some adjustment.
         if (SOURCE_TO_API_MAPPING[source] == "FMI")
         {
-            if (!m_urlBuilder->buildFMIURL(settings, url, source))
-            {
-                qDebug() << "Failed to build FMI url";
-                return false;
-            }
+            m_requestFMIAPI->setLocation(settings.getLocation());
+            m_requestFMIAPI->setTimeWindow(settings.getStartTime(), settings.getEndTime());
+            m_requestFMIAPI->setSearchParameter(source);
             dataSource = dynamic_cast<IDataSource*>(m_requestFMIAPI);
         }
         else if (SOURCE_TO_API_MAPPING[source] == "FINGRID")
         {
-            if (!m_urlBuilder->buildFingridURL(settings, url, source))
-            {
-                qDebug() << "Failed to build Fingrid url";
-                return false;
-            }
-            qDebug() << "url " << url.toString();
-            dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
+            //TODO:
+            //dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
         }
 
         // Make data request
-        dataSource->load(url);
+        dataSource->makeRequest();
     }
 
     return true;
