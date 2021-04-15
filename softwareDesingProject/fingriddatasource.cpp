@@ -107,7 +107,8 @@ QUrl FingridDataSource::buildFingridURL()
                        endTime_.toString(Qt::ISODate));
 
 
-    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + source_ + "/event/xml"));
+
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + source_ + "/events/xml"));
     fetchURL.setQuery(query);
     qDebug() << "FINGRID URL IS: " <<  fetchURL;
     return fetchURL;
