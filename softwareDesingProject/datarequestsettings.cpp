@@ -1,5 +1,6 @@
 #include "datarequestsettings.h"
 #include "defines.h"
+#include <QDebug>
 
 DataRequestSettings::DataRequestSettings() : m_params({}), m_dataSources({})
 {
@@ -62,5 +63,12 @@ QString DataRequestSettings::getEndTime()
 
 QHash<QString, QString> DataRequestSettings::getParams()
 {
+    QHashIterator<QString,QString> i(m_params);
+    qDebug() << "getparams";
+    while(i.hasNext())
+    {
+        i.next();
+        qDebug() << "settings() key "  << i.key() << " value " << i.value();
+    }
     return m_params;
 }
