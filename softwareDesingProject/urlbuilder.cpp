@@ -48,6 +48,27 @@ bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QUrl &url, QString s
 
 bool URLBuilder::buildFingridURL(const DataRequestSettings &settings, QUrl &url, QString source)
 {
+   //QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable"));
+    QHash<QString, QString> params;
+    QString id;
+    QUrlQuery query;
+    QHashIterator<QString, QString> i(params);
+    while(i.hasNext())
+    {
+        i.next();
+        if(CONSUMPTION_OPTION_TO_MODEL_MAPPING .contains(i.key()))
+        {
+            id = CONSUMPTION_OPTION_TO_MODEL_MAPPING [i.key()];
+        }
+        else if(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING.contains(i.key()))
+        {
+            query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[i.key()], i.value());
+        }
+
+    }
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable" + id + "/event/xml"));
+    fetchURL.setQuery(query);
+    url = fetchURL;
     return true;
 }
 

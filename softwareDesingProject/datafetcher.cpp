@@ -44,6 +44,7 @@ bool DataFetcher::fetch(DataRequestSettings settings)
                 qDebug() << "Failed to build Fingrid url";
                 return false;
             }
+            qDebug() << "url " << url.toString();
             dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
         }
 

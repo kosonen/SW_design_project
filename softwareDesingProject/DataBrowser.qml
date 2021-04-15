@@ -44,6 +44,10 @@ Item {
                     {
                         setWeatherProperties(modelToView.get(list.currentIndex).name )
                     }
+                    else
+                    {
+                        setProperties(modelToView.get(list.currentIndex).name);
+                    }
 
                     return list.currentIndex;
 
@@ -58,6 +62,13 @@ Item {
         console.log("current index " + prop);
         //model.setWeatherType(String(prop));
         viewController.setWeatherType(String(prop));
+        viewController.setDataSources([String(prop)]);
+        viewController.requestData();
+    }
+
+    function setProperties(prop)
+    {
+        console.log("current index " + prop);
         viewController.setDataSources([String(prop)]);
         viewController.requestData();
     }

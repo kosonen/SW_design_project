@@ -36,6 +36,10 @@ void Controller::setDataSources(QVector<QString> sources)
             str = WEATHER_OPTION_TO_MODEL_MAPPING[str];
 
         }
+        else if(CONSUMPTION_OPTION_TO_MODEL_MAPPING .contains(str))
+        {
+            str = CONSUMPTION_OPTION_TO_MODEL_MAPPING [str];
+        }
         qDebug() << "Source " << str;
     }
     m_settings.setDatasources(sources);

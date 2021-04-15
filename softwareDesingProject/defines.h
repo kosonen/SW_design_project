@@ -5,10 +5,12 @@
 #include <QUrlQuery>
 
 const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
-    {"solar", "FINGRID"},
     {"temperature", "FMI"},
     {"windspeedms", "FMI"},
-    {"humidity", "FMI"}
+    {"humidity", "FMI"},
+    {"191",  "FINGRID"},
+    {"181", "FINGRID"},
+    {"188", "FINGRID"}
 };
 
 const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
@@ -17,11 +19,11 @@ const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
     {"Humidity", "humidity"}
 };
 
-const QHash<QString, QString> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
 
-    {"hydro", "191"},
-    {"wind", "181"},
-    {"nuclear", "188"}
+const QHash<QString, QString> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
+    {"Hydro power", "191"},
+    {"Wind power", "181"},
+    {"Nuclear power", "188"}
 };
 
 // Aliases for query parameters
@@ -37,6 +39,11 @@ const QString MAXLOCATIONS = "maxlocations";
 const QString GEO_ID = "geoid";
 const QString WMO = "wmo";
 const QString TIMEZONE = "timezone";
+
+const QHash<QString, QString> FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING = {
+    {STARTIME, "start_time"},
+    {ENDTIME,"end_time"}
+};
 
 
 // Key for Fingrid API
