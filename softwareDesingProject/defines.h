@@ -17,10 +17,12 @@ const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
     {"Humidity", "humidity"}
 };
 
-/*const QHash<QString, QString> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
-    {"Nuclear Power", ""},
+const QHash<QString, QString> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
 
-};*/
+    {"hydro", "191"},
+    {"wind", "181"},
+    {"nuclear", "188"}
+};
 
 // Aliases for query parameters
 const QString LOCATION = "place";
