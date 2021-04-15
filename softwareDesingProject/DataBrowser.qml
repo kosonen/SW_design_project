@@ -20,11 +20,16 @@ Item {
                 delegate: Component {
                     Item{
                             width: parent.width
-                            height: heightOfElement
-
-                            Column{
-                                Text { text: name
-                                wrapMode: Text.WordWrap}
+                            height: heightOfElement   
+                            Row{
+                                spacing: 10
+                                Text {
+                                    text: name
+                                    wrapMode: Text.WordWrap
+                                }
+                                Image {
+                                    source: fileUrl
+                                }
                             }
                             MouseArea {
                                 anchors.fill: parent
