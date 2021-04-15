@@ -34,8 +34,6 @@ bool DataFetcher::fetch(DataRequestSettings settings)
         }
         else if (SOURCE_TO_API_MAPPING[source] == "FINGRID")
         {
-            m_requestFingridAPI->setTimeWindow(settings.getStartTime(), settings.getEndTime());
-            m_requestFingridAPI->setSearchParameter(source);
             dataSource = dynamic_cast<IDataSource*>(m_requestFingridAPI);
         }
 
