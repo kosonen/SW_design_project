@@ -10,19 +10,6 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-  /*  QtObject{
-        id: dateObj
-        property var locale: Qt.locale()
-        property date currentTime: new Date()
-        property string timeString: timeString
-
-        Component.onCompleted: {
-            console.log("timeString " << timeString);
-            timeString = currentTime.toLocaleTimeString(locale, Locale.ShortFormat);
-            console.log("timeString " << timeString);
-        }
-    }*/
-
     Rectangle{
         width: parent.width
         height: parent.height
@@ -35,7 +22,7 @@ Window {
             border.color: "black"
             anchors.top: weatherBrowser.bottom
             anchors.left: parent.left
-
+            radius: 5
             Text {
                 id: infotext
                 text: "Location"
@@ -69,7 +56,7 @@ Window {
             border.color: "black"
             anchors.top: locationInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 5
             Text {
                 id: dayInfo
                 text: "Starting Date"
@@ -86,7 +73,7 @@ Window {
             border.color: "black"
             anchors.top: startDateBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: startDayInfo
                 text: "Day"
@@ -129,7 +116,7 @@ Window {
             border.color: "black"
             anchors.top: startDayInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: startMonthInfo
                 text: "Month"
@@ -175,7 +162,7 @@ Window {
             border.color: "black"
             anchors.top: startMonthInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: startYearInfo
                 text: "Year"
@@ -209,7 +196,7 @@ Window {
             border.color: "black"
             anchors.top: startYearInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: startTimeInfo
                 text: "Time (hh:mm:ss)"
@@ -231,7 +218,6 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
-                //text: getCurrentDate().getHours() + "." + getCurrentDate().getMinutes() + "." + "00"
                 text: {
                     var retString = "";
                     if(getCurrentDate().getHours() < 10)
@@ -265,7 +251,7 @@ Window {
             border.color: "black"
             anchors.top: startTimeInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 5
             Text {
                 id: endDayInfo
                 text: "End Date"
@@ -281,7 +267,7 @@ Window {
             border.color: "black"
             anchors.top: endDateBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: endDayInputInfo
                 text: "Day"
@@ -323,6 +309,7 @@ Window {
             border.color: "black"
             anchors.top: endDayInputBoundingRect.bottom
             anchors.left: parent.left
+            radius: 2
 
             Text {
                 id: endMonthInfo
@@ -367,7 +354,7 @@ Window {
             border.color: "black"
             anchors.top: endMonthInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: endYearInfo
                 text: "Year"
@@ -401,7 +388,7 @@ Window {
             border.color: "black"
             anchors.top: endYearInputBoundingRect.bottom
             anchors.left: parent.left
-
+            radius: 2
             Text {
                 id: endTimeInfo
                 text: "Time (hh:mm:ss)"
@@ -451,13 +438,25 @@ Window {
         }
 
 
-        Button{
+        RoundButton{
             id: requestDataButton
             text: "Request Data"
+            contentItem: Text {
+                text: requestDataButton.text
+                color: "cyan"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
             width: weatherBrowser.width
             height: 50
             anchors.bottom: parent.bottom
             anchors.left: parent.left
+            background: Rectangle{
+                color: "#e6004c"
+                radius: 5
+            }
+
+            radius: 5
             onClicked: {
                 viewController.setLocation(inputInfo.text);
                 //viewController.setDataSources(["solar", "Temperature"])
@@ -483,9 +482,6 @@ Window {
 
         }
 
-//        Controller{
-//            id: viewController
-//        }
         Rectangle{
             id: titleConsumption
             width: consumptionBrowser.width
@@ -493,6 +489,7 @@ Window {
             anchors.top: parent.top
             anchors.left: parent.left
             border.color: "black"
+            radius: 5
             Text{
                 id: titleText
                 text: qsTr("Consumption Options")
@@ -511,20 +508,14 @@ Window {
             type: "consupmtion"
 
         }
-        OptionColumn{
-            id: optionColumn
-            width: consumptionBrowser.width
-            height: 170
-            anchors.top: consumptionBrowser.bottom
-        }
 
         Rectangle{
             id: titleWeather
             width: weatherBrowser.width
             height: 25
-            anchors.top: optionColumn.bottom
-            anchors.topMargin: 5
+            anchors.top: consumptionBrowser.bottom
             border.color: "black"
+            radius: 5
             Text{
                 id: titleweatherText
                 text: qsTr("Weather Options")
@@ -543,21 +534,6 @@ Window {
             type: "weather"
         }
 
-        /*Loader{
-            id: energy
-            source: "energy.qml"
-            height: parent.height/2.5
-
-            anchors.left: consumptionBrowser.right
-            anchors.top: parent.top
-            anchors.right: parent.right
-
-            anchors.topMargin: 150
-            anchors.leftMargin: 200
-            anchors.rightMargin: 600
-
-
-        }*/
 
         Loader{
 

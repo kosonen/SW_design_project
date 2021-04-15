@@ -12,6 +12,9 @@ ListModel{
     ListElement {
         name:'Humidity'
     }
+    ListElement{
+        name: "Cloudiness"
+    }
 }
 
 
