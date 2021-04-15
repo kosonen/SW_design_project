@@ -148,7 +148,12 @@ void Model::updateSeries(DataContainer* data)
     // update weatherY axis limits
     QPointF limits = getLimits(data->getData());
     qreal yTop = limits.x() + 1;
-    qreal yBottom = limits.y() - 1;
+    qreal yBottom = 0;
+    if(limits.y() < 0)
+    {
+        yBottom = limits.y() - 1;
+    }
+
     setWeatherY(QPointF(yTop, yBottom));
 
 //    delete data;

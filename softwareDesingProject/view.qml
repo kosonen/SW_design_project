@@ -21,6 +21,7 @@ Item{
                 id: weatherY
                 min: model.weatherY.y
                 max: model.weatherY.x
+                titleText: getUnits()
             }
 
             ValueAxis{
@@ -93,5 +94,22 @@ Item{
         return name;
     }
 
+    function getUnits()
+    {
+        var unit;
+        if (model.weatherType === "Temperature")
+        {
+            unit = "°C";
+        }
+        if (model.weatherType === "Wind speed")
+        {
+            unit = "M/S";
+        }
+        if (model.weatherType === "Humidity")
+        {
+            unit = "%";
+        }
+        return unit;
+    }
 }
 
