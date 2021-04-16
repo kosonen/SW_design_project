@@ -5,9 +5,13 @@
 Controller::Controller(QObject *parent):
     QObject(parent),
     m_settings(),
-    m_model(nullptr)
+    m_model(nullptr),
+    m_updateTimer()
 {
+    connect(&m_updateTimer, &QTimer::timeout, this, &Controller::requestData);
 
+    // Disable auto update by default
+    setAutomaticUpdate(false);
 }
 
 bool Controller::requestData()
@@ -54,6 +58,16 @@ void Controller::setTimeWindow(QString startTime, QString endTime)
 void Controller::setWeatherType(QString newType)
 {
     m_model->setWeatherType(newType);
+}
+
+void Controller::setAutomaticUpdate(bool status)
+{
+    m_updateTimer.stop();
+
+    if (status)
+    {
+        m_updateTimer.start(10000);
+    }
 }
 
 void Controller::setModel(Model* model)

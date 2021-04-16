@@ -7,6 +7,7 @@
 #include "model.h"
 
 #include <QObject>
+#include <QTimer>
 
 class Controller : public QObject
 {
@@ -29,6 +30,8 @@ public:
 
     Q_INVOKABLE void setWeatherType(QString newType);
 
+    Q_INVOKABLE void setAutomaticUpdate(bool status);
+
     void setModel(Model* model);
 
 signals:
@@ -36,6 +39,7 @@ signals:
 private:
     DataRequestSettings m_settings;
     Model* m_model;
+    QTimer m_updateTimer;
 };
 
 #endif // CONTROLLER_H
