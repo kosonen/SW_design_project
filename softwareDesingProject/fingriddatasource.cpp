@@ -117,6 +117,11 @@ void FingridDataSource::fetchHandler(){
     }
     else{
         previousFetchesHandled_ = true;
+        QDateTime currentTime = QDateTime::currentDateTimeUtc();
+        QUrl url = buildFingridURL(true, currentTime.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
+        QNetworkRequest req(url);
+        req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
+        network_->get(QNetworkRequest(req));
     }
 }
 
