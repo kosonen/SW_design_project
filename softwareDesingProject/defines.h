@@ -35,15 +35,17 @@ const QString PARAMETERS = "parameters";
 const QString CRS = "crs";
 const QString BBOX = "bbox";
 const QString FMISID = "fmisid";
-const QString MAXLOCATIONS = "maxlocations";
+const QString MAX_LOCATIONS = "maxlocations";
 const QString GEO_ID = "geoid";
 const QString WMO = "wmo";
 const QString TIMEZONE = "timezone";
+
 
 const QHash<QString, QString> FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING = {
     {STARTIME, "start_time"},
     {ENDTIME,"end_time"}
 };
+
 
 
 // Key for Fingrid API
@@ -66,7 +68,7 @@ const QUrlQuery FMI_QUERY_OBSERVATIONS= QUrlQuery(
     QPair<QString, QString>("service", "WFS"),
     QPair<QString, QString>("version", "2.0.0"),
     QPair<QString, QString>("request", "getFeature"),
-    QPair<QString, QString>("storedquery_id", "fmi::observations::weather")
+    QPair<QString, QString>("storedquery_id", "fmi::observations::weather::simple")
 }
 );
 
