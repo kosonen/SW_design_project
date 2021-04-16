@@ -110,7 +110,6 @@ void FingridDataSource::fetchHandler(){
         DataContainer* data = new DataContainer();
         for(auto it: dataBuffer_)
         {
-            qDebug() << it;
             data->addElement(it);
         }
         data->setType("electricity");

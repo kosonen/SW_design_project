@@ -38,9 +38,9 @@ bool DataFetcher::fetch(DataRequestSettings settings)
         }
 
         // Make data request
-        dataSource->makeRequest();
         dataSource->setTimeWindow(settings.getStartTime(), settings.getEndTime());
         dataSource->setSearchParameter(source);
+        dataSource->makeRequest();
 
     }
 

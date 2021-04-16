@@ -16,7 +16,7 @@ ListModel{
         fileUrl: "drop.png"
     }
     ListElement{
-        name: "Cloudiness"
+        name: "TotalCloudCover"
         fileUrl: "cloud.png"
     }
 }
