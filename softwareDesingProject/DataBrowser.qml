@@ -6,6 +6,8 @@ Item {
     property ListModel modelToView: listModel
     property int heightOfElement: 30
     property string type: ""
+    property string value: ""
+    //signal optionChanged;
 
     Rectangle{
         id: borders
@@ -47,11 +49,13 @@ Item {
                     console.log(modelToView.get(list.currentIndex).name + ' selected');
                     if(type === "weather")
                     {
-                        setWeatherProperties(modelToView.get(list.currentIndex).name )
+                        setWeatherProperties(modelToView.get(list.currentIndex).name);
+
                     }
                     else
                     {
                         setProperties(modelToView.get(list.currentIndex).name);
+
                     }
 
                     return list.currentIndex;
@@ -67,26 +71,51 @@ Item {
         console.log("current index " + prop);
         //model.setWeatherType(String(prop));
         viewController.setWeatherType(String(prop));
-        viewController.setDataSources([String(prop)]);
+        browser.value = prop;
+        //viewController.setDataSources([String(prop)]);
         viewController.requestData();
+        //optionChanged();
     }
 
     function setProperties(prop)
     {
         console.log("current index " + prop);
-        viewController.setDataSources([String(prop)]);
+        browser.value = prop;
+        //viewController.setDataSources([String(prop)]);
         viewController.requestData();
+        //optionChanged();
+
+    }
+
+    function initWeatherProperties(prop)
+    {
+        console.log("current index " + prop);
+        //model.setWeatherType(String(prop));
+        viewController.setWeatherType(String(prop));
+        browser.value = prop;
+        //viewController.setDataSources([String(prop)]);
+        //viewController.requestData();
+        //optionChanged();
+    }
+
+    function initProperties(prop)
+    {
+        console.log("current index " + prop);
+        //viewController.setDataSources([String(prop)]);
+        browser.value = prop;
+        //viewController.requestData();
+        //optionChanged();
     }
 
     Component.onCompleted: {
         console.log(modelToView.get(list.currentIndex).name + ' selected');
         if(type === "weather")
         {
-            setWeatherProperties(modelToView.get(list.currentIndex).name )
+            initWeatherProperties(modelToView.get(list.currentIndex).name )
         }
-        else
+        else // TÄMÄ ON KESKEN, TEE LOPPUUN!!!!
         {
-            setProperties(modelToView.get(list.currentIndex).name);
+            initProperties(modelToView.get(list.currentIndex).name);
         }
     }
 

@@ -522,7 +522,7 @@ Window {
             anchors.top: titleConsumption.bottom
             modelToView: consumptionModel
             type: "consupmtion"
-
+            //optionChanged.
         }
 
         Rectangle{
@@ -601,7 +601,8 @@ function getTomorrow()
 function requestData()
 {
     viewController.setLocation(inputInfo.text);
-   // viewController.setDataSources(["solar", "Temperature"])
+    console.log(" weather browser value: " + weatherBrowser.value + ", consumption browser value: " + consumptionBrowser.value)
+    viewController.setDataSources([weatherBrowser.value, consumptionBrowser.value])
 
     var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
     startDayInput.text + "T" + startTimeInput.text +"Z";

@@ -149,7 +149,8 @@ void Model::updateSeries(DataContainer* data)
     QPointF limits = getLimits(data->getData());
     qreal yTop = limits.x() + 1;
     qreal yBottom = 0;
-    if(limits.y() < 0)
+    qDebug() << data->getType() << Qt::endl;
+    if(data->getType() == "temperature")
     {
         yBottom = limits.y() - 1;
     }
