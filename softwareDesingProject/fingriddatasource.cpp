@@ -25,11 +25,38 @@ void FingridDataSource::setSearchParameter(const QString param)
 
 void FingridDataSource::makeRequest()
 {
+    dataBuffer_.clear();
+    QDateTime currentTime = QDateTime::currentDateTimeUtc();
+    qDebug() << "CURRENT TIME" << currentTime;
+    qDebug() << "START TIME" << startTime_;
+    qDebug() << "END TIME" << endTime_;
+    bool startTimeInPast = (currentTime > startTime_);
+    bool endTimeInPast = (currentTime > endTime_);
 
-    QUrl url = buildFingridURL();
+    bool hastPastValues = !CONSUMPTION_OPTION_TO_MODEL_MAPPING[source_].first.isEmpty();
+    bool hastFutureValues = !CONSUMPTION_OPTION_TO_MODEL_MAPPING[source_].second.isEmpty();
+
+    qDebug() << "BOOLEANS: " << endTimeInPast << startTimeInPast << hastPastValues <<  hastFutureValues;
+    QUrl url;
+    /* Fetch both from observations and forecast */
+    if(!endTimeInPast and startTimeInPast and hastPastValues and hastFutureValues){
+        previousFetchesHandled_ = false;
+        url = buildFingridURL(false, startTime_.toString(Qt::ISODate), currentTime.toString(Qt::ISODate));
+    }
+    /* Fetch from observations */
+    else if(startTimeInPast and hastPastValues){
+        previousFetchesHandled_ = true;
+        url = buildFingridURL(false, startTime_.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
+    }
+    /* Fetch from forecasts */
+    else {
+        previousFetchesHandled_ = true;
+        qDebug() << "TIMES: " << startTime_.toString() << Qt::endl;
+        url = buildFingridURL(true, startTime_.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
+    }
     QNetworkRequest req(url);
     req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
-    network_->get(req);
+    network_->get(QNetworkRequest(req));
 }
 
 void FingridDataSource::downloadCompleted(QNetworkReply *reply)
@@ -53,22 +80,22 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
         QDomElement value = m.firstChildElement();
         QDomElement start_time = value.nextSiblingElement();
         QDomElement end_time = start_time.nextSiblingElement();
-        qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
-        qDebug() << qPrintable(start_time.tagName()) << ": " << start_time.text() << Qt::endl;
-        qDebug() << qPrintable(end_time.tagName()) << ": " << end_time.text() << Qt::endl;
+        //qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+        //qDebug() << qPrintable(start_time.tagName()) << ": " << start_time.text() << Qt::endl;
+        //qDebug() << qPrintable(end_time.tagName()) << ": " << end_time.text() << Qt::endl;
 
         QString timeStr = start_time.text();
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
-        if(!timeStr.isEmpty()){
+        if(!timeStr.isEmpty() and value.text() != "NaN"){
             QPointF point;
             point.setX(dateTime.toMSecsSinceEpoch());
             point.setY(value.text().toDouble());
-            data->addElement(point);
+            dataBuffer_.append(point);
         }
     }
     qDebug() << "Content read OK!";
     reply->deleteLater();
-
+    fetchHandler();
 //    for(int i = 0; i < data.length(); i++){
 //        QString xVal = QString::number(data.at(i).x(), 'g', 20);
 //        QString yVal = QString::number(data.at(i).y(), 'g', 20);
@@ -76,12 +103,23 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 //                 << qPrintable(yVal)
 //                 << Qt::endl;
 //    }
-
-    data->setCategory("electricity");
-
-    emit dataParsed(data);
 }
 
+void FingridDataSource::fetchHandler(){
+    if(previousFetchesHandled_){
+        DataContainer* data = new DataContainer();
+        for(auto it: dataBuffer_)
+        {
+            qDebug() << it;
+            data->addElement(it);
+        }
+        data->setType("electricity");
+        emit dataParsed(data);
+    }
+    else{
+        previousFetchesHandled_ = true;
+    }
+}
 
 void FingridDataSource::setTimeWindow(QString startTime, QString endTime)
 {
@@ -95,20 +133,21 @@ void FingridDataSource::setTimeWindow(QString startTime, QString endTime)
 }
 
 
-QUrl FingridDataSource::buildFingridURL()
+QUrl FingridDataSource::buildFingridURL(bool forecast, QString startTime, QString endTime)
 {
-    QHash<QString, QString> params;
     QString id;
+    if(forecast){
+        id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[source_].second;
+    }
+    else{
+        id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[source_].first;
+    }
     QUrlQuery query;
-    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[STARTIME],
-                       startTime_.toString(Qt::ISODate));
 
-    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[ENDTIME],
-                       endTime_.toString(Qt::ISODate));
+    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[STARTIME], startTime);
+    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[ENDTIME], endTime);
 
-
-
-    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + source_ + "/events/xml"));
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + id + "/events/xml"));
     fetchURL.setQuery(query);
     qDebug() << "FINGRID URL IS: " <<  fetchURL;
     return fetchURL;

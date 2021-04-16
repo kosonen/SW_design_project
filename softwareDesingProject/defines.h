@@ -8,9 +8,11 @@ const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"temperature", "FMI"},
     {"windspeedms", "FMI"},
     {"humidity", "FMI"},
-    {"191",  "FINGRID"},
-    {"181", "FINGRID"},
-    {"188", "FINGRID"}
+    {"Wind power",  "FINGRID"},
+    {"Nuclear power", "FINGRID"},
+    {"Hydro power", "FINGRID"},
+    {"Energy consumption", "FINGRID"},
+    {"Energy production", "FINGRID"}
 };
 
 const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
@@ -20,10 +22,12 @@ const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
 };
 
 
-const QHash<QString, QString> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
-    {"Hydro power", "191"},
-    {"Wind power", "181"},
-    {"Nuclear power", "188"}
+const QHash<QString, QPair<QString, QString>> CONSUMPTION_OPTION_TO_MODEL_MAPPING = {
+    {"Hydro power",         QPair<QString, QString>("191", "")},
+    {"Wind power",          QPair<QString, QString>("75", "245")},
+    {"Nuclear power",       QPair<QString, QString>("188", "")},
+    {"Energy consumption",  QPair<QString, QString>("124", "166")},
+    {"Energy production",   QPair<QString, QString>("74", "242")}
 };
 
 // Aliases for query parameters

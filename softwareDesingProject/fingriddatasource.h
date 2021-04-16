@@ -20,7 +20,9 @@ private Q_SLOTS:
 
 private:
 
-    QUrl buildFingridURL();
+    QUrl buildFingridURL(bool forecast, QString startTime, QString endTime);
+    void fetchHandler();
+
 
 
     QNetworkAccessManager* network_;
@@ -30,6 +32,9 @@ private:
     QString source_;
     QDateTime startTime_;
     QDateTime endTime_;
+
+    QList<QPointF> dataBuffer_;
+    bool previousFetchesHandled_;
 
 };
 
