@@ -97,7 +97,7 @@ QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTim
         query.addQueryItem(i.key(), i.value());
     }
     */
-    query.addQueryItem(LOCATION, "Tampere");
+    query.addQueryItem(LOCATION, location_);
     query.addQueryItem("parameters", source_);
     fetchURL.setQuery(query);
 
@@ -116,7 +116,7 @@ void FmiDataSource::fetchHandler()
         }
 
         // TODO: this neds to be set automatically to correct value
-        data->setType("temperature");
+        data->setType(source_);
         // TODO: move "weather" to some constant
         data->setCategory("weather");
 
