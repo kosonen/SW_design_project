@@ -36,6 +36,7 @@ private:
     QDateTime startTime_;
     QDateTime endTime_;
     QString source_;
+    QString location_;
 
 };
 
