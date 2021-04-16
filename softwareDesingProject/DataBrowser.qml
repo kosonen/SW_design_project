@@ -20,11 +20,16 @@ Item {
                 delegate: Component {
                     Item{
                             width: parent.width
-                            height: heightOfElement
-
-                            Column{
-                                Text { text: name
-                                wrapMode: Text.WordWrap}
+                            height: heightOfElement   
+                            Row{
+                                spacing: 10
+                                Text {
+                                    text: name
+                                    wrapMode: Text.WordWrap
+                                }
+                                Image {
+                                    source: fileUrl
+                                }
                             }
                             MouseArea {
                                 anchors.fill: parent
@@ -71,6 +76,18 @@ Item {
         console.log("current index " + prop);
         viewController.setDataSources([String(prop)]);
         viewController.requestData();
+    }
+
+    Component.onCompleted: {
+        console.log(modelToView.get(list.currentIndex).name + ' selected');
+        if(type === "weather")
+        {
+            setWeatherProperties(modelToView.get(list.currentIndex).name )
+        }
+        else
+        {
+            setProperties(modelToView.get(list.currentIndex).name);
+        }
     }
 
 }

@@ -46,28 +46,31 @@ bool URLBuilder::buildFMIURL(DataRequestSettings &settings, QUrl &url, QString s
     return true;
 }
 
-bool URLBuilder::buildFingridURL(const DataRequestSettings &settings, QUrl &url, QString source)
+bool URLBuilder::buildFingridURL(DataRequestSettings &settings, QUrl &url, QString source)
 {
    //QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable"));
-    QHash<QString, QString> params;
-    QString id;
+    QHash<QString, QString> params = settings.getParams();
+    QString id = source;
     QUrlQuery query;
     QHashIterator<QString, QString> i(params);
     while(i.hasNext())
     {
         i.next();
-        if(CONSUMPTION_OPTION_TO_MODEL_MAPPING .contains(i.key()))
+      //  qDebug() << "key " << i.key() << " value " << i.value();
+       /* if(CONSUMPTION_OPTION_TO_MODEL_MAPPING.contains(i.key()))
         {
-            id = CONSUMPTION_OPTION_TO_MODEL_MAPPING [i.key()];
-        }
-        else if(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING.contains(i.key()))
+            id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[i.key()];
+        }*/
+        if(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING.contains(i.key()))
         {
             query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[i.key()], i.value());
         }
 
     }
-    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable" + id + "/event/xml"));
+    //qDebug() << "id " << id;
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/" + id + "/event/xml"));
     fetchURL.setQuery(query);
+    qDebug() << "fetchurl " << fetchURL;
     url = fetchURL;
     return true;
 }

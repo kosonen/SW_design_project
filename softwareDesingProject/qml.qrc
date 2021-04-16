@@ -7,5 +7,12 @@
         <file>ConsumptionListModel.qml</file>
         <file>OptionColumn.qml</file>
         <file>ConsumptionPieChart.qml</file>
+        <file>cloud.png</file>
+        <file>drop.png</file>
+        <file>g3882.png</file>
+        <file>g3943.png</file>
+        <file>wind_power.png</file>
+        <file>nuclear.png</file>
+        <file>g4050.png</file>
     </qresource>
 </RCC>

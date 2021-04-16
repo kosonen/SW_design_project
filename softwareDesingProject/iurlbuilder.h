@@ -28,7 +28,7 @@ public:
      * @param url of datarequest. User must create empty url for this.
      * @return True if building url is successfull, otherwise false.
      */
-    virtual bool buildFingridURL(const DataRequestSettings &settings, QUrl &url, QString source) = 0;
+    virtual bool buildFingridURL(DataRequestSettings &settings, QUrl &url, QString source) = 0;
 };
 
 #endif // IURLBUILDER_H
