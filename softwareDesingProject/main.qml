@@ -46,6 +46,9 @@ Window {
                 height: locationInputBoundingRect.height
                 text: "Viitasaari"
                 leftPadding: 4
+                onEditingFinished: {
+                    requestData()
+                }
             }
         }
 
@@ -104,7 +107,9 @@ Window {
                         startDayInput.text = getCurrentDate().getDate();
                     }
                 }
-
+                onEditingFinished: {
+                    requestData()
+                }
                 leftPadding: 4
             }
         }
@@ -150,7 +155,9 @@ Window {
                         startMonthInput.text = inputUnderTen;
                     }
                 }
-
+                onEditingFinished: {
+                    requestData()
+                }
                 leftPadding: 4
             }
         }
@@ -186,6 +193,9 @@ Window {
                 anchors.fill: parent
                 text: getCurrentDate().getFullYear()
                 leftPadding: 4
+                onEditingFinished: {
+                    requestData()
+                }
             }
         }
 
@@ -239,7 +249,9 @@ Window {
                     retString += ":00";
                     startTimeInput.text = retString;
                 }
-
+                onEditingFinished: {
+                    requestData()
+                }
                 leftPadding: 4
             }
         }
@@ -299,6 +311,9 @@ Window {
                     }
                 }
                 leftPadding: 4
+                onEditingFinished: {
+                    requestData()
+                }
             }
         }
 
@@ -344,6 +359,9 @@ Window {
                     }
                 }
                 leftPadding: 4
+                onEditingFinished: {
+                    requestData()
+                }
             }
         }
 
@@ -378,6 +396,9 @@ Window {
                 anchors.fill: parent
                 text: getTomorrow().getFullYear()
                 leftPadding: 4
+                onEditingFinished: {
+                    requestData()
+                }
             }
         }
 
@@ -432,6 +453,9 @@ Window {
                     retString += ":00";
                     endTimeInput.text = retString;
                 }
+                onEditingFinished: {
+                    requestData()
+                }
 
                 leftPadding: 4
             }
@@ -458,15 +482,7 @@ Window {
 
             radius: 5
             onClicked: {
-                viewController.setLocation(inputInfo.text);
-                //viewController.setDataSources(["solar", "Temperature"])
-
-                var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
-                startDayInput.text + "T" + startTimeInput.text +"Z";
-                var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +
-                endDayInput.text + "T" + endTimeInput.text +"Z";
-                viewController.setTimeWindow(startTime, endTime);
-                viewController.requestData();
+                requestData();
             }
         }
 
@@ -565,6 +581,10 @@ Window {
 
     }
 
+    Component.onCompleted:{
+        requestData();
+    }
+
 function getCurrentDate(){
     var today = new Date();
     return  today;
@@ -577,4 +597,19 @@ function getTomorrow()
     return tomorrow;
 }
 
+
+function requestData()
+{
+    viewController.setLocation(inputInfo.text);
+   // viewController.setDataSources(["solar", "Temperature"])
+
+    var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
+    startDayInput.text + "T" + startTimeInput.text +"Z";
+    var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +
+    endDayInput.text + "T" + endTimeInput.text +"Z";
+    viewController.setTimeWindow(startTime, endTime);
+    viewController.requestData();
 }
+
+}
+

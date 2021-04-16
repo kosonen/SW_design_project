@@ -78,5 +78,17 @@ Item {
         viewController.requestData();
     }
 
+    Component.onCompleted: {
+        console.log(modelToView.get(list.currentIndex).name + ' selected');
+        if(type === "weather")
+        {
+            setWeatherProperties(modelToView.get(list.currentIndex).name )
+        }
+        else
+        {
+            setProperties(modelToView.get(list.currentIndex).name);
+        }
+    }
+
 }
 
