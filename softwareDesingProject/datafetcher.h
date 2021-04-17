@@ -2,7 +2,7 @@
 #define DATAFETCHER_H
 
 #include "datacontainer.h"
-#include "datarequestsettings.h"
+#include "settings.h"
 #include "iurlbuilder.h"
 #include "urlbuilder.h"
 #include "idatasource.h"
@@ -18,7 +18,7 @@ class DataFetcher : public QObject
 public:
     explicit DataFetcher(QObject *parent = nullptr);
 
-    bool fetch(DataRequestSettings& settings);
+    bool fetch(Settings& settings);
 
 signals:
     void dataReady(DataContainer* data);

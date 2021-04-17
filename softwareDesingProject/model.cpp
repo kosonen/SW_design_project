@@ -134,7 +134,7 @@ void Model::setElectricityType(QString newType)
 }
 
 
-bool Model::update(DataRequestSettings& settings)
+bool Model::update(Settings& settings)
 {
     return m_dataFetcher->fetch(settings);
 }

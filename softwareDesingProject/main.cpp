@@ -3,9 +3,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "idatasource.h"
 #include "controller.h"
 #include "model.h"
+#include "settings.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,25 +16,21 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     Controller controller;
+    Model model;
+    Settings settings;
 
-    // TODO: cleanup
-    Model* model = new Model();
 
-    controller.setModel(model);
+    controller.setModel(&model);
+    controller.setSettings(&settings);
 
 //    qmlRegisterType<Controller>("controller", 1, 0, "Controller");
 
 
-    // For testing
-//    FmiDataSource api;
-//    api.load(QUrl("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::hirlam::surface::point::simple&place=Tampere&parameters=temperature"));
-//    FingridDataSource api2;
-//    api2.load(QUrl("https://api.fingrid.fi/v1/variable/74/events/xml"));
-
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("viewController", &controller);
-    engine.rootContext()->setContextProperty("model", model);
+    engine.rootContext()->setContextProperty("model", &model);
+    engine.rootContext()->setContextProperty("settings", &settings);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

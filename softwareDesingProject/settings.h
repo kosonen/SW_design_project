@@ -10,11 +10,11 @@
 /**
  * @brief The DataRequestSettings class implements settings needed to build url for datarequest.
  */
-class DataRequestSettings : public ISaveObject
+class Settings : public ISaveObject
 {
 public:
-    DataRequestSettings();
-    virtual ~DataRequestSettings() = default;
+    Settings();
+    virtual ~Settings() = default;
 
     void setLocation(QString location);
     QString getLocation();

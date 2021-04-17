@@ -1,16 +1,16 @@
-#include "datarequestsettings.h"
+#include "settings.h"
 #include "defines.h"
 #include <QDebug>
 
 #include <QJsonObject>
 #include <QJsonArray>
 
-DataRequestSettings::DataRequestSettings() : m_params({}), m_dataSources({})
+Settings::Settings() : m_params({}), m_dataSources({})
 {
 
 }
 
-void DataRequestSettings::setLocation(QString location)
+void Settings::setLocation(QString location)
 {
     if(m_params.contains(LOCATION))
     {
@@ -21,22 +21,22 @@ void DataRequestSettings::setLocation(QString location)
     }
 }
 
-QString DataRequestSettings::getLocation()
+QString Settings::getLocation()
 {
     return m_params[LOCATION];
 }
 
-void DataRequestSettings::setDatasources(QVector<QString> sources)
+void Settings::setDatasources(QVector<QString> sources)
 {
     m_dataSources = sources;
 }
 
-QVector<QString> DataRequestSettings::getDatasources()
+QVector<QString> Settings::getDatasources()
 {
     return m_dataSources;
 }
 
-void DataRequestSettings::setTimeWindow(QString startTime, QString endTime)
+void Settings::setTimeWindow(QString startTime, QString endTime)
 {
     if(m_params.contains(STARTIME))
     {
@@ -54,17 +54,17 @@ void DataRequestSettings::setTimeWindow(QString startTime, QString endTime)
     }
 }
 
-QString DataRequestSettings::getStartTime()
+QString Settings::getStartTime()
 {
     return m_params[STARTIME];
 }
 
-QString DataRequestSettings::getEndTime()
+QString Settings::getEndTime()
 {
     return m_params[ENDTIME];
 }
 
-QHash<QString, QString> DataRequestSettings::getParams()
+QHash<QString, QString> Settings::getParams()
 {
     QHashIterator<QString,QString> i(m_params);
     qDebug() << "getparams";
@@ -76,7 +76,7 @@ QHash<QString, QString> DataRequestSettings::getParams()
     return m_params;
 }
 
-QJsonObject DataRequestSettings::serialize()
+QJsonObject Settings::serialize()
 {
     QJsonObject settingsData;
     QJsonArray list;
@@ -95,7 +95,7 @@ QJsonObject DataRequestSettings::serialize()
     return settingsData;
 }
 
-void DataRequestSettings::deserialize(QJsonObject data)
+void Settings::deserialize(QJsonObject data)
 {
     m_params[LOCATION] = data["location"].toString();
     m_params[STARTIME] = data["startTime"].toString();

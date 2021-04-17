@@ -4,7 +4,7 @@
 
 Controller::Controller(QObject *parent):
     QObject(parent),
-    m_settings(),
+    m_settings(nullptr),
     m_model(nullptr),
     m_updateTimer(),
     m_saveManager(),
@@ -31,7 +31,7 @@ bool Controller::requestData()
             SC_Check == SC_NoForecastForNuclear ||
             SC_Check == SC_NoForecastForUnidentifiedSource)
     {
-        return m_model->update(m_settings);
+        return m_model->update(*m_settings);
     }
     else{
         qDebug() << "Invalid settings. Request denied";
@@ -43,7 +43,7 @@ bool Controller::requestData()
 void Controller::setLocation(QString value)
 {
     qDebug() <<"location: " << value;
-    m_settings.setLocation(value);
+    m_settings->setLocation(value);
 }
 
 void Controller::setDataSources(QVector<QString> sources)
@@ -58,13 +58,13 @@ void Controller::setDataSources(QVector<QString> sources)
         }
         qDebug() << "Source " << str;
     }
-    m_settings.setDatasources(sources);
+    m_settings->setDatasources(sources);
 }
 
 void Controller::setTimeWindow(QString startTime, QString endTime)
 {
     qDebug() << "Start Time " << startTime << " End Time " << endTime;
-    m_settings.setTimeWindow(startTime, endTime);
+    m_settings->setTimeWindow(startTime, endTime);
 }
 
 void Controller::setWeatherType(QString newType)
@@ -91,7 +91,7 @@ bool Controller::loadData(QString filePath)
 {
     DataContainer* data = new DataContainer();
 
-    m_saveManager.add("settings", &m_settings);
+    m_saveManager.add("settings", m_settings);
     m_saveManager.add("data", data);
     m_saveManager.load(filePath);
 
@@ -112,7 +112,7 @@ bool Controller::saveData(QString filePath, QString dataSource)
     if (data != nullptr)
     {
         qDebug() << "GOT DATA!";
-        m_saveManager.add("settings", &m_settings);
+        m_saveManager.add("settings", m_settings);
         m_saveManager.add("data", data);
         m_saveManager.save(filePath);
 
@@ -139,22 +139,27 @@ void Controller::setModel(Model* model)
     m_model = model;
 }
 
+void Controller::setSettings(Settings *settings)
+{
+    m_settings = settings;
+}
+
 SettingsCheck Controller::checkSettings()
 {
-    QDateTime start = QDateTime::fromString(m_settings.getStartTime(), Qt::ISODate);
-    QDateTime end = QDateTime::fromString(m_settings.getEndTime(), Qt::ISODate);
+    QDateTime start = QDateTime::fromString(m_settings->getStartTime(), Qt::ISODate);
+    QDateTime end = QDateTime::fromString(m_settings->getEndTime(), Qt::ISODate);
     SettingsCheck retVal = SC_OK;
     if(start > end)
     {
         qDebug() << "Start time is later than end time!!!";
         retVal = SC_StartTimeGreaterThanEnd;
     }
-    if(m_settings.getDatasources().isEmpty())
+    if(m_settings->getDatasources().isEmpty())
     {
         retVal = SC_NoSources;
     }
     QDateTime currentDateTime = getCurrentDate();
-    for(QString src : m_settings.getDatasources())
+    for(QString src : m_settings->getDatasources())
     {
         if(retVal != SC_OK)
         {

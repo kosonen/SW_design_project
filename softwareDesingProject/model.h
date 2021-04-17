@@ -2,7 +2,7 @@
 #define MODEL_H
 
 #include "datacontainer.h"
-#include "datarequestsettings.h"
+#include "settings.h"
 #include "datafetcher.h"
 
 #include <QObject>
@@ -54,7 +54,7 @@ public:
     void setWeatherType(QString newType);
     void setElectricityType(QString newType);
 
-    bool update(DataRequestSettings& settings);
+    bool update(Settings& settings);
 
     DataContainer* getData(QString key);
 

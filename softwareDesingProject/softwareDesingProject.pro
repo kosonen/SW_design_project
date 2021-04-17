@@ -10,12 +10,12 @@ SOURCES += \
         controller.cpp \
         datacontainer.cpp \
         datafetcher.cpp \
-        datarequestsettings.cpp \
         fingriddatasource.cpp \
         fmidatasource.cpp \
         main.cpp \
         model.cpp \
-        savemanager.cpp
+        savemanager.cpp \
+        settings.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,11 +34,11 @@ HEADERS += \
     controller.h \
     datacontainer.h \
     datafetcher.h \
-    datarequestsettings.h \
     defines.h \
     fingriddatasource.h \
     fmidatasource.h \
     idatasource.h \
     isaveobject.h \
     model.h \
-    savemanager.h
+    savemanager.h \
+    settings.h

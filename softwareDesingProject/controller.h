@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "datarequestsettings.h"
+#include "settings.h"
 #include "savemanager.h"
 
 
@@ -52,6 +52,7 @@ public:
     Q_INVOKABLE QString getPopupError();
 
     void setModel(Model* model);
+    void setSettings(Settings* settings);
 
 Q_SIGNALS:
     void invalidSettings(QString message);
@@ -61,7 +62,7 @@ private:
     void handleSettingCheck(SettingsCheck settingsStatus);
     QDateTime getCurrentDate();
 
-    DataRequestSettings m_settings;
+    Settings* m_settings;
     Model* m_model;
     QTimer m_updateTimer;
     SaveManager m_saveManager;
