@@ -26,8 +26,8 @@ Item{
 
             ValueAxis{
                 id: electricityY
-                min: 0
-                max: 100
+                min: model.electricityY.y
+                max: model.electricityY.x
             }
 
 
@@ -67,12 +67,17 @@ Item{
         }
         if (model.weatherType === "Wind speed")
         {
-            color = "gray";
+            color = "cyan";
         }
         if (model.weatherType === "Humidity")
         {
             color = "blue";
         }
+        if (model.weatherType === "TotalCloudCover")
+        {
+            color = "gray";
+        }
+
         return color;
     }
 
@@ -91,6 +96,11 @@ Item{
         {
             name = "Humidity";
         }
+        if (model.weatherType === "TotalCloudCover")
+        {
+            name = "Cloud Cover";
+        }
+
         return name;
     }
 
@@ -109,6 +119,11 @@ Item{
         {
             unit = "%";
         }
+        if (model.weatherType === "TotalCloudCover")
+        {
+            unit = "";
+        }
+
         return unit;
     }
 }

@@ -112,7 +112,8 @@ void FingridDataSource::fetchHandler(){
         {
             data->addElement(it);
         }
-        data->setType("electricity");
+        data->setType(source_);
+        data->setCategory("electricity");
         emit dataParsed(data);
     }
     else{

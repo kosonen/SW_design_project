@@ -15,7 +15,7 @@ Model::Model(QObject *parent):
     m_hydroProductionSeries{},
     */
     m_weatherY{},
-    m_enegyY{},
+    m_elelctricityY{},
     m_start(),
     m_end()
 {
@@ -45,6 +45,11 @@ QDateTime Model::getEndTime()
 QPointF Model::getWeatherY()
 {
     return m_weatherY;
+}
+
+QPointF Model::getElectricityY()
+{
+    return m_elelctricityY;
 }
 
 QString Model::getWeatherType()
@@ -102,6 +107,12 @@ void Model::setWeatherY(QPointF newValue)
     emit weatherYChanged();
 }
 
+void Model::setElectricityY(QPointF newValue)
+{
+    m_elelctricityY = newValue;
+    emit electricityYChanged();
+}
+
 void Model::setWeatherType(QString newType)
 {
     qDebug() << "Weather type " << newType;
@@ -126,36 +137,39 @@ void Model::updateSeries(DataContainer* data)
         return;
     }
 
-//    for (auto p : data->get)
-//    {
-//        qDebug() << "X: " << p.x() << "Y: " << p.y() << Qt::endl;
-//    }
-
     setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
     setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
 
-    qDebug() << data->getCategory() << Qt::endl;
+    qDebug() << data->getCategory() << "MOON TÄSSÄ" << Qt::endl;
 
     if(data->getCategory() == "weather")
     {
         m_weatherSeries->replace(data->getData());
+        // update weatherY axis limits
+        QPointF limits = getLimits(data->getData());
+        qreal yTop = limits.x() + 1;
+        qreal yBottom = 0;
+        qDebug() << data->getType() << Qt::endl;
+        if(data->getType() == "temperature")
+        {
+            yBottom = limits.y() - 1;
+        }
+
+        setWeatherY(QPointF(yTop, yBottom));
     }
     else if (data->getCategory() == "electricity")
     {
+        qDebug() << "haaraan menöö" << Qt::endl;
         m_eleSeries->replace(data->getData());
+        QPointF limits = getLimits(data->getData());
+        qreal yTop = limits.x() + 1;
+        qreal yBottom = 0;
+        setElectricityY(QPointF(yTop, yBottom));
     }
 
-    // update weatherY axis limits
-    QPointF limits = getLimits(data->getData());
-    qreal yTop = limits.x() + 1;
-    qreal yBottom = 0;
-    qDebug() << data->getType() << Qt::endl;
-    if(data->getType() == "temperature")
-    {
-        yBottom = limits.y() - 1;
-    }
+    //m_eleSeries->replace(data->getData());
 
-    setWeatherY(QPointF(yTop, yBottom));
+
 
 //    delete data;
 }
