@@ -1,5 +1,9 @@
 #include "datacontainer.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 DataContainer::DataContainer(QObject *parent):
     ISaveObject(parent),
     m_category(),
@@ -55,12 +59,29 @@ QList<QPointF> DataContainer::getData()
     return m_data;
 }
 
-QString DataContainer::serialize()
+QJsonObject DataContainer::serialize()
 {
+    QJsonObject containerData;
+    QJsonArray list;
 
+    containerData["type"] = m_type;
+    containerData["category"] = m_category;
+    containerData["unit"] = m_unit;
+
+    for (auto e : m_data)
+    {
+        QJsonObject point;
+        point["x"] = e.x();
+        point["y"] = e.y();
+        list.append(point);
+    }
+
+    containerData["data"] = list;
+
+    return containerData;
 }
 
-void DataContainer::deserialize(QString data)
+void DataContainer::deserialize(QJsonObject data)
 {
 
 }

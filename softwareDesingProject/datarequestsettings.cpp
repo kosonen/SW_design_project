@@ -2,6 +2,9 @@
 #include "defines.h"
 #include <QDebug>
 
+#include <QJsonObject>
+#include <QJsonArray>
+
 DataRequestSettings::DataRequestSettings() : m_params({}), m_dataSources({})
 {
 
@@ -73,12 +76,26 @@ QHash<QString, QString> DataRequestSettings::getParams()
     return m_params;
 }
 
-QString DataRequestSettings::serialize()
+QJsonObject DataRequestSettings::serialize()
 {
+    QJsonObject settingsData;
+    QJsonArray list;
 
+    settingsData["location"] = m_params[LOCATION];
+    settingsData["startTime"] = m_params[STARTIME];
+    settingsData["endTime"] = m_params[ENDTIME];
+
+    for (auto e : m_dataSources)
+    {
+        list.append(e);
+    }
+
+    settingsData["dataSources"] = list;
+
+    return settingsData;
 }
 
-void DataRequestSettings::deserialize(QString data)
+void DataRequestSettings::deserialize(QJsonObject data)
 {
 
 }

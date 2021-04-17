@@ -2,6 +2,7 @@
 #define ISAVEOBJECT_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class ISaveObject : public QObject
 {
@@ -9,8 +10,8 @@ class ISaveObject : public QObject
 public:
     explicit ISaveObject(QObject *parent = nullptr) : QObject(parent) {}
 
-    virtual QString serialize() = 0;
-    virtual void deserialize(QString data) = 0;
+    virtual QJsonObject serialize() = 0;
+    virtual void deserialize(QJsonObject data) = 0;
 };
 
 #endif // ISAVEOBJECT_H

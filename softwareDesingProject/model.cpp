@@ -18,7 +18,8 @@ Model::Model(QObject *parent):
     m_weatherY{},
     m_elelctricityY{},
     m_start(),
-    m_end()
+    m_end(),
+    m_data()
 {
     connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateSeries);
 }
@@ -138,6 +139,18 @@ bool Model::update(DataRequestSettings& settings)
     return m_dataFetcher->fetch(settings);
 }
 
+DataContainer* Model::getData(QString key)
+{
+    if (m_data.count(key))
+    {
+        return m_data.at(key);
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 void Model::updateSeries(DataContainer* data)
 {
     qDebug() << "Updating temperature graph" << Qt::endl;
@@ -180,6 +193,8 @@ void Model::updateSeries(DataContainer* data)
     }
 
     //m_eleSeries->replace(data->getData());
+
+    m_data.insert({data->getCategory(), data});
 
 
 

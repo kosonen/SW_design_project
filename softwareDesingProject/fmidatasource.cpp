@@ -150,9 +150,9 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
         QDomElement time = element.nextSiblingElement();
         QDomElement name = time.nextSiblingElement();
         QDomElement value = name.nextSiblingElement();
-        qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
-        qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
-        qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+//        qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
+//        qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
+//        qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
 
         QString timeStr = time.text();
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);

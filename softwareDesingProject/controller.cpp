@@ -75,8 +75,8 @@ void Controller::setAutomaticUpdate(bool status)
 bool Controller::loadData(QString filePath)
 {
     DataContainer* data = new DataContainer();
-    m_saveManager.load(filePath, "key", &m_settings);
-    m_saveManager.load(filePath, "key", data);
+    m_saveManager.load(filePath, "settings", &m_settings);
+    m_saveManager.load(filePath, "data", data);
 
     m_model->updateSeries(data);
 
@@ -86,9 +86,20 @@ bool Controller::loadData(QString filePath)
 bool Controller::saveData(QString filePath, QString dataSource)
 {
     qDebug() << "SAVING! " << dataSource << " to "  << filePath;
-    // m_saveManager.save(filePath, m_settings);
 
-    return true;
+    DataContainer* data = m_model->getData(dataSource);
+
+    if (data != nullptr)
+    {
+        qDebug() << "GOT DATA!";
+        m_saveManager.add("settings", &m_settings);
+        m_saveManager.add("data", data);
+        m_saveManager.save(filePath);
+
+        return true;
+    }
+
+    return false;
 }
 
 void Controller::setModel(Model* model)

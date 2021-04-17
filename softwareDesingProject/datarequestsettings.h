@@ -28,14 +28,12 @@ public:
 
     QHash<QString,QString> getParams();
 
-    virtual QString serialize() override;
-    virtual void deserialize(QString data) override;
+    virtual QJsonObject serialize() override;
+    virtual void deserialize(QJsonObject data) override;
 
 private:
     QHash<QString, QString> m_params;
     QVector<QString> m_dataSources;
-
-
 
 };
 

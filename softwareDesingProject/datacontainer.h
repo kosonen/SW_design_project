@@ -30,8 +30,8 @@ public:
     int size();
 //    void clear();
 
-    virtual QString serialize() override;
-    virtual void deserialize(QString data) override;
+    virtual QJsonObject serialize() override;
+    virtual void deserialize(QJsonObject data) override;
 
 private:
     QString m_category;

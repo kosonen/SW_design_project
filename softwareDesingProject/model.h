@@ -9,6 +9,7 @@
 #include <QChart>
 #include <QLineSeries>
 #include <QDateTime>
+#include <unordered_map>
 
 //enum weatherT {temperature, wind, humidity, NONE};
 
@@ -54,6 +55,7 @@ public:
 
     bool update(DataRequestSettings& settings);
 
+    DataContainer* getData(QString key);
 
 public slots:
     void updateSeries(DataContainer* data);
@@ -87,7 +89,7 @@ private:
     QPointF m_elelctricityY;
     QDateTime m_start;
     QDateTime m_end;
-
+    std::unordered_map<QString, DataContainer*> m_data;
 
 };
 
