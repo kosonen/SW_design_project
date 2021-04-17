@@ -186,6 +186,7 @@ void FingridDataSource::pieModelFetchHandler()
 void FingridDataSource::getCurrentProduction()
 {
     numberOfFetches_ = 0;
+    pieModelDataBuffer_.clear();
     QString id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[PRODUCTION_METHODS_FOR_PIE_MODEL[numberOfFetches_]].first;
     QUrl url = buildFingridURL(id);
     QNetworkRequest req(url);
