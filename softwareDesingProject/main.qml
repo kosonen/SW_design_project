@@ -579,6 +579,13 @@ Window {
             anchors.leftMargin: 50
         }
 
+        SaveLoad{
+            width: consumptionBrowser.width
+            height: 25
+            anchors.top:parent.top
+            anchors.right: parent.right
+        }
+
     }
 
     Component.onCompleted:{
