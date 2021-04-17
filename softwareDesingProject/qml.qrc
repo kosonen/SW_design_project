@@ -14,5 +14,6 @@
         <file>wind_power.png</file>
         <file>nuclear.png</file>
         <file>g4050.png</file>
+        <file>SaveLoad.qml</file>
     </qresource>
 </RCC>

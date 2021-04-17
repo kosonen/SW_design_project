@@ -4,18 +4,20 @@
 FingridDataSource::FingridDataSource(QObject* parent) : IDataSource(parent)
 {
     network_ = new QNetworkAccessManager(this);
-    parser_ = new QXmlStreamReader();
+    pieModelNetwork_ = new QNetworkAccessManager(this);
     connect(network_, &QNetworkAccessManager::finished, this, &FingridDataSource::downloadCompleted);
+    connect(pieModelNetwork_, &QNetworkAccessManager::finished, this, &FingridDataSource::pieModelDownloadCompleted);
     source_ = "191";
     startTime_ = QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(-3);
     endTime_ = QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(-1);
+    numberOfFetches_ = 0;
 
 }
 
 FingridDataSource::~FingridDataSource()
 {
     delete network_;
-    delete parser_;
+    delete pieModelNetwork_;
 }
 
 void FingridDataSource::setSearchParameter(const QString param)
@@ -59,6 +61,45 @@ void FingridDataSource::makeRequest()
     network_->get(QNetworkRequest(req));
 }
 
+void FingridDataSource::parseData(QDomDocument& doc, QList<QPointF>& buffer)
+{
+    for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
+    {
+        QDomElement value = m.firstChildElement();
+        QDomElement start_time = value.nextSiblingElement();
+        QDomElement end_time = start_time.nextSiblingElement();
+        QString timeStr = start_time.text();
+        QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
+        if(!timeStr.isEmpty() and value.text() != "NaN"){
+            QPointF point;
+            point.setX(dateTime.toMSecsSinceEpoch());
+            point.setY(value.text().toDouble());
+            buffer.append(point);
+        }
+    }
+}
+
+void FingridDataSource::parsePieModelData(QDomDocument& doc, QList<QPointF>& buffer)
+{
+    for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
+    {
+        QDomElement value = m.firstChildElement();
+        QDomElement start_time = value.nextSiblingElement();
+        QDomElement end_time = start_time.nextSiblingElement();
+        QString timeStr = start_time.text();
+        QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
+        if(!timeStr.isEmpty() and value.text() != "NaN"){
+            QPointF point;
+            point.setX(dateTime.toMSecsSinceEpoch());
+            point.setY(value.text().toDouble());
+            /* Save only the latest element */
+            if(m.nextSiblingElement().isNull()){
+                buffer.append(point);
+            }
+        }
+    }
+}
+
 void FingridDataSource::downloadCompleted(QNetworkReply *reply)
 {
     qDebug() << "Request was " << reply->request().url();
@@ -66,43 +107,33 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
     QString errMsg;
     QDomDocument doc;
 
-    DataContainer* data = new DataContainer;
+    if (!doc.setContent(reply->readAll(), &errMsg)) {
+        qDebug() << "Fingrid request BROKEN" << Qt::endl;
+        qDebug() << "Error: " << errMsg << Qt::endl;
+        return;
+    }
+    parseData(doc, dataBuffer_);
+    qDebug() << "Content read OK!";
+    reply->deleteLater();
+    fetchHandler();
+}
+
+void FingridDataSource::pieModelDownloadCompleted(QNetworkReply *reply)
+{
+    qDebug() << "Request was " << reply->request().url();
+
+    QString errMsg;
+    QDomDocument doc;
 
     if (!doc.setContent(reply->readAll(), &errMsg)) {
         qDebug() << "Fingrid request BROKEN" << Qt::endl;
         qDebug() << "Error: " << errMsg << Qt::endl;
         return;
     }
-    QString tmpString = doc.toString();
-    qDebug() << tmpString << Qt::endl;
-    for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
-    {
-        QDomElement value = m.firstChildElement();
-        QDomElement start_time = value.nextSiblingElement();
-        QDomElement end_time = start_time.nextSiblingElement();
-        //qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
-        //qDebug() << qPrintable(start_time.tagName()) << ": " << start_time.text() << Qt::endl;
-        //qDebug() << qPrintable(end_time.tagName()) << ": " << end_time.text() << Qt::endl;
-
-        QString timeStr = start_time.text();
-        QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
-        if(!timeStr.isEmpty() and value.text() != "NaN"){
-            QPointF point;
-            point.setX(dateTime.toMSecsSinceEpoch());
-            point.setY(value.text().toDouble());
-            dataBuffer_.append(point);
-        }
-    }
+    parsePieModelData(doc, pieModelDataBuffer_);
     qDebug() << "Content read OK!";
     reply->deleteLater();
-    fetchHandler();
-//    for(int i = 0; i < data.length(); i++){
-//        QString xVal = QString::number(data.at(i).x(), 'g', 20);
-//        QString yVal = QString::number(data.at(i).y(), 'g', 20);
-//        qDebug() << qPrintable(xVal) << " "
-//                 << qPrintable(yVal)
-//                 << Qt::endl;
-//    }
+    pieModelFetchHandler();
 }
 
 void FingridDataSource::fetchHandler(){
@@ -124,6 +155,45 @@ void FingridDataSource::fetchHandler(){
         req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
         network_->get(QNetworkRequest(req));
     }
+}
+
+void FingridDataSource::pieModelFetchHandler()
+{
+    if(numberOfFetches_ < PRODUCTION_METHODS_FOR_PIE_MODEL.size() - 1)
+    {
+        numberOfFetches_++;
+        QString id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[PRODUCTION_METHODS_FOR_PIE_MODEL[numberOfFetches_]].first;
+        QUrl url = buildFingridURL(id);
+        QNetworkRequest req(url);
+        req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
+        pieModelNetwork_->get(QNetworkRequest(req));
+    }
+    else
+    {
+        DataContainer* data = new DataContainer();
+        for(auto it: pieModelDataBuffer_)
+        {
+            qDebug() << "PIE MODEL DATA " << it;
+            data->addElement(it);
+        }
+        data->setType(source_);
+        data->setCategory("electricity");
+        emit currentProductionReady(data);
+        numberOfFetches_ = 0;
+    }
+
+}
+
+void FingridDataSource::getCurrentProduction()
+{
+    numberOfFetches_ = 0;
+    pieModelDataBuffer_.clear();
+    QString id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[PRODUCTION_METHODS_FOR_PIE_MODEL[numberOfFetches_]].first;
+    QUrl url = buildFingridURL(id);
+    QNetworkRequest req(url);
+    req.setRawHeader(FINGRID_KEY_HEADER.toUtf8(), FINGRID_API_KEY.toUtf8());
+    pieModelNetwork_->get(QNetworkRequest(req));
+
 }
 
 void FingridDataSource::setTimeWindow(QString startTime, QString endTime)
@@ -156,6 +226,21 @@ QUrl FingridDataSource::buildFingridURL(bool forecast, QString startTime, QStrin
     fetchURL.setQuery(query);
     qDebug() << "FINGRID URL IS: " <<  fetchURL;
     return fetchURL;
+}
+
+QUrl FingridDataSource::buildFingridURL(QString source)
+{
+    QUrlQuery query;
+    QDateTime currentTime = QDateTime::currentDateTimeUtc();
+    /* Trace back the start time two hours, it is still possible that it will
+     * return two values, we must only save the latest value */
+    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[STARTIME], currentTime.addSecs(-7200).toString(Qt::ISODate));
+    query.addQueryItem(FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING[ENDTIME], currentTime.toString(Qt::ISODate));
+
+    QUrl fetchURL(QString("https://api.fingrid.fi/v1/variable/" + source + "/events/xml"));
+    fetchURL.setQuery(query);
+    return fetchURL;
+
 }
 
 

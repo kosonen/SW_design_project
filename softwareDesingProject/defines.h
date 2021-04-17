@@ -32,6 +32,9 @@ const QHash<QString, QPair<QString, QString>> CONSUMPTION_OPTION_TO_MODEL_MAPPIN
     {"Energy production",   QPair<QString, QString>("74", "242")}
 };
 
+const QList<QString> PRODUCTION_METHODS_FOR_PIE_MODEL =
+    {"Hydro power", "Wind power", "Nuclear power"};
+
 // Aliases for query parameters
 const QString LOCATION = "place";
 const QString STARTIME = "starttime";
