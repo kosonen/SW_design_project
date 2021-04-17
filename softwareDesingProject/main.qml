@@ -100,11 +100,11 @@ Window {
                 text: {
                     if(getCurrentDate().getDate() < 10)
                     {
-                        startDayInput.text = "0" + getCurrentDate().getDate();
+                        startDayInput.text = "0" + getCurrentDate().getDate() - 1;
                     }
                     else
                     {
-                        startDayInput.text = getCurrentDate().getDate();
+                        startDayInput.text = getCurrentDate().getDate() -1;
                     }
                 }
                 onEditingFinished: {
@@ -610,6 +610,7 @@ function requestData()
     viewController.setLocation(inputInfo.text);
     console.log(" weather browser value: " + weatherBrowser.value + ", consumption browser value: " + consumptionBrowser.value)
     viewController.setDataSources([weatherBrowser.value, consumptionBrowser.value])
+
 
     var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
     startDayInput.text + "T" + startTimeInput.text +"Z";

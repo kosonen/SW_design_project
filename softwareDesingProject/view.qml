@@ -21,7 +21,7 @@ Item{
                 id: weatherY
                 min: model.weatherY.y
                 max: model.weatherY.x
-                titleText: getWeatherUnits()
+                //titleText: getWeatherUnits()
             }
 
             ValueAxis{
@@ -33,8 +33,8 @@ Item{
 
             LineSeries{
                 id: weatherSeries
-                color: getWeatherColor()
-                name: getWeatherName()
+                //color: getWeatherColor()
+                //name: getWeatherName()
                 axisX: timeAxis
                 axisY: weatherY
                 width: 2
@@ -43,8 +43,8 @@ Item{
 
             LineSeries{
                 id: electricitySeries
-                color: getElectricityColor()
-                name: getElectricityName()
+                //color: getElectricityColor()
+                //name: getElectricityName()
                 axisX: timeAxis
                 axisYRight: electricityY
                 width: 2
@@ -60,6 +60,7 @@ Item{
         model.elecrtricitySeries = electricitySeries;
     }
 
+    /*
     function getWeatherColor()
     {
         var color;
@@ -117,6 +118,7 @@ Item{
         }
         return name;
     }
+    */
 
 }
 

@@ -16,6 +16,18 @@ const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"Energy production", "FINGRID"}
 };
 
+
+const QHash<QString, int> LINE_SERIES_MAPPING = {
+    {"Temperature",     1},
+    {"Wind speed",      2},
+    {"Humidity",        3},
+    {"TotalCloudCover", 4},
+    {"Hydro power",     5},
+    {"Wind power",      6},
+    {"Nuclear power",   7}
+};
+
+
 const QHash<QString, QString> WEATHER_OPTION_TO_MODEL_MAPPING = {
     {"Wind speed", "windspeedms"},
     {"Temperature", "temperature"},

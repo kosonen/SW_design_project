@@ -51,12 +51,19 @@ Item {
                     {
                         console.log("sää muuttuu")
                         setWeatherProperties(modelToView.get(list.currentIndex).name);
+                        //parent.parent.requestData();
+                        //viewController.setDataSources(modelToView.get(list.currentIndex).name)
+                        //viewController.requestData();
+
 
                     }
                     else if (type === "consumption")
                     {
                         console.log("sähkö muuttuu")
                         setElectricityProperties(modelToView.get(list.currentIndex).name);
+                        //parent.parent.requestData();
+                        //viewController.setDataSources(modelToView.get(list.currentIndex).name)
+                        //viewController.requestData();
                     }
 
                     else
@@ -79,7 +86,7 @@ Item {
         console.log("current index " + prop);
         viewController.setWeatherType(String(prop));
         browser.value = prop;
-        viewController.requestData();
+        //viewController.requestData();
     }
 
     function setElectricityProperties(prop)
@@ -87,7 +94,7 @@ Item {
         console.log("current index " + prop);
         viewController.setElectricityType(String(prop));
         browser.value = prop;
-        viewController.requestData();
+        //viewController.requestData();
     }
 
     function setProperties(prop)
@@ -107,6 +114,13 @@ Item {
 
     }
 
+    function initElecticityProperties(prop)
+    {
+        console.log("current index " + prop);
+        viewController.setElectricityType(String(prop));
+        browser.value = prop;
+    }
+
     function initProperties(prop)
     {
         console.log("current index " + prop);
@@ -119,8 +133,15 @@ Item {
         console.log(modelToView.get(list.currentIndex).name + ' selected');
         if(type === "weather")
         {
-            initWeatherProperties(modelToView.get(list.currentIndex).name )
+            console.log("weather initialized");
+            initWeatherProperties(modelToView.get(list.currentIndex).name);
         }
+        else if(type === "consumption")
+        {
+            console.log("electricity initialized");
+            initElecticityProperties(modelToView.get(list.currentIndex).name);
+        }
+
         else // TÄMÄ ON KESKEN, TEE LOPPUUN!!!!
         {
             initProperties(modelToView.get(list.currentIndex).name);

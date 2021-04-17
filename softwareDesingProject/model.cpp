@@ -177,11 +177,30 @@ void Model::updateSeries(DataContainer* data)
     if(data->getCategory() == "weather")
     {
         m_weatherSeries->replace(data->getData());
-        // update weatherY axis limits
+
+        switch(LINE_SERIES_MAPPING[m_weatherType]){
+            case 1:
+                m_weatherSeries->setColor("red");
+                m_weatherSeries->setName("Temperature");
+                break;
+            case 2:
+                m_weatherSeries->setColor("cyan");
+                m_weatherSeries->setName("Wind speed");
+                break;
+            case 3:
+                m_weatherSeries->setColor("blue");
+                m_weatherSeries->setName("Humidity");
+                break;
+            case 4:
+                m_weatherSeries->setColor("gray");
+                m_weatherSeries->setName("Cloud Cover");
+                break;
+        }
+
         QPointF limits = getLimits(data->getData());
         qreal yTop = limits.x() + 1;
         qreal yBottom = 0;
-        qDebug() << data->getType() << Qt::endl;
+
         if(data->getType() == "temperature")
         {
             yBottom = limits.y() - 1;
@@ -191,8 +210,23 @@ void Model::updateSeries(DataContainer* data)
     }
     else if (data->getCategory() == "electricity")
     {
-        qDebug() << "haaraan menöö" << Qt::endl;
         m_eleSeries->replace(data->getData());
+
+        switch(LINE_SERIES_MAPPING[m_electricityType]){
+            case 5:
+                m_eleSeries->setColor("darkblue");
+                m_eleSeries->setName("Hydro power");
+                break;
+            case 6:
+                m_eleSeries->setColor("darkgreen");
+                m_eleSeries->setName("Wind power");
+                break;
+            case 7:
+                m_eleSeries->setColor("darkcyan");
+                m_eleSeries->setName("Nuclear power");
+                break;
+        }
+
         QPointF limits = getLimits(data->getData());
         qreal yTop = limits.x() + 10;
         qreal yBottom = 0;
