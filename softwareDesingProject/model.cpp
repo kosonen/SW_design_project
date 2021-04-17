@@ -162,7 +162,7 @@ void Model::updateSeries(DataContainer* data)
         qDebug() << "haaraan menöö" << Qt::endl;
         m_eleSeries->replace(data->getData());
         QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() + 1;
+        qreal yTop = limits.x() + 10;
         qreal yBottom = 0;
         setElectricityY(QPointF(yTop, yBottom));
     }

@@ -61,69 +61,36 @@ Item{
     function getColor()
     {
         var color;
-        if (model.weatherType === "Temperature")
-        {
-            color = "red";
+        switch (model.weatherType){
+            case "Temperature"      : color = "red" ; break;
+            case "Wind speed"       : color = "cyan"; break;
+            case "Humidity"         : color = "blue"; break;
+            case "TotalCloudCover"  : color = "gray"; break;
         }
-        if (model.weatherType === "Wind speed")
-        {
-            color = "cyan";
-        }
-        if (model.weatherType === "Humidity")
-        {
-            color = "blue";
-        }
-        if (model.weatherType === "TotalCloudCover")
-        {
-            color = "gray";
-        }
-
         return color;
     }
 
     function getName()
     {
         var name;
-        if (model.weatherType === "Temperature")
-        {
-            name = "Temperature";
+        switch (model.weatherType){
+            case "Temperature"      : name = "Temperature"    ; break;
+            case "Wind speed"       : name = "Wind speed"     ; break;
+            case "Humidity"         : name = "Humidity"       ; break;
+            case "TotalCloudCover"  : name = "Cloud Cover"    ; break;
         }
-        if (model.weatherType === "Wind speed")
-        {
-            name = "Wind";
-        }
-        if (model.weatherType === "Humidity")
-        {
-            name = "Humidity";
-        }
-        if (model.weatherType === "TotalCloudCover")
-        {
-            name = "Cloud Cover";
-        }
-
         return name;
     }
 
     function getUnits()
     {
         var unit;
-        if (model.weatherType === "Temperature")
-        {
-            unit = "°C";
+        switch (model.weatherType){
+            case "Temperature"      : unit = "°C"   ; break;
+            case "Wind speed"       : unit = "M/S"  ; break;
+            case "Humidity"         : unit = "%"    ; break;
+            case "TotalCloudCover"  : unit = ""     ; break;
         }
-        if (model.weatherType === "Wind speed")
-        {
-            unit = "M/S";
-        }
-        if (model.weatherType === "Humidity")
-        {
-            unit = "%";
-        }
-        if (model.weatherType === "TotalCloudCover")
-        {
-            unit = "";
-        }
-
         return unit;
     }
 }
