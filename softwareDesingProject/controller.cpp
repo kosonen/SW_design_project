@@ -7,7 +7,8 @@ Controller::Controller(QObject *parent):
     m_settings(),
     m_model(nullptr),
     m_updateTimer(),
-    m_saveManager()
+    m_saveManager(),
+    m_error("")
 {
     connect(&m_updateTimer, &QTimer::timeout, this, &Controller::requestData);
 
@@ -17,12 +18,26 @@ Controller::Controller(QObject *parent):
 
 bool Controller::requestData()
 {
+    m_error = "";
     if (m_model == nullptr)
     {
         return false;
     }
+    SettingsCheck SC_Check = checkSettings();
+    handleSettingCheck(SC_Check);
 
-    return m_model->update(m_settings);
+    if(SC_Check == SC_OK ||
+            SC_Check == SC_NoForecastForHydro ||
+            SC_Check == SC_NoForecastForNuclear ||
+            SC_Check == SC_NoForecastForUnidentifiedSource)
+    {
+        return m_model->update(m_settings);
+    }
+    else{
+        qDebug() << "Invalid settings. Request denied";
+        return false;
+    }
+
 }
 
 void Controller::setLocation(QString value)
@@ -107,7 +122,91 @@ bool Controller::saveData(QString filePath, QString dataSource)
     return false;
 }
 
+
+QString Controller::getPopupError()
+{
+    if(m_error == "")
+    {
+        return "";
+    }
+    else{
+        return m_error;
+    }
+}
+
 void Controller::setModel(Model* model)
 {
     m_model = model;
+}
+
+SettingsCheck Controller::checkSettings()
+{
+    QDateTime start = QDateTime::fromString(m_settings.getStartTime(), Qt::ISODate);
+    QDateTime end = QDateTime::fromString(m_settings.getEndTime(), Qt::ISODate);
+    SettingsCheck retVal = SC_OK;
+    if(start > end)
+    {
+        qDebug() << "Start time is later than end time!!!";
+        retVal = SC_StartTimeGreaterThanEnd;
+    }
+    if(m_settings.getDatasources().isEmpty())
+    {
+        retVal = SC_NoSources;
+    }
+    QDateTime currentDateTime = getCurrentDate();
+    for(QString src : m_settings.getDatasources())
+    {
+        if(retVal != SC_OK)
+        {
+            break;
+        }
+        if(end > currentDateTime)
+        {
+            if(NO_FORECAST_SOURCES.contains(src))
+            {
+                if(src == "Nuclear power")
+                {
+                    retVal = SC_NoForecastForNuclear;
+                }
+                else if(src == "Hydro power")
+                {
+                    retVal = SC_NoForecastForHydro;
+                }
+                else
+                {
+                    retVal = SC_NoForecastForUnidentifiedSource;
+                }
+            }
+        }
+    }
+    return retVal;
+
+}
+
+void Controller::handleSettingCheck(SettingsCheck settingsStatus)
+{
+    switch (settingsStatus) {
+        case SC_StartTimeGreaterThanEnd:
+            m_error = ("Start time is greater than end time. Request denied");
+            break;
+        case SC_NoSources:
+            m_error = ("No sources to fetch found. Request denied");
+            break;
+        case SC_NoForecastForHydro:
+            m_error =("No forecast for hydro power. Request for other souces still send");
+            break;
+        case SC_NoForecastForNuclear:
+            m_error =("No forecast for nuclear power. Request for other sources still send");
+            break;
+        case SC_NoForecastForUnidentifiedSource:
+            m_error =("No forecast for unidentified source. Request for other sources still send");
+            break;
+        default:
+            break;
+    }
+}
+
+QDateTime Controller::getCurrentDate()
+{
+    return QDateTime::currentDateTime();
 }

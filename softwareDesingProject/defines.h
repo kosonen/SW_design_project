@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QUrlQuery>
+#include <QSet>
 
 const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
     {"temperature", "FMI"},
@@ -42,6 +43,10 @@ const QHash<QString, QPair<QString, QString>> CONSUMPTION_OPTION_TO_MODEL_MAPPIN
     {"Nuclear power",       QPair<QString, QString>("188", "")},
     {"Energy consumption",  QPair<QString, QString>("124", "166")},
     {"Energy production",   QPair<QString, QString>("74", "242")}
+};
+
+const QSet<QString> NO_FORECAST_SOURCES = {
+    "Nuclear power","Hydro power"
 };
 
 const QList<QString> PRODUCTION_METHODS_FOR_PIE_MODEL =

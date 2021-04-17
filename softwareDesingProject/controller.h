@@ -10,9 +10,20 @@
 #include <QObject>
 #include <QTimer>
 
+enum SettingsCheck {
+    SC_OK = 0,
+    SC_StartTimeGreaterThanEnd,
+    SC_NoSources,
+    SC_NoForecastForNuclear,
+    SC_NoForecastForHydro,
+    SC_NoForecastForUnidentifiedSource
+};
+
 class Controller : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString message NOTIFY invalidSettings)
+
 public:
     explicit Controller(QObject *parent = nullptr);
 
@@ -38,15 +49,23 @@ public:
     Q_INVOKABLE bool loadData(QString filePath);
     Q_INVOKABLE bool saveData(QString filePath, QString dataSource);
 
+    Q_INVOKABLE QString getPopupError();
+
     void setModel(Model* model);
 
-signals:
+Q_SIGNALS:
+    void invalidSettings(QString message);
 
 private:
+    SettingsCheck checkSettings();
+    void handleSettingCheck(SettingsCheck settingsStatus);
+    QDateTime getCurrentDate();
+
     DataRequestSettings m_settings;
     Model* m_model;
     QTimer m_updateTimer;
     SaveManager m_saveManager;
+    QString m_error;
 };
 
 #endif // CONTROLLER_H

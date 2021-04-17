@@ -11,6 +11,7 @@ Window {
     title: qsTr("Hello World")
 
     Rectangle{
+        id: viewBounds
         width: parent.width
         height: parent.height
         color: "cyan"
@@ -586,6 +587,43 @@ Window {
             anchors.right: parent.right
         }
 
+        Popup{
+            id: invalidSettingsPopup
+            //width: 600
+           // height: 200
+            anchors.centerIn: viewBounds
+            background: Rectangle{
+                id: popupBackground
+                width: 600
+                height: 200
+                color: "red"
+                radius: 5
+                anchors.centerIn: viewBounds
+                RoundButton{
+                    id: closeButton
+                    text: qsTr("Close popup");
+                    anchors.bottom: popupBackground.bottom
+                    anchors.horizontalCenter:  popupBackground.horizontalCenter
+                    width: weatherBrowser.width
+                    height: 50
+                    anchors.bottomMargin: 10
+                    radius: 5
+                    onClicked: invalidSettingsPopup.close();
+                }
+            }
+
+            focus: true
+            modal: true
+            contentItem: Text {
+                id: popupText
+                text: qsTr("text")
+                color: "black"
+                anchors.horizontalCenter: popupBackground.horizontalCenter
+                anchors.verticalCenter: popupBackground.verticalCenter
+            }
+
+
+        }
     }
 
     Component.onCompleted:{
@@ -618,6 +656,19 @@ function requestData()
     endDayInput.text + "T" + endTimeInput.text +"Z";
     viewController.setTimeWindow(startTime, endTime);
     viewController.requestData();
+    var errMsg = viewController.getPopupError();
+    console.log("request error " + errMsg);
+    if(errMsg !== "")
+    {
+        showPopup(errMsg);
+    }
+}
+
+function showPopup(msg)
+{
+    console.log("show Popup " << msg);
+    popupText.text = msg;
+    invalidSettingsPopup.open();
 }
 
 }
