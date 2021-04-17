@@ -13,6 +13,8 @@ bool DataFetcher::fetch(DataRequestSettings& settings)
 {
     qDebug() << "Updating model";
 
+    m_requestFingridAPI->getCurrentProduction();
+
     QUrl url;
     IDataSource* dataSource = nullptr;
 
