@@ -6,6 +6,7 @@ Model::Model(QObject *parent):
     m_dataFetcher(new DataFetcher),
     m_weatherSeries{},
     m_eleSeries{},
+    m_savedSeries{},
     m_weatherType("Temperature"),
     m_electricityType("Hydro power"),
     /*
@@ -17,6 +18,7 @@ Model::Model(QObject *parent):
     */
     m_weatherY{new QtCharts::QValueAxis},
     m_elelctricityY{new QtCharts::QValueAxis},
+    m_savedY{new QtCharts::QValueAxis},
     m_start(),
     m_end(),
     m_data()
@@ -32,6 +34,11 @@ QtCharts::QLineSeries *Model::getWeatherSeries() const
 QtCharts::QLineSeries *Model::getElectricitySeries() const
 {
     return m_eleSeries;
+}
+
+QtCharts::QLineSeries *Model::getSavedSeries() const
+{
+    return m_savedSeries;
 }
 
 QDateTime Model::getStartTime()
@@ -52,6 +59,11 @@ QtCharts::QValueAxis* Model::getWeatherY()
 QtCharts::QValueAxis* Model::getElectricityY()
 {
     return m_elelctricityY;
+}
+
+QtCharts::QValueAxis *Model::getSavedY()
+{
+    return m_savedY;
 }
 
 QString Model::getWeatherType()
@@ -96,6 +108,12 @@ void Model::setElectricitySeries(QtCharts::QLineSeries *electricitySeries)
     emit electricitySeriesChanged();
 }
 
+void Model::setSavedSeries(QtCharts::QLineSeries *savedSeries)
+{
+    m_savedSeries = savedSeries;
+    emit savedSeriesChanged();
+}
+
 void Model::setStartTime(QDateTime start)
 {
     m_start = start;
@@ -118,6 +136,12 @@ void Model::setElectricityY(QtCharts::QValueAxis* newValue)
 {
     m_elelctricityY = newValue;
     emit electricityYChanged();
+}
+
+void Model::setSavedY(QtCharts::QValueAxis *newValue)
+{
+    m_savedY = newValue;
+    emit savedYChanged();
 }
 
 void Model::setWeatherType(QString newType)
@@ -249,6 +273,48 @@ void Model::updateSeries(DataContainer* data)
 
         m_elelctricityY->setMax(yTop);
         m_elelctricityY->setMin(yBottom);
+
+    }
+
+    else if (data->getCategory() == "save")
+    {
+        m_savedSeries->replace(data->getData());
+
+        qDebug() << "data type: " << data->getType() << Qt::endl;
+        if(data->getType() == "temperature" || data->getType() == "windspeedms"
+                || data->getType() == "humidity" || data->getType() == "TotalCouldCover"){
+
+            m_savedSeries->setName("Saved " + WEATHER_OPTION_TO_MODEL_MAPPING[data->getType()]);
+            qDebug() << "Hashed value: " << WEATHER_OPTION_TO_MODEL_MAPPING[data->getType()] << Qt::endl;
+
+            QPointF limits = getLimits(data->getData());
+            qreal yTop = limits.x() + 1;
+            qreal yBottom = 0;
+
+            if(data->getType() == "temperature")
+            {
+                yBottom = limits.y() - 1;
+            }
+            m_savedY->setMax(yTop);
+            qDebug() << "Y top: " << yTop << Qt::endl;
+            m_savedY->setMin(yBottom);
+            m_savedY->setTitleText("Saved " + data->getUnit());
+
+        }
+        else {
+
+            m_savedSeries->setName("Saved " + data->getType());
+
+            QPointF limits = getLimits(data->getData());
+            qreal yTop = limits.x() + 10;
+            qreal yBottom = 0;
+
+            m_savedY->setMax(yTop);
+            m_savedY->setMin(yBottom);
+            m_savedY->setTitleText("Saved " + data->getUnit());
+
+        }
+
 
     }
 
