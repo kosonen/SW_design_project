@@ -200,29 +200,9 @@ void Model::updateSeries(DataContainer* data)
     if(data->getCategory() == "weather")
     {
         m_weatherSeries->replace(data->getData());
-
-        switch(LINE_SERIES_MAPPING[m_weatherType]){
-            case 1:
-                m_weatherSeries->setColor("red");
-                m_weatherSeries->setName("Temperature");
-                m_weatherY->setTitleText("°C");
-                break;
-            case 2:
-                m_weatherSeries->setColor("cyan");
-                m_weatherSeries->setName("Wind speed");
-                m_weatherY->setTitleText("M/S");
-                break;
-            case 3:
-                m_weatherSeries->setColor("blue");
-                m_weatherSeries->setName("Humidity");
-                m_weatherY->setTitleText("%");
-                break;
-            case 4:
-                m_weatherSeries->setColor("gray");
-                m_weatherSeries->setName("Cloud Cover");
-                m_weatherY->setTitleText("/ 8");
-                break;
-        }
+        m_weatherY->setTitleText(data->getUnit());
+        m_weatherSeries->setColor(SOURCE_TO_COLOR_MAPPING[data->getType()]);
+        m_weatherSeries->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
 
         QPointF limits = getLimits(data->getData());
         qreal yTop = limits.x() + 1;
@@ -240,32 +220,9 @@ void Model::updateSeries(DataContainer* data)
     else if (data->getCategory() == "electricity")
     {
         m_eleSeries->replace(data->getData());
-
-        switch(LINE_SERIES_MAPPING[m_electricityType]){
-            case 5:
-                m_eleSeries->setColor("darkblue");
-                m_eleSeries->setName("Hydro power");
-                m_elelctricityY->setTitleText(data->getUnit());
-                break;
-            case 6:
-                m_eleSeries->setColor("darkgreen");
-                m_eleSeries->setName("Wind power");
-                qDebug() << data->getUnit() << Qt::endl;
-                m_elelctricityY->setTitleText(data->getUnit());
-                break;
-            case 7:
-                m_eleSeries->setColor("darkcyan");
-                m_eleSeries->setName("Nuclear power");
-                m_elelctricityY->setTitleText(data->getUnit());
-                break;
-            case 8:
-                m_eleSeries->setColor("lightgreen");
-                m_eleSeries->setName("Energy consumption");
-                break;
-            case 9:
-                m_eleSeries->setColor("lightblue");
-                m_eleSeries->setName("Energy production");
-        }
+        m_elelctricityY->setTitleText(data->getUnit());
+        m_eleSeries->setColor(SOURCE_TO_COLOR_MAPPING[data->getType()]);
+        m_eleSeries->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
 
         QPointF limits = getLimits(data->getData());
         qreal yTop = limits.x() + 10;
@@ -273,20 +230,19 @@ void Model::updateSeries(DataContainer* data)
 
         m_elelctricityY->setMax(yTop);
         m_elelctricityY->setMin(yBottom);
-
     }
 
     else if (data->getCategory() == "save")
     {
         m_savedSeries->replace(data->getData());
+        m_savedSeries->setName("Saved " + SOURCE_TO_NAME_MAPPING[data->getType()]);
+
+        QPointF limits = getLimits(data->getData());
 
         qDebug() << "data type: " << data->getType() << Qt::endl;
         if(data->getType() == "temperature" || data->getType() == "windspeedms"
                 || data->getType() == "humidity" || data->getType() == "TotalCouldCover"){
 
-            m_savedSeries->setName("Saved " + data->getType());
-
-            QPointF limits = getLimits(data->getData());
             qreal yTop = limits.x() + 1;
             qreal yBottom = 0;
 
@@ -294,17 +250,14 @@ void Model::updateSeries(DataContainer* data)
             {
                 yBottom = limits.y() - 1;
             }
+
             m_savedY->setMax(yTop);
-            qDebug() << "Y top: " << yTop << Qt::endl;
             m_savedY->setMin(yBottom);
             m_savedY->setTitleText("Saved " + data->getUnit());
 
         }
         else {
 
-            m_savedSeries->setName("Saved " + data->getType());
-
-            QPointF limits = getLimits(data->getData());
             qreal yTop = limits.x() + 10;
             qreal yBottom = 0;
 

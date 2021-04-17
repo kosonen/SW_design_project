@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     Model model;
     Settings settings;
 
-
     controller.setModel(&model);
     controller.setSettings(&settings);
 
@@ -30,7 +29,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("viewController", &controller);
     engine.rootContext()->setContextProperty("model", &model);
-    engine.rootContext()->setContextProperty("settings", &settings);
+//    engine.rootContext()->setContextProperty("settings", &settings);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -18,6 +18,30 @@ const QHash<QString, QString> SOURCE_TO_API_MAPPING = {
 };
 
 
+const QHash<QString, QString> SOURCE_TO_COLOR_MAPPING = {
+    {"temperature", "red"},
+    {"windspeedms", "cyan"},
+    {"humidity", "blue"},
+    {"TotalCloudCover", "gray"},
+    {"Wind power",  "darkgreen"},
+    {"Nuclear power", "darkcyan"},
+    {"Hydro power", "darkblue"},
+    {"Energy consumption", "lightgreen"},
+    {"Energy production", "lightblue"}
+};
+
+const QHash<QString, QString> SOURCE_TO_NAME_MAPPING = {
+    {"temperature", "Temperature"},
+    {"windspeedms", "Wind speed"},
+    {"humidity", "Humidity"},
+    {"TotalCloudCover", "Cloud cover"},
+    {"Wind power",  "Wind power"},
+    {"Nuclear power", "Nuclear power"},
+    {"Hydro power", "Hydro power"},
+    {"Energy consumption", "Energy consumption"},
+    {"Energy production", "Energy production"}
+};
+
 const QHash<QString, int> LINE_SERIES_MAPPING = {
     {"Temperature",         1},
     {"Wind speed",          2},
@@ -78,10 +102,10 @@ const QHash<QString, QString> FMI_SOURCE_TO_UNIT_MAPPING = {
     {"temperature", "°C"},
     {"windspeedms", "m/s"},
     {"humidity", "%"},
-    {"TotalCloudCover", ""}
+    {"TotalCloudCover", "1/8"}
 };
 
-const QString FINGRID_UNIT_NAME = "MWh/h";
+const QString FINGRID_UNIT_NAME = "MWh";
 
 
 
