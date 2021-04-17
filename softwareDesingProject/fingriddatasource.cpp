@@ -130,7 +130,7 @@ void FingridDataSource::pieModelDownloadCompleted(QNetworkReply *reply)
         qDebug() << "Error: " << errMsg << Qt::endl;
         return;
     }
-    parseData(doc, dataBuffer_);
+    parsePieModelData(doc, pieModelDataBuffer_);
     qDebug() << "Content read OK!";
     reply->deleteLater();
     pieModelFetchHandler();
@@ -159,7 +159,7 @@ void FingridDataSource::fetchHandler(){
 
 void FingridDataSource::pieModelFetchHandler()
 {
-    if(numberOfFetches_ < PRODUCTION_METHODS_FOR_PIE_MODEL.size())
+    if(numberOfFetches_ < PRODUCTION_METHODS_FOR_PIE_MODEL.size() - 1)
     {
         numberOfFetches_++;
         QString id = CONSUMPTION_OPTION_TO_MODEL_MAPPING[PRODUCTION_METHODS_FOR_PIE_MODEL[numberOfFetches_]].first;
@@ -173,6 +173,7 @@ void FingridDataSource::pieModelFetchHandler()
         DataContainer* data = new DataContainer();
         for(auto it: pieModelDataBuffer_)
         {
+            qDebug() << "PIE MODEL DATA " << it;
             data->addElement(it);
         }
         data->setType(source_);
