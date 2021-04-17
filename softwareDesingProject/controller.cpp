@@ -98,7 +98,7 @@ bool Controller::loadData(QString filePath)
     m_model->updateSeries(data);
 
 //    qDebug() << data->serialize();
-//    qDebug() << m_settings.serialize();
+//    qDebug() << m_settings->serialize();
 
     return true;
 }

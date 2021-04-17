@@ -284,8 +284,7 @@ void Model::updateSeries(DataContainer* data)
         if(data->getType() == "temperature" || data->getType() == "windspeedms"
                 || data->getType() == "humidity" || data->getType() == "TotalCouldCover"){
 
-            m_savedSeries->setName("Saved " + WEATHER_OPTION_TO_MODEL_MAPPING[data->getType()]);
-            qDebug() << "Hashed value: " << WEATHER_OPTION_TO_MODEL_MAPPING[data->getType()] << Qt::endl;
+            m_savedSeries->setName("Saved " + data->getType());
 
             QPointF limits = getLimits(data->getData());
             qreal yTop = limits.x() + 1;
