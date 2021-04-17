@@ -22,7 +22,6 @@ enum SettingsCheck {
 class Controller : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString message NOTIFY invalidSettings)
 
 public:
     explicit Controller(QObject *parent = nullptr);

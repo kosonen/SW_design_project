@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QValueAxis>
 #include <unordered_map>
+#include <QPieSeries>
 
 //enum weatherT {temperature, wind, humidity, NONE};
 
@@ -25,6 +26,7 @@ class Model : public QObject
     Q_PROPERTY(QtCharts::QValueAxis* weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
     Q_PROPERTY(QtCharts::QValueAxis* electricityY READ getElectricityY WRITE setElectricityY NOTIFY electricityYChanged)
     Q_PROPERTY(QtCharts::QValueAxis* savedY READ getSavedY WRITE setSavedY NOTIFY savedYChanged)
+    Q_PROPERTY(QtCharts::QPieSeries* pieSeries READ getPieSeries WRITE setPieSeries NOTIFY pieSeriesChanged)
 
 public:
 
@@ -40,6 +42,7 @@ public:
     QtCharts::QValueAxis *getWeatherY();
     QtCharts::QValueAxis *getElectricityY();
     QtCharts::QValueAxis *getSavedY();
+    QtCharts::QPieSeries* getPieSeries() const;
 
     QPointF getLimits(QList<QPointF> data);
 
@@ -52,13 +55,14 @@ public:
     void setWeatherY(QtCharts::QValueAxis* newValue);
     void setElectricityY(QtCharts::QValueAxis* newValue);
     void setSavedY(QtCharts::QValueAxis* newValue);
-
+    void setPieSeries(QtCharts::QPieSeries* pieseries);
     bool update(Settings& settings);
 
     DataContainer* getData(QString key);
 
 public slots:
     void updateSeries(DataContainer* data);
+    void updateProductionPieModel(DataContainer* currentData);
 
 signals:
 
@@ -70,6 +74,7 @@ signals:
     void weatherYChanged();
     void electricityYChanged();
     void savedYChanged();
+    void pieSeriesChanged();
 
 
 private:
@@ -81,7 +86,7 @@ private:
     QtCharts::QValueAxis* m_weatherY;
     QtCharts::QValueAxis* m_elelctricityY;
     QtCharts::QValueAxis* m_savedY;
-
+    QtCharts::QPieSeries* m_pieseries;
     QDateTime m_start;
     QDateTime m_end;
     std::unordered_map<QString, DataContainer*> m_data;

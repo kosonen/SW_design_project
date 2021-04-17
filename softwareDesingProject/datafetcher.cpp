@@ -8,6 +8,7 @@ DataFetcher::DataFetcher(QObject *parent):
 {
     connect(m_requestFMIAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataProcessingHandler);
     connect(m_requestFingridAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataProcessingHandler);
+    connect(m_requestFingridAPI, &FingridDataSource::currentProductionReady, this, &DataFetcher::currentProductionReady);
 }
 
 bool DataFetcher::fetch(Settings& settings)

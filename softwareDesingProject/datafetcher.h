@@ -23,6 +23,7 @@ public:
 
 signals:
     void dataReady(DataContainer* data);
+    void currentProductionReady(DataContainer* currentData);
 private:
     void dataProcessingHandler(DataContainer* data);
 

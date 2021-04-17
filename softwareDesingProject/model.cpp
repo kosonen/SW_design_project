@@ -1,5 +1,6 @@
 #include "model.h"
 #include "defines.h"
+#include <QPieSlice>
 
 Model::Model(QObject *parent):
     QObject(parent),
@@ -17,11 +18,14 @@ Model::Model(QObject *parent):
     m_weatherY{new QtCharts::QValueAxis},
     m_elelctricityY{new QtCharts::QValueAxis},
     m_savedY{new QtCharts::QValueAxis},
+    m_pieseries(new QtCharts::QPieSeries),
     m_start(),
     m_end(),
     m_data()
 {
     connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateSeries);
+    connect(m_dataFetcher, &DataFetcher::currentProductionReady, this, &Model::updateProductionPieModel);
+
 }
 
 QtCharts::QLineSeries *Model::getWeatherSeries() const
@@ -62,6 +66,11 @@ QtCharts::QValueAxis* Model::getElectricityY()
 QtCharts::QValueAxis *Model::getSavedY()
 {
     return m_savedY;
+}
+
+QtCharts::QPieSeries* Model::getPieSeries() const
+{
+    return m_pieseries;
 }
 
 QPointF Model::getLimits(QList<QPointF> data)
@@ -130,6 +139,12 @@ void Model::setSavedY(QtCharts::QValueAxis *newValue)
 {
     m_savedY = newValue;
     emit savedYChanged();
+}
+
+void Model::setPieSeries(QtCharts::QPieSeries *pieSeries)
+{
+    m_pieseries = pieSeries;
+    emit pieSeriesChanged();
 }
 
 bool Model::update(Settings& settings)
@@ -251,6 +266,34 @@ void Model::updateSeries(DataContainer* data)
 
 
 //    delete data;
+}
+
+void Model::updateProductionPieModel(DataContainer *currentData)
+{
+    int index = 0;
+    m_pieseries->clear();
+    for(QPointF point : currentData->getData())
+    {
+        qDebug() << "Piemodel() x: " << point.rx() << " y: " << point.ry() << " type: " << currentData->getType() << " category: " << currentData->getCategory();
+        switch (index) {
+        case 0:
+            m_pieseries->append("Hydro", point.ry());
+            break;
+        case 1:
+            m_pieseries->append("Wind", point.ry());
+            break;
+        case 2:
+            m_pieseries->append("Nuclear", point.ry());
+            break;
+        default:
+            m_pieseries->append(currentData->getCategory(), point.ry());
+            break;
+
+        }
+        ++index;
+    }
+    m_pieseries->setLabelsVisible(true);
+    emit pieSeriesChanged();
 }
 
 

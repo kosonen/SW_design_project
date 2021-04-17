@@ -571,13 +571,12 @@ Window {
 
         ConsumptionPieChart{
             id: consumptionChart
-            height: view.height/2
-            width: view.height/2
+            height: 3*view.height/4
+            width: 3*view.height/4
 
             anchors.left: view.right
-            anchors.top: view.top
-            anchors.topMargin: 50
-            anchors.leftMargin: 50
+            anchors.bottom: view.bottom
+            anchors.leftMargin: 25
         }
 
         SaveLoad{
