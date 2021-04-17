@@ -225,8 +225,8 @@ void Model::updateSeries(DataContainer* data)
         m_eleSeries->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
 
         QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() + 10;
-        qreal yBottom = 0;
+        qreal yTop = limits.x() * 1.25;
+        qreal yBottom = limits.y() * 0.7;
 
         m_elelctricityY->setMax(yTop);
         m_elelctricityY->setMin(yBottom);
