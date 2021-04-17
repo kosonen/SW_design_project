@@ -14,7 +14,8 @@ SOURCES += \
         fingriddatasource.cpp \
         fmidatasource.cpp \
         main.cpp \
-        model.cpp
+        model.cpp \
+        savemanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -38,4 +39,6 @@ HEADERS += \
     fingriddatasource.h \
     fmidatasource.h \
     idatasource.h \
-    model.h
+    isaveobject.h \
+    model.h \
+    savemanager.h

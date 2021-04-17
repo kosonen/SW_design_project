@@ -9,7 +9,7 @@ DataFetcher::DataFetcher(QObject *parent):
     connect(m_requestFingridAPI, &FmiDataSource::dataParsed, this, &DataFetcher::dataReady);
 }
 
-bool DataFetcher::fetch(DataRequestSettings settings)
+bool DataFetcher::fetch(DataRequestSettings& settings)
 {
     qDebug() << "Updating model";
 

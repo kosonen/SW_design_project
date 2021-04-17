@@ -6,7 +6,8 @@ Controller::Controller(QObject *parent):
     QObject(parent),
     m_settings(),
     m_model(nullptr),
-    m_updateTimer()
+    m_updateTimer(),
+    m_saveManager()
 {
     connect(&m_updateTimer, &QTimer::timeout, this, &Controller::requestData);
 
@@ -64,6 +65,25 @@ void Controller::setAutomaticUpdate(bool status)
     {
         m_updateTimer.start(10000);
     }
+}
+
+bool Controller::loadData(QString filePath)
+{
+    DataContainer* data = new DataContainer();
+    m_saveManager.load(filePath, "key", &m_settings);
+    m_saveManager.load(filePath, "key", data);
+
+    m_model->updateSeries(data);
+
+    return true;
+}
+
+bool Controller::saveData(QString filePath, QString dataSource)
+{
+    qDebug() << "SAVING! " << dataSource << " to "  << filePath;
+    // m_saveManager.save(filePath, m_settings);
+
+    return true;
 }
 
 void Controller::setModel(Model* model)

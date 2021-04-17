@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "datarequestsettings.h"
+#include "savemanager.h"
 
 
 #include "model.h"
@@ -32,6 +33,9 @@ public:
 
     Q_INVOKABLE void setAutomaticUpdate(bool status);
 
+    Q_INVOKABLE bool loadData(QString filePath);
+    Q_INVOKABLE bool saveData(QString filePath, QString dataSource);
+
     void setModel(Model* model);
 
 signals:
@@ -40,6 +44,7 @@ private:
     DataRequestSettings m_settings;
     Model* m_model;
     QTimer m_updateTimer;
+    SaveManager m_saveManager;
 };
 
 #endif // CONTROLLER_H

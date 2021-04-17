@@ -121,7 +121,7 @@ void Model::setWeatherType(QString newType)
 }
 
 
-bool Model::update(DataRequestSettings settings)
+bool Model::update(DataRequestSettings& settings)
 {
     return m_dataFetcher->fetch(settings);
 }

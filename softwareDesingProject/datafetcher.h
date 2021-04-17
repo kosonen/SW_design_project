@@ -18,7 +18,7 @@ class DataFetcher : public QObject
 public:
     explicit DataFetcher(QObject *parent = nullptr);
 
-    bool fetch(DataRequestSettings settings);
+    bool fetch(DataRequestSettings& settings);
 
 signals:
     void dataReady(DataContainer* data);

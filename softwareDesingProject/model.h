@@ -49,7 +49,7 @@ public:
     void setElectricityY(QPointF newValue);
     void setWeatherType(QString newType);
 
-    bool update(DataRequestSettings settings);
+    bool update(DataRequestSettings& settings);
 
 
 public slots:

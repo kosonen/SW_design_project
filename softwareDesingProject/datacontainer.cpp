@@ -1,7 +1,7 @@
 #include "datacontainer.h"
 
 DataContainer::DataContainer(QObject *parent):
-    QObject(parent),
+    ISaveObject(parent),
     m_category(),
     m_type(),
     m_unit(),
@@ -53,4 +53,14 @@ QPointF DataContainer::getElement(int i)
 QList<QPointF> DataContainer::getData()
 {
     return m_data;
+}
+
+QString DataContainer::serialize()
+{
+
+}
+
+void DataContainer::deserialize(QString data)
+{
+
 }

@@ -1,16 +1,20 @@
 #ifndef DATACONTAINER_H
 #define DATACONTAINER_H
 
+#include "isaveobject.h"
+
 #include <QObject>
 #include <QString>
 #include <QList>
 #include <QPointF>
 
-class DataContainer : public QObject
+class DataContainer : public ISaveObject
 {
     Q_OBJECT
 public:
     explicit DataContainer(QObject *parent = nullptr);
+
+    virtual ~DataContainer() = default;
 
     void setType(QString type);
     void setUnit(QString unit);
@@ -25,6 +29,9 @@ public:
 
     int size();
 //    void clear();
+
+    virtual QString serialize() override;
+    virtual void deserialize(QString data) override;
 
 private:
     QString m_category;

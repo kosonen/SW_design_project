@@ -72,3 +72,13 @@ QHash<QString, QString> DataRequestSettings::getParams()
     }
     return m_params;
 }
+
+QString DataRequestSettings::serialize()
+{
+
+}
+
+void DataRequestSettings::deserialize(QString data)
+{
+
+}
