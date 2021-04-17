@@ -25,9 +25,6 @@ class Model : public QObject
     Q_PROPERTY(QtCharts::QValueAxis* weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
     Q_PROPERTY(QtCharts::QValueAxis* electricityY READ getElectricityY WRITE setElectricityY NOTIFY electricityYChanged)
     Q_PROPERTY(QtCharts::QValueAxis* savedY READ getSavedY WRITE setSavedY NOTIFY savedYChanged)
-    Q_PROPERTY(QString weatherType READ getWeatherType WRITE setWeatherType NOTIFY weatherTypeChanged)
-    Q_PROPERTY(QString electricityType READ getElectricityType WRITE setElectricityType NOTIFY electricityTypeChanged)
-
 
 public:
 
@@ -43,8 +40,6 @@ public:
     QtCharts::QValueAxis *getWeatherY();
     QtCharts::QValueAxis *getElectricityY();
     QtCharts::QValueAxis *getSavedY();
-    QString getWeatherType();
-    QString getElectricityType();
 
     QPointF getLimits(QList<QPointF> data);
 
@@ -57,8 +52,6 @@ public:
     void setWeatherY(QtCharts::QValueAxis* newValue);
     void setElectricityY(QtCharts::QValueAxis* newValue);
     void setSavedY(QtCharts::QValueAxis* newValue);
-    void setWeatherType(QString newType);
-    void setElectricityType(QString newType);
 
     bool update(Settings& settings);
 
@@ -77,8 +70,6 @@ signals:
     void weatherYChanged();
     void electricityYChanged();
     void savedYChanged();
-    void weatherTypeChanged();
-    void electricityTypeChanged();
 
 
 private:
@@ -86,9 +77,6 @@ private:
     QtCharts::QLineSeries* m_weatherSeries;
     QtCharts::QLineSeries* m_eleSeries;
     QtCharts::QLineSeries* m_savedSeries;
-
-    QString m_weatherType;
-    QString m_electricityType;
 
     QtCharts::QValueAxis* m_weatherY;
     QtCharts::QValueAxis* m_elelctricityY;

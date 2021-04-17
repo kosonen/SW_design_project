@@ -7,8 +7,6 @@ Model::Model(QObject *parent):
     m_weatherSeries{},
     m_eleSeries{},
     m_savedSeries{},
-    m_weatherType("Temperature"),
-    m_electricityType("Hydro power"),
     /*
     m_eleProductionSeries{},
     m_eleConsumptionSeries{},
@@ -64,16 +62,6 @@ QtCharts::QValueAxis* Model::getElectricityY()
 QtCharts::QValueAxis *Model::getSavedY()
 {
     return m_savedY;
-}
-
-QString Model::getWeatherType()
-{
-    return m_weatherType;
-}
-
-QString Model::getElectricityType()
-{
-    return m_electricityType;
 }
 
 QPointF Model::getLimits(QList<QPointF> data)
@@ -143,20 +131,6 @@ void Model::setSavedY(QtCharts::QValueAxis *newValue)
     m_savedY = newValue;
     emit savedYChanged();
 }
-
-void Model::setWeatherType(QString newType)
-{
-    qDebug() << "Weather type " << newType;
-    m_weatherType = newType;
-    emit weatherTypeChanged();
-}
-
-void Model::setElectricityType(QString newType)
-{
-    m_electricityType = newType;
-    emit electricityTypeChanged();
-}
-
 
 bool Model::update(Settings& settings)
 {

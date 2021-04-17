@@ -84,7 +84,6 @@ Item {
     function setWeatherProperties(prop)
     {
         console.log("current index " + prop);
-        viewController.setWeatherType(String(prop));
         browser.value = prop;
         //viewController.requestData();
     }
@@ -92,7 +91,6 @@ Item {
     function setElectricityProperties(prop)
     {
         console.log("current index " + prop);
-        viewController.setElectricityType(String(prop));
         browser.value = prop;
         //viewController.requestData();
     }
@@ -109,7 +107,6 @@ Item {
     function initWeatherProperties(prop)
     {
         console.log("current index " + prop);
-        viewController.setWeatherType(String(prop));
         browser.value = prop;
 
     }
@@ -117,7 +114,6 @@ Item {
     function initElecticityProperties(prop)
     {
         console.log("current index " + prop);
-        viewController.setElectricityType(String(prop));
         browser.value = prop;
     }
 

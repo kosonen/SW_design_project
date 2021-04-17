@@ -67,16 +67,6 @@ void Controller::setTimeWindow(QString startTime, QString endTime)
     m_settings->setTimeWindow(startTime, endTime);
 }
 
-void Controller::setWeatherType(QString newType)
-{
-    m_model->setWeatherType(newType);
-}
-
-void Controller::setElectricityType(QString newType)
-{
-    m_model->setElectricityType(newType);
-}
-
 void Controller::setAutomaticUpdate(bool status)
 {
     m_updateTimer.stop();

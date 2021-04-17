@@ -40,10 +40,6 @@ public:
     /* All fetched data sources are fit into the same time frame */
     Q_INVOKABLE void setTimeWindow(QString startTime, QString endTime);
 
-    Q_INVOKABLE void setWeatherType(QString newType);
-
-    Q_INVOKABLE void setElectricityType(QString newType);
-
     Q_INVOKABLE void setAutomaticUpdate(bool status);
 
     Q_INVOKABLE bool loadData(QString filePath);
