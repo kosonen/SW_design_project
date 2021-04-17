@@ -15,5 +15,7 @@
         <file>nuclear.png</file>
         <file>g4050.png</file>
         <file>SaveLoad.qml</file>
+        <file>image90.png</file>
+        <file>prod.png</file>
     </qresource>
 </RCC>

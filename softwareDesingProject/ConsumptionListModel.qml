@@ -18,4 +18,14 @@ ListModel
         name:'Nuclear power'
         fileUrl: "nuclear.png"
      }
+     ListElement
+     {
+         name: 'Energy consumption'
+         fileUrl: "image90.png"
+     }
+     ListElement
+     {
+         name: 'Energy production'
+         fileUrl: "prod.png"
+     }
 }
