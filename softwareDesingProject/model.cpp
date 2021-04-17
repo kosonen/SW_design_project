@@ -7,6 +7,7 @@ Model::Model(QObject *parent):
     m_weatherSeries{},
     m_eleSeries{},
     m_weatherType("Temperature"),
+    m_electricityType("Hydro power"),
     /*
     m_eleProductionSeries{},
     m_eleConsumptionSeries{},
@@ -55,6 +56,11 @@ QPointF Model::getElectricityY()
 QString Model::getWeatherType()
 {
     return m_weatherType;
+}
+
+QString Model::getElectricityType()
+{
+    return m_electricityType;
 }
 
 QPointF Model::getLimits(QList<QPointF> data)
@@ -120,6 +126,12 @@ void Model::setWeatherType(QString newType)
     emit weatherTypeChanged();
 }
 
+void Model::setElectricityType(QString newType)
+{
+    m_electricityType = newType;
+    emit electricityTypeChanged();
+}
+
 
 bool Model::update(DataRequestSettings& settings)
 {
@@ -162,7 +174,7 @@ void Model::updateSeries(DataContainer* data)
         qDebug() << "haaraan menöö" << Qt::endl;
         m_eleSeries->replace(data->getData());
         QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() + 1;
+        qreal yTop = limits.x() + 10;
         qreal yBottom = 0;
         setElectricityY(QPointF(yTop, yBottom));
     }

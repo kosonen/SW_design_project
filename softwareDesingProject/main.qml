@@ -521,7 +521,7 @@ Window {
             height: consumptionBrowser.heightOfElement * consumptionModel.rowCount()
             anchors.top: titleConsumption.bottom
             modelToView: consumptionModel
-            type: "consupmtion"
+            type: "consumption"
             //optionChanged.
         }
 
