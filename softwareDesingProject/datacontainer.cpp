@@ -16,6 +16,11 @@ DataContainer::DataContainer(QObject *parent):
 
 }
 
+int DataContainer::size()
+{
+    return m_data.size();
+}
+
 void DataContainer::setType(QString type)
 {
     m_type = type;
