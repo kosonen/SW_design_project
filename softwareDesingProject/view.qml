@@ -30,6 +30,10 @@ Item{
                 //max: model.electricityY.x
             }
 
+            ValueAxis{
+                id: savedY
+            }
+
 
             LineSeries{
                 id: weatherSeries
@@ -50,6 +54,13 @@ Item{
                 width: 2
             }
 
+            LineSeries{
+                id: savedSeries
+                axisX: timeAxis
+                width: 2
+                axisYRight: savedY
+            }
+
         }
     }
 
@@ -58,8 +69,11 @@ Item{
     {
         model.weatherSeries = weatherSeries;
         model.elecrtricitySeries = electricitySeries;
+        model.savedSeries = savedSeries;
+
         model.weatherY = weatherY;
         model.electricityY = electricityY;
+        model.savedY = savedY;
     }
 
     /*
