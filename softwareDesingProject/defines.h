@@ -67,6 +67,15 @@ const QHash<QString, QString> FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING = {
     {ENDTIME,"end_time"}
 };
 
+const QHash<QString, QString> FMI_SOURCE_TO_UNIT_MAPPING = {
+    {"temperature", "°C"},
+    {"windspeedms", "m/s"},
+    {"humidity", "%"},
+    {"TotalCloudCover", ""}
+};
+
+const QString FINGRID_UNIT_NAME = "MWh/h";
+
 
 
 // Key for Fingrid API
@@ -91,6 +100,8 @@ const QUrlQuery FMI_QUERY_OBSERVATIONS= QUrlQuery(
     QPair<QString, QString>("request", "getFeature"),
     QPair<QString, QString>("storedquery_id", "fmi::observations::weather::simple")
 }
+
+
 );
 
 #endif // DEFINES_H

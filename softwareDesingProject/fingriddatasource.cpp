@@ -145,6 +145,7 @@ void FingridDataSource::fetchHandler(){
         }
         data->setType(source_);
         data->setCategory("electricity");
+        data->setUnit(FINGRID_UNIT_NAME);
         emit dataParsed(data);
     }
     else{
@@ -178,6 +179,7 @@ void FingridDataSource::pieModelFetchHandler()
         }
         data->setType(source_);
         data->setCategory("electricity");
+        data->setUnit(FINGRID_UNIT_NAME);
         emit currentProductionReady(data);
         numberOfFetches_ = 0;
     }

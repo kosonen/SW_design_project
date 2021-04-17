@@ -11,6 +11,7 @@
 #include <QNetworkReply>
 #include <QDomDocument>
 #include <QHash>
+#include <memory>
 
 
 class IDataSource : public QObject

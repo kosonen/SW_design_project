@@ -111,7 +111,6 @@ void FmiDataSource::fetchHandler()
         DataContainer* data = new DataContainer();
         for(auto it: dataBuffer_)
         {
-            qDebug() << it;
             data->addElement(it);
         }
 
@@ -119,10 +118,7 @@ void FmiDataSource::fetchHandler()
         data->setType(source_);
         // TODO: move "weather" to some constant
         data->setCategory("weather");
-
-
-
-
+        data->setUnit(FMI_SOURCE_TO_UNIT_MAPPING[source_]);
         emit dataParsed(data);
     }
     else{
@@ -150,9 +146,9 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
         QDomElement time = element.nextSiblingElement();
         QDomElement name = time.nextSiblingElement();
         QDomElement value = name.nextSiblingElement();
-//        qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
-//        qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
-//        qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+        //qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
+        //qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
+        //qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
 
         QString timeStr = time.text();
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
