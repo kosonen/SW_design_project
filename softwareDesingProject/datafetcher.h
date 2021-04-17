@@ -19,13 +19,20 @@ public:
     explicit DataFetcher(QObject *parent = nullptr);
 
     bool fetch(Settings& settings);
+    void setDataProcessingMethod(QString method);
 
 signals:
     void dataReady(DataContainer* data);
-
 private:
+    void dataProcessingHandler(DataContainer* data);
+
+    DataContainer* calcAverage(DataContainer* data);
+    DataContainer* calcMin(DataContainer* data);
+    DataContainer* calcMax(DataContainer* data);
+
     FmiDataSource* m_requestFMIAPI;
     FingridDataSource* m_requestFingridAPI;
+    QString m_dataProcessingMethod_;
 
 };
 
