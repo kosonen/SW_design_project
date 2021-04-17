@@ -97,5 +97,15 @@ QJsonObject DataRequestSettings::serialize()
 
 void DataRequestSettings::deserialize(QJsonObject data)
 {
+    m_params[LOCATION] = data["location"].toString();
+    m_params[STARTIME] = data["startTime"].toString();
+    m_params[ENDTIME] = data["endTime"].toString();
 
+    m_dataSources.clear();
+    QJsonArray list = data["dataSources"].toArray();
+
+    for (int i = 0; i < list.size(); i++) {
+        QString source = list[i].toString();
+        m_dataSources.push_back(source);
+    }
 }

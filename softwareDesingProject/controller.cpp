@@ -75,10 +75,15 @@ void Controller::setAutomaticUpdate(bool status)
 bool Controller::loadData(QString filePath)
 {
     DataContainer* data = new DataContainer();
-    m_saveManager.load(filePath, "settings", &m_settings);
-    m_saveManager.load(filePath, "data", data);
+
+    m_saveManager.add("settings", &m_settings);
+    m_saveManager.add("data", data);
+    m_saveManager.load(filePath);
 
     m_model->updateSeries(data);
+
+//    qDebug() << data->serialize();
+//    qDebug() << m_settings.serialize();
 
     return true;
 }

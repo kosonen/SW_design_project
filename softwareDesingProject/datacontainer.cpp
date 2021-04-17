@@ -4,6 +4,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include <QDebug>
+
 DataContainer::DataContainer(QObject *parent):
     ISaveObject(parent),
     m_category(),
@@ -83,5 +85,19 @@ QJsonObject DataContainer::serialize()
 
 void DataContainer::deserialize(QJsonObject data)
 {
+    qDebug() << data;
 
+    m_type = data["type"].toString();
+    m_category = "save";
+    m_unit = data["unit"].toString();
+
+    QJsonArray list = data["data"].toArray();
+
+    for (int i = 0; i < list.size(); i++) {
+        QJsonObject obj = list[i].toObject();
+        QPointF point;
+        point.setX(obj["x"].toDouble());
+        point.setY(obj["y"].toDouble());
+        addElement(point);
+    }
 }
