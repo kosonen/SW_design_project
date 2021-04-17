@@ -241,38 +241,54 @@ void Model::updateSeries(DataContainer* data)
     {
         m_eleSeries->replace(data->getData());
 
+        QPointF limits = getLimits(data->getData());
+        qreal yTop = limits.x() + 10;
+        qreal yBottom = 0;
+
+        qreal yTopRel = limits.x() * 1.25;
+        qreal yBottomRel = limits.x() * 0.75;
+
+
+
         switch(LINE_SERIES_MAPPING[m_electricityType]){
             case 5:
                 m_eleSeries->setColor("darkblue");
                 m_eleSeries->setName("Hydro power");
                 m_elelctricityY->setTitleText(data->getUnit());
+                m_elelctricityY->setMax(yTop);
+                m_elelctricityY->setMin(yBottom);
                 break;
             case 6:
                 m_eleSeries->setColor("darkgreen");
                 m_eleSeries->setName("Wind power");
-                qDebug() << data->getUnit() << Qt::endl;
                 m_elelctricityY->setTitleText(data->getUnit());
+                m_elelctricityY->setMax(yTop);
+                m_elelctricityY->setMin(yBottom);
                 break;
             case 7:
                 m_eleSeries->setColor("darkcyan");
                 m_eleSeries->setName("Nuclear power");
                 m_elelctricityY->setTitleText(data->getUnit());
+                m_elelctricityY->setMax(yTopRel);
+                m_elelctricityY->setMin(yBottomRel);
                 break;
             case 8:
                 m_eleSeries->setColor("lightgreen");
                 m_eleSeries->setName("Energy consumption");
+                m_elelctricityY->setTitleText(data->getUnit());
+                m_elelctricityY->setMax(yTopRel);
+                m_elelctricityY->setMin(yBottomRel);
                 break;
             case 9:
                 m_eleSeries->setColor("lightblue");
                 m_eleSeries->setName("Energy production");
+                m_elelctricityY->setTitleText(data->getUnit());
+                m_elelctricityY->setMax(yTopRel);
+                m_elelctricityY->setMin(yBottomRel);
         }
 
-        QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() + 10;
-        qreal yBottom = 0;
 
-        m_elelctricityY->setMax(yTop);
-        m_elelctricityY->setMin(yBottom);
+
 
     }
 
