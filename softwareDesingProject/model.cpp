@@ -141,6 +141,13 @@ bool Model::update(DataRequestSettings& settings)
 
 DataContainer* Model::getData(QString key)
 {
+    qDebug() << "GET DATA";
+
+    for (auto e : m_data)
+    {
+        qDebug() << e.first << ": " << e.second->getType();
+    }
+
     if (m_data.count(key))
     {
         return m_data.at(key);
@@ -194,7 +201,7 @@ void Model::updateSeries(DataContainer* data)
 
     //m_eleSeries->replace(data->getData());
 
-    m_data.insert({data->getCategory(), data});
+    m_data[data->getCategory()] = data;
 
 
 
