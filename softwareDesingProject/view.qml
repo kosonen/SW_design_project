@@ -21,7 +21,7 @@ Item{
                 id: weatherY
                 min: model.weatherY.y
                 max: model.weatherY.x
-                titleText: getUnits()
+                titleText: getWeatherUnits()
             }
 
             ValueAxis{
@@ -33,19 +33,21 @@ Item{
 
             LineSeries{
                 id: weatherSeries
-                color: getColor()
-                name: getName()
+                color: getWeatherColor()
+                name: getWeatherName()
                 axisX: timeAxis
                 axisY: weatherY
+                width: 2
 
             }
 
             LineSeries{
                 id: electricitySeries
-                //color: "black"
-                name: "electricity placeholder"
+                color: getElectricityColor()
+                name: getElectricityName()
                 axisX: timeAxis
                 axisYRight: electricityY
+                width: 2
             }
 
         }
@@ -58,7 +60,7 @@ Item{
         model.elecrtricitySeries = electricitySeries;
     }
 
-    function getColor()
+    function getWeatherColor()
     {
         var color;
         switch (model.weatherType){
@@ -70,7 +72,7 @@ Item{
         return color;
     }
 
-    function getName()
+    function getWeatherName()
     {
         var name;
         switch (model.weatherType){
@@ -82,16 +84,39 @@ Item{
         return name;
     }
 
-    function getUnits()
+    function getWeatherUnits()
     {
         var unit;
         switch (model.weatherType){
-            case "Temperature"      : unit = "°C"   ; break;
-            case "Wind speed"       : unit = "M/S"  ; break;
-            case "Humidity"         : unit = "%"    ; break;
-            case "TotalCloudCover"  : unit = ""     ; break;
+            case "Temperature"      : unit = "°C"           ; break;
+            case "Wind speed"       : unit = "M/S"          ; break;
+            case "Humidity"         : unit = "%"            ; break;
+            case "TotalCloudCover"  : unit = "Cloud Cover"  ; break;
         }
         return unit;
     }
+
+    function getElectricityColor()
+    {
+        var color;
+        switch (model.electricityType){
+            case "Hydro power"  :   color = "darkblue"  ; break;
+            case "Wind power"   :   color = "darkgreen" ; break;
+            case "Nuclear power":   color = "darkcyan"  ; break;
+        }
+        return color;
+    }
+
+    function getElectricityName()
+    {
+        var name;
+        switch (model.electricityType){
+            case "Hydro power"  :   name = "Hydro power"    ; break;
+            case "Wind power"   :   name = "Wind power"     ; break;
+            case "Nuclear power":   name = "Nuclear power"  ; break;
+        }
+        return name;
+    }
+
 }
 

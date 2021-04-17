@@ -49,11 +49,19 @@ Item {
                     console.log(modelToView.get(list.currentIndex).name + ' selected');
                     if(type === "weather")
                     {
+                        console.log("sää muuttuu")
                         setWeatherProperties(modelToView.get(list.currentIndex).name);
 
                     }
+                    else if (type === "consumption")
+                    {
+                        console.log("sähkö muuttuu")
+                        setElectricityProperties(modelToView.get(list.currentIndex).name);
+                    }
+
                     else
                     {
+                        console.log("ei mihinkään")
                         setProperties(modelToView.get(list.currentIndex).name);
 
                     }
@@ -69,42 +77,42 @@ Item {
     function setWeatherProperties(prop)
     {
         console.log("current index " + prop);
-        //model.setWeatherType(String(prop));
         viewController.setWeatherType(String(prop));
         browser.value = prop;
-        //viewController.setDataSources([String(prop)]);
         viewController.requestData();
-        //optionChanged();
+    }
+
+    function setElectricityProperties(prop)
+    {
+        console.log("current index " + prop);
+        viewController.setElectricityType(String(prop));
+        browser.value = prop;
+        viewController.requestData();
     }
 
     function setProperties(prop)
     {
         console.log("current index " + prop);
         browser.value = prop;
-        //viewController.setDataSources([String(prop)]);
         viewController.requestData();
-        //optionChanged();
+
 
     }
 
     function initWeatherProperties(prop)
     {
         console.log("current index " + prop);
-        //model.setWeatherType(String(prop));
         viewController.setWeatherType(String(prop));
         browser.value = prop;
-        //viewController.setDataSources([String(prop)]);
-        //viewController.requestData();
-        //optionChanged();
+
     }
 
     function initProperties(prop)
     {
         console.log("current index " + prop);
-        //viewController.setDataSources([String(prop)]);
+
         browser.value = prop;
-        //viewController.requestData();
-        //optionChanged();
+
     }
 
     Component.onCompleted: {

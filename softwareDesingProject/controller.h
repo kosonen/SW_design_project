@@ -30,6 +30,8 @@ public:
 
     Q_INVOKABLE void setWeatherType(QString newType);
 
+    Q_INVOKABLE void setElectricityType(QString newType);
+
     Q_INVOKABLE void setAutomaticUpdate(bool status);
 
     void setModel(Model* model);

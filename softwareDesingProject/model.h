@@ -22,6 +22,7 @@ class Model : public QObject
     Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
     Q_PROPERTY(QPointF electricityY READ getElectricityY WRITE setElectricityY NOTIFY electricityYChanged)
     Q_PROPERTY(QString weatherType READ getWeatherType WRITE setWeatherType NOTIFY weatherTypeChanged)
+    Q_PROPERTY(QString electricityType READ getElectricityType WRITE setElectricityType NOTIFY electricityTypeChanged)
 
 
 public:
@@ -37,6 +38,7 @@ public:
     QPointF getWeatherY();
     QPointF getElectricityY();
     QString getWeatherType();
+    QString getElectricityType();
 
     QPointF getLimits(QList<QPointF> data);
 
@@ -48,6 +50,7 @@ public:
     void setWeatherY(QPointF newValue);
     void setElectricityY(QPointF newValue);
     void setWeatherType(QString newType);
+    void setElectricityType(QString newType);
 
     bool update(DataRequestSettings settings);
 
@@ -58,18 +61,21 @@ public slots:
 signals:
 
     void weatherSeriesChanged();
+    void electricitySeriesChanged();
     void startTimeChanged();
     void endTimeChanged();
     void weatherYChanged();
     void electricityYChanged();
     void weatherTypeChanged();
-    void electricitySeriesChanged();
+    void electricityTypeChanged();
+
 
 private:
     DataFetcher* m_dataFetcher;
     QtCharts::QLineSeries* m_weatherSeries;
     QtCharts::QLineSeries* m_eleSeries;
     QString m_weatherType;
+    QString m_electricityType;
     /*
     QtCharts::QLineSeries* m_eleProductionSeries;
     QtCharts::QLineSeries* m_eleConsumptionSeries;
