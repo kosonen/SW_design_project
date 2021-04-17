@@ -9,6 +9,7 @@
 #include <QChart>
 #include <QLineSeries>
 #include <QDateTime>
+#include <QValueAxis>
 #include <unordered_map>
 
 //enum weatherT {temperature, wind, humidity, NONE};
@@ -20,8 +21,8 @@ class Model : public QObject
     Q_PROPERTY(QtCharts::QLineSeries* elecrtricitySeries READ getElectricitySeries WRITE setElectricitySeries NOTIFY electricitySeriesChanged)
     Q_PROPERTY(QDateTime startTime READ getStartTime WRITE setStartTime NOTIFY startTimeChanged)
     Q_PROPERTY(QDateTime endTime READ getEndTime WRITE setEndTime NOTIFY endTimeChanged)
-    Q_PROPERTY(QPointF weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
-    Q_PROPERTY(QPointF electricityY READ getElectricityY WRITE setElectricityY NOTIFY electricityYChanged)
+    Q_PROPERTY(QtCharts::QValueAxis* weatherY READ getWeatherY WRITE setWeatherY NOTIFY weatherYChanged)
+    Q_PROPERTY(QtCharts::QValueAxis* electricityY READ getElectricityY WRITE setElectricityY NOTIFY electricityYChanged)
     Q_PROPERTY(QString weatherType READ getWeatherType WRITE setWeatherType NOTIFY weatherTypeChanged)
     Q_PROPERTY(QString electricityType READ getElectricityType WRITE setElectricityType NOTIFY electricityTypeChanged)
 
@@ -36,8 +37,8 @@ public:
     QtCharts::QLineSeries* getElectricitySeries() const;
     QDateTime getStartTime();
     QDateTime getEndTime();
-    QPointF getWeatherY();
-    QPointF getElectricityY();
+    QtCharts::QValueAxis *getWeatherY();
+    QtCharts::QValueAxis *getElectricityY();
     QString getWeatherType();
     QString getElectricityType();
 
@@ -48,8 +49,8 @@ public:
     void setElectricitySeries(QtCharts::QLineSeries *electricitySeries);
     void setStartTime(QDateTime start);
     void setEndTime(QDateTime end);
-    void setWeatherY(QPointF newValue);
-    void setElectricityY(QPointF newValue);
+    void setWeatherY(QtCharts::QValueAxis* newValue);
+    void setElectricityY(QtCharts::QValueAxis* newValue);
     void setWeatherType(QString newType);
     void setElectricityType(QString newType);
 
@@ -85,8 +86,8 @@ private:
     QtCharts::QLineSeries* m_nuclearProductionSeries;
     QtCharts::QLineSeries* m_hydroProductionSeries;
     */
-    QPointF m_weatherY;
-    QPointF m_elelctricityY;
+    QtCharts::QValueAxis* m_weatherY;
+    QtCharts::QValueAxis* m_elelctricityY;
     QDateTime m_start;
     QDateTime m_end;
     std::unordered_map<QString, DataContainer*> m_data;

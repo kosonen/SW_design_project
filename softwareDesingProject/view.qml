@@ -19,15 +19,15 @@ Item{
             }
             ValueAxis{
                 id: weatherY
-                min: model.weatherY.y
-                max: model.weatherY.x
+                //min: model.weatherY.y
+                //max: model.weatherY.x
                 //titleText: getWeatherUnits()
             }
 
             ValueAxis{
                 id: electricityY
-                min: model.electricityY.y
-                max: model.electricityY.x
+                //min: model.electricityY.y
+                //max: model.electricityY.x
             }
 
 
@@ -58,6 +58,8 @@ Item{
     {
         model.weatherSeries = weatherSeries;
         model.elecrtricitySeries = electricitySeries;
+        model.weatherY = weatherY;
+        model.electricityY = electricityY;
     }
 
     /*

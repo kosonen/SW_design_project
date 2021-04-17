@@ -15,8 +15,8 @@ Model::Model(QObject *parent):
     m_nuclearProductionSeries{},
     m_hydroProductionSeries{},
     */
-    m_weatherY{},
-    m_elelctricityY{},
+    m_weatherY{new QtCharts::QValueAxis},
+    m_elelctricityY{new QtCharts::QValueAxis},
     m_start(),
     m_end(),
     m_data()
@@ -44,12 +44,12 @@ QDateTime Model::getEndTime()
     return m_end;
 }
 
-QPointF Model::getWeatherY()
+QtCharts::QValueAxis* Model::getWeatherY()
 {
     return m_weatherY;
 }
 
-QPointF Model::getElectricityY()
+QtCharts::QValueAxis* Model::getElectricityY()
 {
     return m_elelctricityY;
 }
@@ -108,13 +108,13 @@ void Model::setEndTime(QDateTime end)
     emit endTimeChanged();
 }
 
-void Model::setWeatherY(QPointF newValue)
+void Model::setWeatherY(QtCharts::QValueAxis* newValue)
 {
     m_weatherY = newValue;
     emit weatherYChanged();
 }
 
-void Model::setElectricityY(QPointF newValue)
+void Model::setElectricityY(QtCharts::QValueAxis* newValue)
 {
     m_elelctricityY = newValue;
     emit electricityYChanged();
@@ -172,7 +172,6 @@ void Model::updateSeries(DataContainer* data)
     setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
     setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
 
-    qDebug() << data->getCategory() << "MOON TÄSSÄ" << Qt::endl;
 
     if(data->getCategory() == "weather")
     {
@@ -182,18 +181,22 @@ void Model::updateSeries(DataContainer* data)
             case 1:
                 m_weatherSeries->setColor("red");
                 m_weatherSeries->setName("Temperature");
+                m_weatherY->setTitleText("°C");
                 break;
             case 2:
                 m_weatherSeries->setColor("cyan");
                 m_weatherSeries->setName("Wind speed");
+                m_weatherY->setTitleText("M/S");
                 break;
             case 3:
                 m_weatherSeries->setColor("blue");
                 m_weatherSeries->setName("Humidity");
+                m_weatherY->setTitleText("%");
                 break;
             case 4:
                 m_weatherSeries->setColor("gray");
                 m_weatherSeries->setName("Cloud Cover");
+                m_weatherY->setTitleText("/ 8");
                 break;
         }
 
@@ -206,7 +209,9 @@ void Model::updateSeries(DataContainer* data)
             yBottom = limits.y() - 1;
         }
 
-        setWeatherY(QPointF(yTop, yBottom));
+        m_weatherY->setMax(yTop);
+        m_weatherY->setMin(yBottom);
+
     }
     else if (data->getCategory() == "electricity")
     {
@@ -216,21 +221,35 @@ void Model::updateSeries(DataContainer* data)
             case 5:
                 m_eleSeries->setColor("darkblue");
                 m_eleSeries->setName("Hydro power");
+                m_elelctricityY->setTitleText(data->getUnit());
                 break;
             case 6:
                 m_eleSeries->setColor("darkgreen");
                 m_eleSeries->setName("Wind power");
+                qDebug() << data->getUnit() << Qt::endl;
+                m_elelctricityY->setTitleText(data->getUnit());
                 break;
             case 7:
                 m_eleSeries->setColor("darkcyan");
                 m_eleSeries->setName("Nuclear power");
+                m_elelctricityY->setTitleText(data->getUnit());
                 break;
+            case 8:
+                m_eleSeries->setColor("lightgreen");
+                m_eleSeries->setName("Energy consumption");
+                break;
+            case 9:
+                m_eleSeries->setColor("lightblue");
+                m_eleSeries->setName("Energy production");
         }
 
         QPointF limits = getLimits(data->getData());
         qreal yTop = limits.x() + 10;
         qreal yBottom = 0;
-        setElectricityY(QPointF(yTop, yBottom));
+
+        m_elelctricityY->setMax(yTop);
+        m_elelctricityY->setMin(yBottom);
+
     }
 
     //m_eleSeries->replace(data->getData());
