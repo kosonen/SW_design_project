@@ -628,7 +628,7 @@ Window {
             id: dataProcessingRect
             border.color: "black"
             width: consumptionBrowser.width
-            height: 130
+            height: 170
             anchors.left: parent.left
             anchors.top: endTimeInputBoundingRect.bottom
             radius: 2
@@ -637,8 +637,20 @@ Window {
                     id: columElement
                     spacing: 2
                     RadioButton{
-                        id: avgButton
+                        id:rawButton
                         checked: true
+                        text: "Raw data"
+                        onCheckedChanged: {
+                            if(rawButton.checked)
+                            {
+                                viewController.setDataProcessing("RAW")
+                            }
+                        }
+                    }
+
+                    RadioButton{
+                        id: avgButton
+                        checked: false
                         text: "AVG"
                         onCheckedChanged: {
                             if(avgButton.checked)
@@ -685,7 +697,7 @@ Window {
     }
 
     Component.onCompleted:{
-        viewController.setDataProcessing("AVG");
+        viewController.setDataProcessing("RAW");
         requestData();
     }
 
@@ -705,9 +717,7 @@ function getTomorrow()
 function requestData()
 {
     viewController.setLocation(inputInfo.text);
-    console.log(" weather browser value: " + weatherBrowser.value + ", consumption browser value: " + consumptionBrowser.value)
     viewController.setDataSources([weatherBrowser.value, consumptionBrowser.value])
-
 
     var startTime = startYearInput.text + "-" + startMonthInput.text + "-" +
     startDayInput.text + "T" + startTimeInput.text +"Z";
@@ -719,7 +729,6 @@ function requestData()
         viewController.requestData();
         coolDownTimer.start();
         var errMsg = viewController.getPopupError();
-        console.log("request error " + errMsg);
         if(errMsg !== "")
         {
             showPopup(errMsg);

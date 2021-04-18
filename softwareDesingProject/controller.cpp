@@ -117,6 +117,7 @@ bool Controller::saveData(QString filePath, QString dataSource)
 void Controller::setDataProcessing(QString method)
 {
     qDebug() << method;
+    m_model->setDataProcessing(method);
 }
 
 QString Controller::getPopupError()

@@ -46,6 +46,7 @@ public:
     Q_INVOKABLE QString getHydroConsumption();
     Q_INVOKABLE QString getNucklearConsumption();
     Q_INVOKABLE QString getWindConsumption();
+    void setDataProcessing(QString method);
 
     QPointF getLimits(QList<QPointF> data);
 
