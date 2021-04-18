@@ -247,6 +247,9 @@ signals:
      */
     void pieSeriesChanged();
 
+    /**
+     * @brief Emitted when empty data is fetched. Usually this is emitted because of error
+     */
     void emptySeries();
 
 private:

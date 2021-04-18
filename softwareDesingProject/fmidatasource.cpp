@@ -94,21 +94,9 @@ QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTim
         query = FMI_QUERY_OBSERVATIONS;
     }
 
-    //query.addQueryItem(STARTIME, QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(1).toString(Qt::ISODate));
-    //query.addQueryItem(ENDTIME,QDateTime::currentDateTime().toTimeSpec(Qt::OffsetFromUTC).addDays(2).toString(Qt::ISODate));
     query.addQueryItem(STARTIME, startTime);
     query.addQueryItem(ENDTIME, endTime);
 
-
-
-
-    /*)
-    while(i.hasNext())
-    {
-        i.next();
-        query.addQueryItem(i.key(), i.value());
-    }
-    */
     query.addQueryItem(LOCATION, location_);
     query.addQueryItem("parameters", source_);
     fetchURL.setQuery(query);
@@ -126,9 +114,7 @@ void FmiDataSource::fetchHandler()
             data->addElement(it);
         }
 
-        // TODO: this neds to be set automatically to correct value
         data->setType(source_);
-        // TODO: move "weather" to some constant
         data->setCategory("weather");
         data->setUnit(FMI_SOURCE_TO_UNIT_MAPPING[source_]);
         emit dataParsed(data);

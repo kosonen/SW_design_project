@@ -29,8 +29,6 @@ bool DataFetcher::fetch(Settings& settings)
             return false;
         }
 
-        // TODO: There needs to be better solution for selecting between the
-        // dataSources. Also the urlBuilder needs some adjustment.
         if (SOURCE_TO_API_MAPPING[source] == "FMI")
         {
             qDebug() << "FMI REQUEST";
@@ -86,7 +84,6 @@ DataContainer* DataFetcher::calcAverage(DataContainer* data)
             QPointF it = data->getElement(i);
             iterations++;
             QDateTime currDateTime = QDateTime::fromMSecsSinceEpoch(it.x());
-            //qDebug() << date << currDateTime;
             if(currDateTime.date() != date or i == data->size() - 1){
                 avg = avg/iterations;
                 avgData->addElement(QPointF(date.startOfDay().addSecs(43200).toMSecsSinceEpoch(), avg));
