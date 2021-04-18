@@ -195,7 +195,7 @@ void Model::updateSeries(DataContainer* data)
     qDebug() << "Updating temperature graph" << Qt::endl;
 
     qDebug() << data->getData().size() << Qt::endl;
-    if (data->getData().size() < 2)
+    if (data->getData().size() < 1)
     {
         qDebug() << "tyhjä" << Qt::endl;
         return;
