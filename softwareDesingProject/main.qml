@@ -683,6 +683,31 @@ Window {
 
                 }
             }
+        CheckBox{
+            id: automaticUpdateCheckBox
+            checked: false
+            anchors.top: dataProcessingRect.bottom
+            anchors.left: parent.left
+            background: Rectangle{
+                anchors.top: dataProcessingRect.bottom
+                anchors.left: automaticUpdateCheckBox.left
+                border.color: "black"
+                height: 40
+                radius: 2
+                width: consumptionBrowser.width
+            }
+
+            text: "Automatic update"
+            onCheckStateChanged:
+                if(automaticUpdateCheckBox.checked)
+                {
+                    viewController.setAutomaticUpdate(true)
+                }
+                else
+                {
+                    viewController.setAutomaticUpdate(false);
+                }
+        }
 
 
     }
