@@ -69,17 +69,17 @@ QtCharts::QPieSeries* Model::getPieSeries() const
     return m_pieseries;
 }
 
-QString Model::getHydroConsumption()
+QString Model::getHydroProduction()
 {
     return m_hydroConsumption;
 }
 
-QString Model::getNucklearConsumption()
+QString Model::getNuclearProduction()
 {
     return m_nucklearConsumption;
 }
 
-QString Model::getWindConsumption()
+QString Model::getWindProduction()
 {
     return m_windConsumption;
 }
