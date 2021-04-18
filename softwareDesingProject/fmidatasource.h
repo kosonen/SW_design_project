@@ -4,6 +4,10 @@
 #include "idatasource.h"
 #include "defines.h"
 
+/**
+ * @brief The FmiDataSource class implements fetching from the FMI API
+ */
+
 class FmiDataSource : public IDataSource
 {
     Q_OBJECT

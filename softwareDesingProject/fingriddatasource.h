@@ -4,6 +4,9 @@
 #include "idatasource.h"
 #include "defines.h"
 
+/**
+ * @brief The FingridDataSource class implements fetching from the Fingrid API
+ */
 class FingridDataSource : public IDataSource
 {
     Q_OBJECT
