@@ -435,7 +435,6 @@ Window {
                 width: startMonthInputBoundingRect.width
                 height: startMonthInputBoundingRect.height
                 anchors.fill: parent
-               // text: getTomorrow().getHours() + "." + getTomorrow().getMinutes() + "." + "00"
                 text: {
                     var retString = "";
                     if(getTomorrow().getHours() < 10)
@@ -526,7 +525,6 @@ Window {
             anchors.top: titleConsumption.bottom
             modelToView: consumptionModel
             type: "consumption"
-            //optionChanged.
         }
 
         Rectangle{
@@ -591,8 +589,6 @@ Window {
 
         Popup{
             id: invalidSettingsPopup
-            //width: 600
-           // height: 200
             anchors.centerIn: viewBounds
             background: Rectangle{
                 id: popupBackground
