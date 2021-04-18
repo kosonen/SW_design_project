@@ -5,7 +5,6 @@
         <file>view.qml</file>
         <file>WeatherListModel.qml</file>
         <file>ConsumptionListModel.qml</file>
-        <file>OptionColumn.qml</file>
         <file>ConsumptionPieChart.qml</file>
         <file>cloud.png</file>
         <file>drop.png</file>

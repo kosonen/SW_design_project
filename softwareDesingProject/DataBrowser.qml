@@ -7,7 +7,6 @@ Item {
     property int heightOfElement: 30
     property string type: ""
     property string value: ""
-    //signal optionChanged;
 
     Rectangle{
         id: borders
@@ -51,19 +50,11 @@ Item {
                     {
                         console.log("sää muuttuu")
                         setWeatherProperties(modelToView.get(list.currentIndex).name);
-                        //parent.parent.requestData();
-                        //viewController.setDataSources(modelToView.get(list.currentIndex).name)
-                        //viewController.requestData();
-
-
                     }
                     else if (type === "consumption")
                     {
                         console.log("sähkö muuttuu")
                         setElectricityProperties(modelToView.get(list.currentIndex).name);
-                        //parent.parent.requestData();
-                        //viewController.setDataSources(modelToView.get(list.currentIndex).name)
-                        //viewController.requestData();
                     }
 
                     else
@@ -85,23 +76,18 @@ Item {
     {
         console.log("current index " + prop);
         browser.value = prop;
-        //viewController.requestData();
     }
 
     function setElectricityProperties(prop)
     {
         console.log("current index " + prop);
         browser.value = prop;
-        //viewController.requestData();
     }
 
     function setProperties(prop)
     {
         console.log("current index " + prop);
         browser.value = prop;
-        //viewController.requestData();
-
-
     }
 
     function initWeatherProperties(prop)
