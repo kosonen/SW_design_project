@@ -105,9 +105,6 @@ public:
      */
     void setSettings(Settings* settings);
 
-Q_SIGNALS:
-    void invalidSettings(QString message);
-
 private:
     SettingsCheck checkSettings();
     void handleSettingCheck(SettingsCheck settingsStatus);

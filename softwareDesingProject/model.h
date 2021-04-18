@@ -208,14 +208,49 @@ public slots:
 
 signals:
 
+    /**
+     * @brief Emitted when weather series is changed
+     */
     void weatherSeriesChanged();
+
+    /**
+     * @brief Emitted when electricity series is changed
+     */
     void electricitySeriesChanged();
+
+    /**
+     * @brief Emitted when saved series is cahnged
+     */
     void savedSeriesChanged();
+
+    /**
+     * @brief Emitted when start time is changed
+     */
     void startTimeChanged();
+
+    /**
+     * @brief Emitted when end time is changed
+     */
     void endTimeChanged();
+
+    /**
+     * @brief Emitted when Y axel for weather data is changed
+     */
     void weatherYChanged();
+
+    /**
+     * @brief Emitted when Y axel for electricity is changed
+     */
     void electricityYChanged();
+
+    /**
+     * @brief Emitted when Y axel for saved data is changed
+     */
     void savedYChanged();
+
+    /**
+     * @brief Emitted when pieseries is changed
+     */
     void pieSeriesChanged();
 
 

@@ -45,7 +45,17 @@ public:
     void setDataProcessingMethod(const QString method);
 
 signals:
+
+    /**
+     * @brief Emitted when data is ready
+     * @param data
+     */
     void dataReady(DataContainer* data);
+
+    /**
+     * @brief Emitted when current production data is ready
+     * @param currentData
+     */
     void currentProductionReady(DataContainer* currentData);
 private:
     void dataProcessingHandler(DataContainer* data);

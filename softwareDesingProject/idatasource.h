@@ -46,6 +46,10 @@ public:
     virtual void setSearchParameter(const QString param) = 0;
 
 signals:
+    /**
+     * @brief Emitted when requested data is parsed
+     * @param data
+     */
     void dataParsed(DataContainer* data);
 };
 

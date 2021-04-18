@@ -42,6 +42,11 @@ public:
     void getCurrentProduction();
 
 signals:
+
+    /**
+     * @brief Emitted when data for current production is ready
+     * @param data
+     */
     void currentProductionReady(DataContainer* data);
 
 private Q_SLOTS:

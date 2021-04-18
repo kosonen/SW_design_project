@@ -44,6 +44,11 @@ public:
 
 
 private Q_SLOTS:
+
+    /**
+     * @brief Emitted when request is completed
+     * @param reply
+     */
     void downloadCompleted(QNetworkReply* reply);
 
 private:
