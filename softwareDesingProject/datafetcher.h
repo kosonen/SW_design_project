@@ -3,8 +3,6 @@
 
 #include "datacontainer.h"
 #include "settings.h"
-#include "iurlbuilder.h"
-#include "urlbuilder.h"
 #include "idatasource.h"
 #include "fmidatasource.h"
 #include "fingriddatasource.h"
