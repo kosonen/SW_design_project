@@ -2,6 +2,18 @@ import QtQuick 2.14
 import QtCharts 2.14
 
 Item {
+
+    Timer{
+        interval: 1000;
+        running: true
+        onTriggered: {
+            hydroLabel.text = "Hydro: " + model.getHydroConsumption();
+            nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
+            windLabel.text = "Wind: "+ model.getWindConsumption();
+            stop();
+        }
+    }
+
     Rectangle{
         width: parent.width
         height: parent.height
@@ -15,6 +27,11 @@ Item {
             antialiasing: true
             PieSeries{
                 id: pieseries
+                onAdded: {
+                    hydroLabel.text = "Hydro: " + model.getHydroConsumption();
+                    nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
+                    windLabel.text = "Wind: "+ model.getWindConsumption();
+                }
             }
 
         }
@@ -29,8 +46,10 @@ Item {
         border.color: "black"
         border.width: 2
         Text{
+            font.pointSize: 10
             id: hydroLabel
             anchors.fill: parent
+            leftPadding: 2
         }
 
     }
@@ -44,8 +63,10 @@ Item {
         border.color: "black"
         border.width: 2
         Text{
+            font.pointSize: 10
             id: nucklearLabel
             anchors.fill: parent
+            leftPadding: 2
         }
 
     }
@@ -59,13 +80,18 @@ Item {
         border.color: "black"
         border.width: 2
         Text {
+            font.pointSize: 10
             id: windLabel
             anchors.fill: parent
+            leftPadding: 2
         }
 
     }
 
     Component.onCompleted: {
         model.pieSeries = pieseries;
+        hydroLabel.text = "Hydro: " + model.getHydroConsumption();
+        nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
+        windLabel.text = "Wind: "+ model.getWindConsumption();
     }
 }

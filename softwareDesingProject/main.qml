@@ -571,8 +571,8 @@ Window {
 
         ConsumptionPieChart{
             id: consumptionChart
-            height: 3*view.height/4
-            width: 3*view.height/4
+            height: 4*view.height/5
+            width: 4*view.height/5
 
             anchors.left: view.right
             anchors.bottom: view.bottom
