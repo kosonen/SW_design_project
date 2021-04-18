@@ -15,8 +15,8 @@ public:
 
     void add(QString key, ISaveObject* obj);
 
-    void load(QString filePath);
-    void save(QString filePath);
+    bool load(QString filePath);
+    bool save(QString filePath);
 
 signals:
 

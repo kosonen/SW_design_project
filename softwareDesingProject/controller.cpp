@@ -85,12 +85,13 @@ bool Controller::loadData(QString filePath)
 
     m_saveManager.add("settings", m_settings);
     m_saveManager.add("data", data);
-    m_saveManager.load(filePath);
+
+    if (!m_saveManager.load(filePath))
+    {
+        return false;
+    }
 
     m_model->updateSeries(data);
-
-//    qDebug() << data->serialize();
-//    qDebug() << m_settings->serialize();
 
     return true;
 }
@@ -101,17 +102,16 @@ bool Controller::saveData(QString filePath, QString dataSource)
 
     DataContainer* data = m_model->getData(dataSource);
 
-    if (data != nullptr)
+    if (data == nullptr)
     {
-        qDebug() << "GOT DATA!";
-        m_saveManager.add("settings", m_settings);
-        m_saveManager.add("data", data);
-        m_saveManager.save(filePath);
-
-        return true;
+        return false;
     }
 
-    return false;
+    qDebug() << "GOT DATA!";
+    m_saveManager.add("settings", m_settings);
+    m_saveManager.add("data", data);
+
+    return m_saveManager.save(filePath);
 }
 
 void Controller::setDataProcessing(QString method)

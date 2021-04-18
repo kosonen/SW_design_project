@@ -15,14 +15,14 @@ void SaveManager::add(QString key, ISaveObject *obj)
     m_data[key] = obj;
 }
 
-void SaveManager::load(QString filePath)
+bool SaveManager::load(QString filePath)
 {
     qDebug() << "Loading! from" << filePath;
 
     QFile loadFile(filePath);
 
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        return;
+        return false;
     }
 
     QByteArray saveContent = loadFile.readAll();
@@ -35,17 +35,17 @@ void SaveManager::load(QString filePath)
         QJsonObject content = saveData[key].toObject();
         m_data[key]->deserialize(content);
     }
-
+    return true;
 }
 
-void SaveManager::save(QString filePath)
+bool SaveManager::save(QString filePath)
 {
     qDebug() << "SAVING! to"  << filePath;
 
     QFile saveFile(filePath);
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        return;
+        return false;
     }
 
     QJsonObject saveData;
@@ -57,4 +57,5 @@ void SaveManager::save(QString filePath)
 
     QJsonDocument saveDoc(saveData);
     saveFile.write(saveDoc.toJson());
+    return true;
 }
