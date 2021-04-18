@@ -9,8 +9,9 @@ Window {
     height: screen.height
     minimumHeight: 840
     minimumWidth: 1640
+
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Viita saaren sää ennuste ohjelma")
 
     Rectangle{
         id: viewBounds

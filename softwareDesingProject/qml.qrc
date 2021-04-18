@@ -17,5 +17,6 @@
         <file>SaveLoad.qml</file>
         <file>image90.png</file>
         <file>prod.png</file>
+        <file>teuvo_hakkarainen-1200x800.jpg</file>
     </qresource>
 </RCC>
