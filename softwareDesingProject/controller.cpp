@@ -92,6 +92,7 @@ bool Controller::loadData(QString filePath)
     }
 
     m_model->updateSeries(data);
+    requestData();
 
     return true;
 }
