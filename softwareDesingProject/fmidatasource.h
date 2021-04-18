@@ -52,7 +52,6 @@ private:
 
     QNetworkAccessManager* network_;
     QXmlStreamReader* parser_;
-    QHash<QString,QString> queryParameters_;
     QList<QPointF> dataBuffer_;
 
     bool firstFetchHandled_;

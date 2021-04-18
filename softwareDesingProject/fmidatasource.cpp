@@ -58,7 +58,6 @@ void FmiDataSource::makeRequest()
 void FmiDataSource::setLocation(QString location)
 {
     location_ = location;
-    queryParameters_[LOCATION] = location;
 }
 
 void FmiDataSource::setTimeWindow(QString startTime, QString endTime)
@@ -88,7 +87,6 @@ QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTim
 
 
 
-    QHashIterator<QString,QString> i (queryParameters_);
 
     /*)
     while(i.hasNext())
