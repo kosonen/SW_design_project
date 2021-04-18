@@ -15,3 +15,5 @@ Used Qt libraries are
 - quick
 - widgets
 - xml
+
+To run the project, clone this repository, open softwareDesignProject.pro in Qt Creator and configure the project with the correct Qt version.
