@@ -18,6 +18,8 @@ Controller::Controller(QObject *parent):
 
 bool Controller::requestData()
 {
+    qDebug() << "REQUEST DATA!!!";
+
     m_error = "";
     if (m_model == nullptr)
     {
@@ -110,6 +112,11 @@ bool Controller::saveData(QString filePath, QString dataSource)
     }
 
     return false;
+}
+
+void Controller::setDataProcessing(QString method)
+{
+    qDebug() << method;
 }
 
 

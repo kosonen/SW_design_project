@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE bool loadData(QString filePath);
     Q_INVOKABLE bool saveData(QString filePath, QString dataSource);
 
+    Q_INVOKABLE void setDataProcessing(QString method);
+
     Q_INVOKABLE QString getPopupError();
 
     void setModel(Model* model);
