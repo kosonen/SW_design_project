@@ -51,7 +51,7 @@ bool DataFetcher::fetch(Settings& settings)
     return true;
 }
 
-void DataFetcher::setDataProcessingMethod(QString method)
+void DataFetcher::setDataProcessingMethod(const QString method)
 {
     m_dataProcessingMethod_ = method;
 }
