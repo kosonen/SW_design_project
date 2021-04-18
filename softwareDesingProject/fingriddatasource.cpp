@@ -110,7 +110,6 @@ void FingridDataSource::downloadCompleted(QNetworkReply *reply)
     if (!doc.setContent(reply->readAll(), &errMsg)) {
         qDebug() << "Fingrid request BROKEN" << Qt::endl;
         qDebug() << "Error: " << errMsg << Qt::endl;
-        return;
     }
     parseData(doc, dataBuffer_);
     qDebug() << "Content read OK!";
