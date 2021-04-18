@@ -133,8 +133,15 @@ const QUrlQuery FMI_QUERY_OBSERVATIONS= QUrlQuery(
     QPair<QString, QString>("request", "getFeature"),
     QPair<QString, QString>("storedquery_id", "fmi::observations::weather::simple")
 }
+);
 
-
+const QUrlQuery FMI_TEMP_DAILY_QUERY_OBSERVATIONS= QUrlQuery(
+{
+    QPair<QString, QString>("service", "WFS"),
+    QPair<QString, QString>("version", "2.0.0"),
+    QPair<QString, QString>("request", "getFeature"),
+    QPair<QString, QString>("storedquery_id", "fmi::observations::weather::daily::simple")
+}
 );
 
 #endif // DEFINES_H

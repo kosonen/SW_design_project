@@ -28,12 +28,8 @@ void FmiDataSource::makeRequest()
 {
     dataBuffer_.clear();
     QDateTime currentTime = QDateTime::currentDateTimeUtc();
-    qDebug() << "CURRENT TIME" << currentTime;
-    qDebug() << "START TIME" << startTime_;
-    qDebug() << "END TIME" << endTime_;
     bool startTimeInPast = (currentTime > startTime_);
     bool endTimeInPast = (currentTime > endTime_);
-    qDebug() << "BOOLEANS: " << startTimeInPast << endTimeInPast;
     /* Fetch both from observations and forecast */
     if(!endTimeInPast and startTimeInPast){
         firstFetchHandled_ = false;
@@ -49,7 +45,6 @@ void FmiDataSource::makeRequest()
     /* Fetch from forecasts */
     else {
         firstFetchHandled_ = true;
-        qDebug() << "TIMES: " << startTime_.toString() << Qt::endl;
         QUrl url = buildFMIURL(true, startTime_.toString(Qt::ISODate), endTime_.toString(Qt::ISODate));
         network_->get(QNetworkRequest(url));
     }
@@ -62,9 +57,8 @@ void FmiDataSource::setLocation(const QString location)
 
 void FmiDataSource::setTimeWindow(const QString startTime, const QString endTime)
 {
-    qDebug() << startTime << endTime;
     QDateTime currentDate = QDateTime::currentDateTimeUtc();
-    /* Saturate the times to the max and min that the API allows */
+    /* Saturate the times to the max that the API allows */
     if(currentDate.addDays(3) < QDateTime::fromString(endTime, Qt::ISODate)){
         endTime_ = currentDate.addDays(3);
     }
@@ -72,33 +66,61 @@ void FmiDataSource::setTimeWindow(const QString startTime, const QString endTime
     {
         endTime_ = QDateTime::fromString(endTime, Qt::ISODate);
     }
-    if(currentDate.addDays(-7) > QDateTime::fromString(startTime, Qt::ISODate)){
-        startTime_ = currentDate.addDays(-7);
-    }
-    else
-    {
-        startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
-    }
+    startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
 }
 
 QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTime)
 {
     QUrl fetchURL(QString("https://opendata.fmi.fi/wfs"));
     QUrlQuery query;
+    QDateTime currentDate = QDateTime::currentDateTimeUtc();
     if(forecast)
     {
         query = FMI_QUERY_FORECAST;
     }
     else
     {
-        query = FMI_QUERY_OBSERVATIONS;
+        /* Get temperature from daily statistics if request is longer than one week */
+        if(source_ == "temperature" and currentDate.addDays(-7) > QDateTime::fromString(startTime, Qt::ISODate)){
+            query = FMI_TEMP_DAILY_QUERY_OBSERVATIONS;
+        }
+        else
+        {
+            query = FMI_QUERY_OBSERVATIONS;
+        }
     }
 
-    query.addQueryItem(STARTIME, startTime);
+
+    bool fetchingFromTooFar = false;
+    /* If fetching further away than the api allows */
+    if(currentDate.addDays(-7) > QDateTime::fromString(startTime, Qt::ISODate))
+    {
+        if(source_ != "temperature")
+        {
+            query.addQueryItem(STARTIME, currentDate.addDays(-7).toString(Qt::ISODate));
+        }
+        else
+        {
+            query.addQueryItem(STARTIME, startTime);
+        }
+        fetchingFromTooFar = true;
+    }
+    else
+    {
+        query.addQueryItem(STARTIME, startTime);
+    }
+
     query.addQueryItem(ENDTIME, endTime);
 
     query.addQueryItem(LOCATION, location_);
-    query.addQueryItem("parameters", source_);
+    if((!forecast) and source_ == "temperature" and fetchingFromTooFar)
+    {
+        query.addQueryItem("parameters", "tday");
+    }
+    else
+    {
+        query.addQueryItem("parameters", source_);
+    }
     fetchURL.setQuery(query);
 
     return fetchURL;
@@ -144,9 +166,7 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
         QDomElement time = element.nextSiblingElement();
         QDomElement name = time.nextSiblingElement();
         QDomElement value = name.nextSiblingElement();
-        //qDebug() << qPrintable(time.tagName()) << ": " << time.text() << Qt::endl;
-        //qDebug() << qPrintable(name.tagName()) << ": " << name.text() << Qt::endl;
-        //qDebug() << qPrintable(value.tagName()) << ": " << value.text() << Qt::endl;
+
 
         QString timeStr = time.text();
         QDateTime dateTime = QDateTime::fromString(timeStr, Qt::ISODate);
