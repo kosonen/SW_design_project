@@ -7,6 +7,8 @@ import QtQml 2.14
 Window {
     width: screen.height * 4/3
     height: screen.height
+    minimumHeight: 840
+    minimumWidth: 1640
     visible: true
     title: qsTr("Hello World")
 
