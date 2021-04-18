@@ -84,26 +84,6 @@ QString Model::getWindProduction()
     return m_windConsumption;
 }
 
-QPointF Model::getLimits(QList<QPointF> data)
-{
-    qreal top = data.at(0).y();
-    qreal bottom = data.at(0).y();
-    for (auto point : data)
-    {
-        if(point.y() > top)
-        {
-            top = point.y();
-        }
-        if(point.y() < bottom)
-        {
-            bottom = point.y();
-        }
-    }
-    return QPointF(top, bottom);
-}
-
-
-
 void Model::setWeatherSeries(QtCharts::QLineSeries *weatherSeries)
 {
     m_weatherSeries = weatherSeries;
@@ -197,81 +177,52 @@ void Model::updateSeries(DataContainer* data)
         return;
     }
 
+    QtCharts::QLineSeries* series = nullptr;
+    QtCharts::QValueAxis* axis = nullptr;
+
+    // Select series
     if(data->getCategory() == "weather")
     {
-        m_weatherSeries->replace(data->getData());
-        m_weatherY->setTitleText(data->getUnit());
-        m_weatherSeries->setColor(SOURCE_TO_COLOR_MAPPING[data->getType()]);
-        m_weatherSeries->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
-
-        QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() + 1;
-        qreal yBottom = 0;
-
-        if(data->getType() == "temperature")
-        {
-            yBottom = limits.y() - 1;
-        }
-
-        m_weatherY->setMax(yTop);
-        m_weatherY->setMin(yBottom);
-
+        series = m_weatherSeries;
+        axis = m_weatherY;
     }
     else if (data->getCategory() == "electricity")
     {
-        m_eleSeries->replace(data->getData());
-        m_elelctricityY->setTitleText(data->getUnit());
-        m_eleSeries->setColor(SOURCE_TO_COLOR_MAPPING[data->getType()]);
-        m_eleSeries->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
-
-        QPointF limits = getLimits(data->getData());
-        qreal yTop = limits.x() * 1.25;
-        qreal yBottom = limits.y() * 0.7;
-
-        m_elelctricityY->setMax(yTop);
-        m_elelctricityY->setMin(yBottom);
+        series = m_eleSeries;
+        axis = m_elelctricityY;
     }
-
     else if (data->getCategory() == "save")
     {
-        m_savedSeries->replace(data->getData());
-        m_savedSeries->setName("Saved " + SOURCE_TO_NAME_MAPPING[data->getType()]);
-
-        QPointF limits = getLimits(data->getData());
-
-        qDebug() << "data type: " << data->getType() << Qt::endl;
-        if(data->getType() == "temperature" || data->getType() == "windspeedms"
-                || data->getType() == "humidity" || data->getType() == "TotalCouldCover"){
-
-            qreal yTop = limits.x() + 1;
-            qreal yBottom = 0;
-
-            if(data->getType() == "temperature")
-            {
-                yBottom = limits.y() - 1;
-            }
-
-            m_savedY->setMax(yTop);
-            m_savedY->setMin(yBottom);
-            m_savedY->setTitleText("Saved " + data->getUnit());
-
-        }
-        else {
-
-            qreal yTop = limits.x() + 10;
-            qreal yBottom = 0;
-
-            m_savedY->setMax(yTop);
-            m_savedY->setMin(yBottom);
-            m_savedY->setTitleText("Saved " + data->getUnit());
-        }
+        series = m_savedSeries;
+        axis = m_savedY;
     }
 
+    series->replace(data->getData());
+    if (data->getCategory() == "save")
+    {
+        series->setName("Saved " + SOURCE_TO_NAME_MAPPING[data->getType()]);
+    }
+    else
+    {
+        series->setName(SOURCE_TO_NAME_MAPPING[data->getType()]);
+        series->setColor(SOURCE_TO_COLOR_MAPPING[data->getType()]);
+    }
+
+    QPointF limits = data->getLimits();
+    qreal yTop = limits.x() > 0 ? limits.x() * 1.1 : limits.x() * 0.9;
+    qreal yBottom = limits.y() > 0 ? limits.y() * 0.9 : limits.y() * 1.1;
+
+    axis->setMax(yTop);
+    axis->setMin(yBottom);
+    axis->setTitleText(data->getUnit());
+
+    // Deallocate DataContainer
     if(m_data.count(data->getCategory()))
     {
         delete m_data[data->getCategory()];
         m_data[data->getCategory()] = nullptr;
     }
+
     m_data[data->getCategory()] = data;
 }
 

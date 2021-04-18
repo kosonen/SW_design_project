@@ -27,6 +27,13 @@ public:
     QPointF getElement(int i);
     QList<QPointF> getData();
 
+    /**
+     * @brief gets top and bottom ĺimits of input data
+     * @return QPointF with x value at highest point of data
+     * and y at lowest
+     */
+    QPointF getLimits();
+
     int size();
 //    void clear();
 

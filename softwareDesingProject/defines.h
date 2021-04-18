@@ -107,7 +107,7 @@ const QHash<QString, QString> FMI_SOURCE_TO_UNIT_MAPPING = {
     {"TotalCloudCover", "1/8"}
 };
 
-const QString FINGRID_UNIT_NAME = "MWh";
+const QString FINGRID_UNIT_NAME = "MW";
 
 
 

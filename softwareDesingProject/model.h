@@ -111,14 +111,6 @@ public:
     Q_INVOKABLE QString getWindProduction();
 
     /**
-     * @brief gets top and bottom ĺimits of input data
-     * @param data: input data
-     * @return QPointF with x value at highest point of data
-     * and y at lowest
-     */
-    QPointF getLimits(QList<QPointF> data);
-
-    /**
      * @brief sets Weather Series to new series
      * @param weatherSeries: new series
      */
@@ -261,6 +253,7 @@ private:
     QtCharts::QValueAxis* m_weatherY;
     QtCharts::QValueAxis* m_elelctricityY;
     QtCharts::QValueAxis* m_savedY;
+
     QtCharts::QPieSeries* m_pieseries;
     QDateTime m_start;
     QDateTime m_end;

@@ -66,6 +66,24 @@ QList<QPointF> DataContainer::getData()
     return m_data;
 }
 
+QPointF DataContainer::getLimits()
+{
+    qreal top = m_data.at(0).y();
+    qreal bottom = m_data.at(0).y();
+    for (auto point : m_data)
+    {
+        if(point.y() > top)
+        {
+            top = point.y();
+        }
+        if(point.y() < bottom)
+        {
+            bottom = point.y();
+        }
+    }
+    return QPointF(top, bottom);
+}
+
 QJsonObject DataContainer::serialize()
 {
     QJsonObject containerData;
