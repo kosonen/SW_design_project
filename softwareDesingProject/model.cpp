@@ -192,7 +192,7 @@ void Model::updateSeries(DataContainer* data)
     qDebug() << data->getData().size() << Qt::endl;
     if (data->getData().size() < 1)
     {
-        qDebug() << "tyhjä category" << data->getCategory() <<  Qt::endl;
+        qDebug() << "empty" <<  Qt::endl;
         if(data->getCategory() == "electricity")
         {
             emit emptySeries();
@@ -267,19 +267,15 @@ void Model::updateSeries(DataContainer* data)
             m_savedY->setMax(yTop);
             m_savedY->setMin(yBottom);
             m_savedY->setTitleText("Saved " + data->getUnit());
-
         }
-
-
     }
 
-    //m_eleSeries->replace(data->getData());
-
+    if(m_data.count(data->getCategory()))
+    {
+        delete m_data[data->getCategory()];
+        m_data[data->getCategory()] = nullptr;
+    }
     m_data[data->getCategory()] = data;
-
-
-
-//    delete data;
 }
 
 void Model::updateProductionPieModel(DataContainer *currentData)

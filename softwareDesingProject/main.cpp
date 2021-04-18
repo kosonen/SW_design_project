@@ -23,14 +23,10 @@ int main(int argc, char *argv[])
     controller.setModel(&model);
     controller.setSettings(&settings);
 
-//    qmlRegisterType<Controller>("controller", 1, 0, "Controller");
-
-
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("viewController", &controller);
     engine.rootContext()->setContextProperty("model", &model);
-//    engine.rootContext()->setContextProperty("settings", &settings);
     app.setWindowIcon(QIcon(":/teuvo_hakkarainen-1200x800.jpg"));
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -77,12 +77,6 @@ QString Settings::getDataProcessing()
 QHash<QString, QString> Settings::getParams()
 {
     QHashIterator<QString,QString> i(m_params);
-    qDebug() << "getparams";
-    while(i.hasNext())
-    {
-        i.next();
-        qDebug() << "settings() key "  << i.key() << " value " << i.value();
-    }
     return m_params;
 }
 

@@ -44,16 +44,12 @@ Item {
                 }
                 focus: true
                 onCurrentItemChanged: {
-
-                    console.log(modelToView.get(list.currentIndex).name + ' selected');
                     if(type === "weather")
                     {
-                        console.log("sää muuttuu")
                         setWeatherProperties(modelToView.get(list.currentIndex).name);
                     }
                     else if (type === "consumption")
                     {
-                        console.log("sähkö muuttuu")
                         setElectricityProperties(modelToView.get(list.currentIndex).name);
                     }
 
@@ -74,57 +70,46 @@ Item {
 }
     function setWeatherProperties(prop)
     {
-        console.log("current index " + prop);
         browser.value = prop;
     }
 
     function setElectricityProperties(prop)
     {
-        console.log("current index " + prop);
         browser.value = prop;
     }
 
     function setProperties(prop)
     {
-        console.log("current index " + prop);
         browser.value = prop;
     }
 
     function initWeatherProperties(prop)
     {
-        console.log("current index " + prop);
         browser.value = prop;
-
     }
 
     function initElecticityProperties(prop)
     {
-        console.log("current index " + prop);
         browser.value = prop;
     }
 
     function initProperties(prop)
     {
-        console.log("current index " + prop);
-
         browser.value = prop;
-
     }
 
     Component.onCompleted: {
         console.log(modelToView.get(list.currentIndex).name + ' selected');
         if(type === "weather")
         {
-            console.log("weather initialized");
             initWeatherProperties(modelToView.get(list.currentIndex).name);
         }
         else if(type === "consumption")
         {
-            console.log("electricity initialized");
             initElecticityProperties(modelToView.get(list.currentIndex).name);
         }
 
-        else // TÄMÄ ON KESKEN, TEE LOPPUUN!!!!
+        else
         {
             initProperties(modelToView.get(list.currentIndex).name);
         }
