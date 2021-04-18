@@ -87,9 +87,9 @@ DataContainer* DataFetcher::calcAverage(DataContainer* data)
             iterations++;
             QDateTime currDateTime = QDateTime::fromMSecsSinceEpoch(it.x());
             //qDebug() << date << currDateTime;
-            if(currDateTime.date() != date){
+            if(currDateTime.date() != date or i == data->size() - 1){
                 avg = avg/iterations;
-                avgData->addElement(QPointF(date.startOfDay().toMSecsSinceEpoch(), avg));
+                avgData->addElement(QPointF(date.startOfDay().addSecs(43200).toMSecsSinceEpoch(), avg));
                 date = currDateTime.date();
                 avg = 0;
                 iterations = 0;
@@ -118,9 +118,9 @@ DataContainer* DataFetcher::calcMin(DataContainer* data)
         {
             QPointF it = data->getElement(i);
             QDateTime currDateTime = QDateTime::fromMSecsSinceEpoch(it.x());
-            if(currDateTime.date() != date){
+            if(currDateTime.date() != date or i == data->size() - 1){
 
-                minData->addElement(QPointF(date.startOfDay().toMSecsSinceEpoch(), min));
+                minData->addElement(QPointF(date.startOfDay().addSecs(43200).toMSecsSinceEpoch(), min));
                 date = currDateTime.date();
                 min = it.y();
             }
@@ -152,8 +152,8 @@ DataContainer* DataFetcher::calcMax(DataContainer* data)
         {
             QPointF it = data->getElement(i);
             QDateTime currDateTime = QDateTime::fromMSecsSinceEpoch(it.x());
-            if(currDateTime.date() != date){
-                maxData->addElement(QPointF(date.startOfDay().toMSecsSinceEpoch(), max));
+            if(currDateTime.date() != date or i == data->size() - 1){
+                maxData->addElement(QPointF(date.startOfDay().addSecs(43200).toMSecsSinceEpoch(), max));
                 date = currDateTime.date();
                 max = it.y();
             }
