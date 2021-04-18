@@ -8,13 +8,6 @@ Model::Model(QObject *parent):
     m_weatherSeries{},
     m_eleSeries{},
     m_savedSeries{},
-    /*
-    m_eleProductionSeries{},
-    m_eleConsumptionSeries{},
-    m_windProductionSeries{},
-    m_nuclearProductionSeries{},
-    m_hydroProductionSeries{},
-    */
     m_weatherY{new QtCharts::QValueAxis},
     m_elelctricityY{new QtCharts::QValueAxis},
     m_savedY{new QtCharts::QValueAxis},
@@ -182,8 +175,14 @@ void Model::updateSeries(DataContainer* data)
         return;
     }
 
-    setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
-    setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
+    if(m_end.toMSecsSinceEpoch() - m_start.toMSecsSinceEpoch() <=
+            data->getData().last().rx() - data->getData().first().rx())
+    {
+        setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
+        setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
+    }
+
+
 
 
     if(data->getCategory() == "weather")
