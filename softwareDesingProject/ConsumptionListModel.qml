@@ -3,6 +3,11 @@ import QtQuick 2.14
 ListModel
 {
     id: consumptionModel
+    ListElement
+    {
+        name: 'Energy production'
+        fileUrl: "prod.png"
+    }
      ListElement
      {
         name:'Hydro power'
@@ -23,9 +28,5 @@ ListModel
          name: 'Energy consumption'
          fileUrl: "image90.png"
      }
-     ListElement
-     {
-         name: 'Energy production'
-         fileUrl: "prod.png"
-     }
+
 }

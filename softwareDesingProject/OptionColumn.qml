@@ -5,7 +5,7 @@ Item {
     property int spacing: 2
     id: optionItem
     ButtonGroup{
-        id: consumtionPredictionGroup
+        id: dataProcessing
         buttons: columElement.children
     }
     Rectangle{
@@ -18,20 +18,16 @@ Item {
       spacing: 2
 
       RadioButton{
-          ButtonGroup.group: consumtionPredictionGroup
+          ButtonGroup.group: dataProcessing
           text: qsTr("Consumed")
       }
       RadioButton{
-          ButtonGroup.group: consumtionPredictionGroup
+          ButtonGroup.group: dataProcessing
           text: qsTr("Producted")
       }
       RadioButton{
-          ButtonGroup.group: consumtionPredictionGroup
+          ButtonGroup.group: dataProcessing
           text: qsTr("Predicted consupmtion")
-      }
-      RadioButton{
-          ButtonGroup.group: consumtionPredictionGroup
-          text: qsTr("Tentative production")
       }
 
 

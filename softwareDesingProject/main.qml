@@ -623,9 +623,59 @@ Window {
 
 
         }
+
+        Rectangle{
+            id: dataProcessingRect
+            border.color: "black"
+            width: consumptionBrowser.width
+            height: 130
+            anchors.left: parent.left
+            anchors.top: endTimeInputBoundingRect.bottom
+                Column{
+                    id: columElement
+                    spacing: 2
+                    RadioButton{
+                        id: avgButton
+                        checked: true
+                        text: "AVG"
+                        onCheckedChanged: {
+                            if(avgButton.checked)
+                            {
+                                viewController.setDataProcessing("AVG")
+                            }
+                        }
+                    }
+                    RadioButton{
+                        id: maxButton
+                        checked: false
+                        text: "MAX"
+                        onCheckedChanged: {
+                            if(maxButton.checked)
+                            {
+                                viewController.setDataProcessing("MAX")
+                            }
+                        }
+                    }
+                    RadioButton{
+                        id: minButton
+                        checked: false
+                        text: "MIN"
+                        onCheckedChanged: {
+                            if(minButton.checked)
+                            {
+                                viewController.setDataProcessing("MIN")
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
     }
 
     Component.onCompleted:{
+        viewController.setDataProcessing("AVG");
         requestData();
     }
 
