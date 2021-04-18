@@ -12,10 +12,31 @@ public:
     FmiDataSource(QObject* parent = nullptr);
     virtual ~FmiDataSource();
 
-    virtual void setLocation(QString location);
+    /**
+     * @brief setTimeWindow, for setting the time window for the next fetch
+     * @param startTime, start time of the fetch, in ISO format
+     * @param endTime, end time of the fetch, in ISO format
+     */
     virtual void setTimeWindow(QString startTime, QString endTime);
+
+    /**
+     * @brief makeRequest, makes the actual request to the network API, emits
+     * dataParsed signal when data is ready.
+     */
     virtual void makeRequest();
+
+    /**
+     * @brief setSearchParameter, sets the search parameter for the next fetch
+     * @param param, the parameter for the next search, for example "temperature
+     * for FMI API
+     */
     virtual void setSearchParameter(const QString param);
+
+    /**
+     * @brief setLocation, sets the location for the next fetch
+     * @param location, location for the next fetch, for example "Viitasaari"
+     */
+    virtual void setLocation(QString location);
 
 
 private Q_SLOTS:
