@@ -43,6 +43,9 @@ public:
     QtCharts::QValueAxis *getElectricityY();
     QtCharts::QValueAxis *getSavedY();
     QtCharts::QPieSeries* getPieSeries() const;
+    Q_INVOKABLE QString getHydroConsumption();
+    Q_INVOKABLE QString getNucklearConsumption();
+    Q_INVOKABLE QString getWindConsumption();
 
     QPointF getLimits(QList<QPointF> data);
 
@@ -90,6 +93,9 @@ private:
     QDateTime m_start;
     QDateTime m_end;
     std::unordered_map<QString, DataContainer*> m_data;
+    QString m_hydroConsumption;
+    QString m_nucklearConsumption;
+    QString m_windConsumption;
 
 };
 

@@ -14,7 +14,10 @@ Model::Model(QObject *parent):
     m_pieseries(new QtCharts::QPieSeries),
     m_start(),
     m_end(),
-    m_data()
+    m_data(),
+    m_hydroConsumption(""),
+    m_nucklearConsumption(""),
+    m_windConsumption("")
 {
     connect(m_dataFetcher, &DataFetcher::dataReady, this, &Model::updateSeries);
     connect(m_dataFetcher, &DataFetcher::currentProductionReady, this, &Model::updateProductionPieModel);
@@ -64,6 +67,21 @@ QtCharts::QValueAxis *Model::getSavedY()
 QtCharts::QPieSeries* Model::getPieSeries() const
 {
     return m_pieseries;
+}
+
+QString Model::getHydroConsumption()
+{
+    return m_hydroConsumption;
+}
+
+QString Model::getNucklearConsumption()
+{
+    return m_nucklearConsumption;
+}
+
+QString Model::getWindConsumption()
+{
+    return m_windConsumption;
 }
 
 QPointF Model::getLimits(QList<QPointF> data)
@@ -277,20 +295,21 @@ void Model::updateProductionPieModel(DataContainer *currentData)
         switch (index) {
         case 0:
             m_pieseries->append("Hydro", point.ry());
+            m_hydroConsumption = QString("%1 MWh/h").arg(point.ry());
             break;
         case 1:
             m_pieseries->append("Wind", point.ry());
+            m_windConsumption = QString("%1 MWh/h").arg(point.ry());
             break;
         case 2:
             m_pieseries->append("Nuclear", point.ry());
-            break;
-        default:
-            m_pieseries->append(currentData->getCategory(), point.ry());
+            m_nucklearConsumption = QString("%1 MWh/h").arg(point.ry());
             break;
 
         }
         ++index;
     }
+    qDebug() << "hyd " << m_hydroConsumption << " wind " << m_windConsumption << " nuck " << m_nucklearConsumption;
     m_pieseries->setLabelsVisible(true);
     emit pieSeriesChanged();
 }
