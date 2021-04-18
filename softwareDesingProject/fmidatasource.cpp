@@ -156,8 +156,15 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
 
         if(!timeStr.isEmpty() and value.text() != "NaN"){
             point.setX(dateTime.toMSecsSinceEpoch());
-            point.setY(value.text().toDouble());
-
+            /* The observation api uses different unit for this */
+            if((source_ == "TotalCloudCover") & firstFetchHandled_)
+            {
+                point.setY(8*(value.text().toDouble())/100);
+            }
+            else
+            {
+                point.setY(value.text().toDouble());
+            }
             dataBuffer_.append(point);
         }
     }
