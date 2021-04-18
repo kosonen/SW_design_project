@@ -63,8 +63,22 @@ void FmiDataSource::setLocation(const QString location)
 void FmiDataSource::setTimeWindow(const QString startTime, const QString endTime)
 {
     qDebug() << startTime << endTime;
-    startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
-    endTime_ = QDateTime::fromString(endTime, Qt::ISODate);
+    QDateTime currentDate = QDateTime::currentDateTimeUtc();
+    /* Saturate the times to the max and min that the API allows */
+    if(currentDate.addDays(3) < QDateTime::fromString(endTime, Qt::ISODate)){
+        endTime_ = currentDate.addDays(3);
+    }
+    else
+    {
+        endTime_ = QDateTime::fromString(endTime, Qt::ISODate);
+    }
+    if(currentDate.addDays(-7) > QDateTime::fromString(startTime, Qt::ISODate)){
+        startTime_ = currentDate.addDays(-7);
+    }
+    else
+    {
+        startTime_ = QDateTime::fromString(startTime, Qt::ISODate);
+    }
 }
 
 QUrl FmiDataSource::buildFMIURL(bool forecast, QString startTime, QString endTime)
@@ -135,7 +149,7 @@ void FmiDataSource::downloadCompleted(QNetworkReply *reply)
     QDomDocument doc;
 
     if (!doc.setContent(reply->readAll())) {
-        return;
+        qDebug() << "REQUEST BROKEN, most likely invalid date";
     }
 
     for (QDomElement m = doc.documentElement().firstChildElement(); !m.isNull(); m = m.nextSiblingElement())
