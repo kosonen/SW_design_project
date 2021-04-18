@@ -119,7 +119,6 @@ void Controller::setDataProcessing(QString method)
     qDebug() << method;
 }
 
-
 QString Controller::getPopupError()
 {
     if(m_error == "")

@@ -142,6 +142,9 @@ void Model::setPieSeries(QtCharts::QPieSeries *pieSeries)
 
 bool Model::update(Settings& settings)
 {
+    setStartTime(QDateTime::fromString(settings.getStartTime(), Qt::ISODate));
+    setEndTime(QDateTime::fromString(settings.getEndTime(), Qt::ISODate));
+
     return m_dataFetcher->fetch(settings);
 }
 
@@ -174,16 +177,6 @@ void Model::updateSeries(DataContainer* data)
         qDebug() << "tyhjä" << Qt::endl;
         return;
     }
-
-    if(m_end.toMSecsSinceEpoch() - m_start.toMSecsSinceEpoch() <=
-            data->getData().last().rx() - data->getData().first().rx())
-    {
-        setStartTime(QDateTime::fromMSecsSinceEpoch(data->getData().first().rx()));
-        setEndTime(QDateTime::fromMSecsSinceEpoch(data->getData().last().rx()));
-    }
-
-
-
 
     if(data->getCategory() == "weather")
     {

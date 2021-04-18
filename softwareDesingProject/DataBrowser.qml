@@ -99,7 +99,7 @@ Item {
     {
         console.log("current index " + prop);
         browser.value = prop;
-        viewController.requestData();
+        //viewController.requestData();
 
 
     }
