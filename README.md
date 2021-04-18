@@ -17,3 +17,5 @@ Used Qt libraries are
 - xml
 
 To run the project, clone this repository, open softwareDesignProject.pro in Qt Creator and configure the project with the correct Qt version.
+
+The design documentation is found from documentation folder that contains the design_document.pdf file.
