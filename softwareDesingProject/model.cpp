@@ -192,7 +192,11 @@ void Model::updateSeries(DataContainer* data)
     qDebug() << data->getData().size() << Qt::endl;
     if (data->getData().size() < 1)
     {
-        qDebug() << "tyhjä" << Qt::endl;
+        qDebug() << "tyhjä category" << data->getCategory() <<  Qt::endl;
+        if(data->getCategory() == "electricity")
+        {
+            emit emptySeries();
+        }
         return;
     }
 

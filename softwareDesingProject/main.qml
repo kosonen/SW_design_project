@@ -13,6 +13,14 @@ Window {
     visible: true
     title: qsTr("Viita saaren sää ennuste ohjelma")
 
+    Connections{
+        target: model
+        onEmptySeries:{
+            popupText.text = "Error failed fetching, most likely due to an invalid date";
+            invalidSettingsPopup.open();
+        }
+    }
+
     Rectangle{
         id: viewBounds
         width: parent.width
@@ -694,6 +702,7 @@ Window {
                 border.color: "black"
                 height: 40
                 radius: 2
+                border.width: 2
                 width: consumptionBrowser.width
             }
 

@@ -247,6 +247,7 @@ signals:
      */
     void pieSeriesChanged();
 
+    void emptySeries();
 
 private:
     DataFetcher* m_dataFetcher;
