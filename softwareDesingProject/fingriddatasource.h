@@ -20,7 +20,7 @@ public:
      * @param endTime, end time of the fetch, in ISO format
      */
 
-    virtual void setTimeWindow(QString startTime, QString endTime);
+    virtual void setTimeWindow(const QString startTime, const QString endTime);
 
     /**
      * @brief makeRequest, makes the actual request to the network API, emits

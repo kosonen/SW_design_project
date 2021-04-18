@@ -55,12 +55,12 @@ void FmiDataSource::makeRequest()
     }
 }
 
-void FmiDataSource::setLocation(QString location)
+void FmiDataSource::setLocation(const QString location)
 {
     location_ = location;
 }
 
-void FmiDataSource::setTimeWindow(QString startTime, QString endTime)
+void FmiDataSource::setTimeWindow(const QString startTime, const QString endTime)
 {
     qDebug() << startTime << endTime;
     startTime_ = QDateTime::fromString(startTime, Qt::ISODate);

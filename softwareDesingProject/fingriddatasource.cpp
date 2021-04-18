@@ -198,7 +198,7 @@ void FingridDataSource::getCurrentProduction()
 
 }
 
-void FingridDataSource::setTimeWindow(QString startTime, QString endTime)
+void FingridDataSource::setTimeWindow(const QString startTime, const QString endTime)
 {
 
     if(!startTime.isEmpty()){

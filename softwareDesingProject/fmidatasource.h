@@ -21,7 +21,7 @@ public:
      * @param startTime, start time of the fetch, in ISO format
      * @param endTime, end time of the fetch, in ISO format
      */
-    virtual void setTimeWindow(QString startTime, QString endTime);
+    virtual void setTimeWindow(const QString startTime, const QString endTime);
 
     /**
      * @brief makeRequest, makes the actual request to the network API, emits
@@ -40,7 +40,7 @@ public:
      * @brief setLocation, sets the location for the next fetch
      * @param location, location for the next fetch, for example "Viitasaari"
      */
-    virtual void setLocation(QString location);
+    virtual void setLocation(const QString location);
 
 
 private Q_SLOTS:
