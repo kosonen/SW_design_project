@@ -16,8 +16,6 @@
 /**
  * @brief The IDataSource class is an interface class for network APIs
  */
-
-
 class IDataSource : public QObject
 {
     Q_OBJECT

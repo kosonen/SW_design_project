@@ -13,8 +13,10 @@
 #include <unordered_map>
 #include <QPieSeries>
 
-//enum weatherT {temperature, wind, humidity, NONE};
 
+/**
+ * @brief The Model class is the main model of the program
+ */
 class Model : public QObject
 {
     Q_OBJECT

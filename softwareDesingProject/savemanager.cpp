@@ -5,6 +5,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include <QDebug>
+
 SaveManager::SaveManager(QObject *parent) : QObject(parent)
 {
 

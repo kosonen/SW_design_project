@@ -8,7 +8,7 @@
 #include <QHash>
 
 /**
- * @brief The DataRequestSettings class implements settings needed to build url for datarequest.
+ * @brief The DataRequestSettings class contains the global settings needed to build url for datarequest.
  */
 class Settings : public ISaveObject
 {
@@ -81,16 +81,7 @@ public:
      */
     QHash<QString,QString> getParams();
 
-    /**
-     * @brief Creates QJsonObject from parameters
-     * @return QJsonObject with parameter information
-     */
     virtual QJsonObject serialize() override;
-
-    /**
-     * @brief Deserializes QJsonObject to parameters
-     * @param data as QJsonObject to deserialize
-     */
     virtual void deserialize(QJsonObject data) override;
 
 private:

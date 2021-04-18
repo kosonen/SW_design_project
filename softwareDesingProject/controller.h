@@ -19,6 +19,9 @@ enum SettingsCheck {
     SC_NoForecastForUnidentifiedSource
 };
 
+/**
+ * @brief The Controller class is main controller of the program
+ */
 class Controller : public QObject
 {
     Q_OBJECT

@@ -16,8 +16,6 @@
  * @brief The DataFetcher class controls the different network APIs, mapping the
  * requests to the correct API and forwarding processed data forward
  */
-
-
 class DataFetcher : public QObject
 {
     Q_OBJECT
