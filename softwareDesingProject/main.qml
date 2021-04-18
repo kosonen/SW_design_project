@@ -631,6 +631,8 @@ Window {
             height: 130
             anchors.left: parent.left
             anchors.top: endTimeInputBoundingRect.bottom
+            radius: 2
+            border.width: 2
                 Column{
                     id: columElement
                     spacing: 2
