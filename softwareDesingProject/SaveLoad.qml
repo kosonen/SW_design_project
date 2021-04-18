@@ -71,7 +71,7 @@ Rectangle{
             var source;
             if(weatherRadioButton.checked)
             {
-                source = "weather"
+                source = "weather"        
             }
             else if(electricityRadioButton.checked)
             {
@@ -79,7 +79,19 @@ Rectangle{
             }
             if( filepath !== "" && source !== "")
             {
-                viewController.saveData(filepath,source);
+                if(viewController.saveData(filepath,source))
+                {
+                    popupText.text = "Saved " + source + " data to file " + filepath;
+                    invalidSettingsPopup.open();
+                }
+                else{
+                    popupText.text = "Failed to save " + source + " data to file " + filepath;
+                    invalidSettingsPopup.open();
+                }
+            }
+            else{
+                popupText.text = "Invalid file name or source";
+                invalidSettingsPopup.open();
             }
         }
     }
@@ -104,10 +116,19 @@ Rectangle{
             var filepath = fileInput.text;
             if( filepath !== "")
             {
-                viewController.loadData(filepath);
+                if(viewController.loadData(filepath))
+                {
+                    popupText.text = "Loaded data from " + filepath;
+                    invalidSettingsPopup.open();
+                }
+                else{
+                    popupText.text = "Failed to load data from " + filepath;
+                    invalidSettingsPopup.open();
+                }
             }
         }
 
     }
+
 
 }
