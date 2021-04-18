@@ -16,6 +16,7 @@ bool DataFetcher::fetch(Settings& settings)
     qDebug() << "Updating model";
 
     m_requestFingridAPI->getCurrentProduction();
+    setDataProcessingMethod(settings.getDataProcessing());
 
     QUrl url;
     IDataSource* dataSource = nullptr;

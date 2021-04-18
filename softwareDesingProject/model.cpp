@@ -84,11 +84,6 @@ QString Model::getWindProduction()
     return m_windConsumption;
 }
 
-void Model::setDataProcessing(QString method)
-{
-    m_dataFetcher->setDataProcessingMethod(method);
-}
-
 QPointF Model::getLimits(QList<QPointF> data)
 {
     qreal top = data.at(0).y();

@@ -111,12 +111,6 @@ public:
     Q_INVOKABLE QString getWindProduction();
 
     /**
-     * @brief set Data Processing method: AVG, Min, Max, NONE
-     * @param method to use
-     */
-    void setDataProcessing(QString method);
-
-    /**
      * @brief gets top and bottom ĺimits of input data
      * @param data: input data
      * @return QPointF with x value at highest point of data

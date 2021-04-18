@@ -64,6 +64,16 @@ QString Settings::getEndTime()
     return m_params[ENDTIME];
 }
 
+void Settings::setDataProcessing(QString method)
+{
+    m_params[PROCESSING] = method;
+}
+
+QString Settings::getDataProcessing()
+{
+    return m_params[PROCESSING];
+}
+
 QHash<QString, QString> Settings::getParams()
 {
     QHashIterator<QString,QString> i(m_params);
@@ -84,6 +94,7 @@ QJsonObject Settings::serialize()
     settingsData["location"] = m_params[LOCATION];
     settingsData["startTime"] = m_params[STARTIME];
     settingsData["endTime"] = m_params[ENDTIME];
+    settingsData["dataProcessing"] = m_params[PROCESSING];
 
     for (auto e : m_dataSources)
     {
@@ -100,6 +111,7 @@ void Settings::deserialize(QJsonObject data)
     m_params[LOCATION] = data["location"].toString();
     m_params[STARTIME] = data["startTime"].toString();
     m_params[ENDTIME] = data["endTime"].toString();
+    m_params[PROCESSING] = data["dataProcessing"].toString();
 
     m_dataSources.clear();
     QJsonArray list = data["dataSources"].toArray();

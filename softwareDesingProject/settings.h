@@ -64,6 +64,18 @@ public:
     QString getEndTime();
 
     /**
+     * @brief set Data Processing method: AVG, MIN, MAX, NONE
+     * @param method to use
+     */
+    void setDataProcessing(QString method);
+
+    /**
+     * @brief get Data Processing method: AVG, MIN, MAX, NONE
+     * @return method to use
+     */
+    QString getDataProcessing();
+
+    /**
      * @brief Getter for all parameters of data request except data sources
      * @return Parameters
      */

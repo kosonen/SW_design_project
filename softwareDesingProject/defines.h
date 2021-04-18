@@ -92,6 +92,8 @@ const QString GEO_ID = "geoid";
 const QString WMO = "wmo";
 const QString TIMEZONE = "timezone";
 
+const QString PROCESSING = "processing";
+
 
 const QHash<QString, QString> FMI_QUERY_TO_FINGRID_QUERY_PARAMETER_MAPPING = {
     {STARTIME, "start_time"},
