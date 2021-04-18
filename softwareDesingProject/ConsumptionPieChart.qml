@@ -7,9 +7,9 @@ Item {
         interval: 1000;
         running: true
         onTriggered: {
-            hydroLabel.text = "Hydro: " + model.getHydroConsumption();
-            nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
-            windLabel.text = "Wind: "+ model.getWindConsumption();
+            hydroLabel.text = "Hydro: " + model.getHydroProduction();
+            nucklearLabel.text = "Nuclear: " + model.getNuclearProduction();
+            windLabel.text = "Wind: "+ model.getWindProduction();
             stop();
         }
     }
@@ -28,9 +28,9 @@ Item {
             PieSeries{
                 id: pieseries
                 onAdded: {
-                    hydroLabel.text = "Hydro: " + model.getHydroConsumption();
-                    nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
-                    windLabel.text = "Wind: "+ model.getWindConsumption();
+                    hydroLabel.text = "Hydro: " + model.getHydroProduction();
+                    nucklearLabel.text = "Nuclear: " + model.getNuclearProduction();
+                    windLabel.text = "Wind: "+ model.getWindProduction();
                 }
             }
 
@@ -90,8 +90,8 @@ Item {
 
     Component.onCompleted: {
         model.pieSeries = pieseries;
-        hydroLabel.text = "Hydro: " + model.getHydroConsumption();
-        nucklearLabel.text = "Nuclear: " + model.getNucklearConsumption();
-        windLabel.text = "Wind: "+ model.getWindConsumption();
+        hydroLabel.text = "Hydro: " + model.getHydroProduction();
+        nucklearLabel.text = "Nuclear: " + model.getNuclearProduction();
+        windLabel.text = "Wind: "+ model.getWindProduction();
     }
 }
