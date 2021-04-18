@@ -59,7 +59,7 @@ void DataFetcher::setDataProcessingMethod(const QString method)
 void DataFetcher::dataProcessingHandler(DataContainer* data)
 {
     qDebug() << data->size();
-    DataContainer* processedData = data;
+    DataContainer* processedData;
     if(m_dataProcessingMethod_== "AVG")
         processedData = calcAverage(data);
     else if(m_dataProcessingMethod_== "MAX")
@@ -95,6 +95,9 @@ DataContainer* DataFetcher::calcAverage(DataContainer* data)
             }
             avg += it.y();
         }
+        avgData->setUnit(data->getUnit());
+        avgData->setType(data->getType());
+        avgData->setCategory(data->getCategory());
         delete data;
         return avgData;
     }
@@ -125,6 +128,9 @@ DataContainer* DataFetcher::calcMin(DataContainer* data)
                 min = it.y();
             }
         }
+        minData->setUnit(data->getUnit());
+        minData->setType(data->getType());
+        minData->setCategory(data->getCategory());
         delete data;
         return minData;
     }
@@ -155,6 +161,9 @@ DataContainer* DataFetcher::calcMax(DataContainer* data)
                 max = it.y();
             }
         }
+        maxData->setUnit(data->getUnit());
+        maxData->setType(data->getType());
+        maxData->setCategory(data->getCategory());
         delete data;
         return maxData;
     }
