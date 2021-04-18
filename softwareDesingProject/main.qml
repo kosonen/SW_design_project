@@ -675,6 +675,14 @@ Window {
 
 
     }
+    Timer{
+        id: coolDownTimer
+        interval: 1000
+        onTriggered: {
+            coolDownTimer.stop();
+        }
+
+    }
 
     Component.onCompleted:{
         viewController.setDataProcessing("AVG");
@@ -706,13 +714,22 @@ function requestData()
     var endTime = endYearInput.text + "-" + endMonthInput.text + "-" +
     endDayInput.text + "T" + endTimeInput.text +"Z";
     viewController.setTimeWindow(startTime, endTime);
-    viewController.requestData();
-    var errMsg = viewController.getPopupError();
-    console.log("request error " + errMsg);
-    if(errMsg !== "")
+    if(!coolDownTimer.running)
     {
-        showPopup(errMsg);
+        viewController.requestData();
+        coolDownTimer.start();
+        var errMsg = viewController.getPopupError();
+        console.log("request error " + errMsg);
+        if(errMsg !== "")
+        {
+            showPopup(errMsg);
+        }
     }
+    else{
+        console.log("cooling down");
+    }
+
+
 }
 
 function showPopup(msg)
